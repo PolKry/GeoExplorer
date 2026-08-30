@@ -1,0 +1,64 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.error-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 2rem 0;
+}
+
+.error-title {
+    font-size: 7rem;
+    font-weight: 700;
+    margin: 0;
+    color: #00ffae;
+    text-shadow: 0 0 20px #00ffaeaa;
+}
+
+.error-subtitle {
+    margin-top: 0.5rem;
+    font-size: 2.2rem;
+}
+
+.error-text {
+    color: #cccccc;
+    margin: 1.5rem 0 2rem;
+    font-size: 1.2rem;
+}
+
+.reasons-list {
+    list-style: disc;
+    text-align: left;
+    margin: 0 auto 2.5rem;
+    max-width: 420px;
+    color: #bbbbbb;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    background-color: #00ffae;
+    border-radius: 8px;
+    border: none;
+    transition: 0.25s ease;
+    cursor: pointer;
+}
+
+.back-button:hover {
+    background-color: #00d790;
+    transform: scale(1.05);
+}
+
+.back-button a {
+    text-decoration: none;
+    color: #0e0e0e;
+    font-size: 1rem;
+    font-weight: bold;
+}

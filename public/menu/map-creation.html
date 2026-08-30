@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles/map-creation-style.css" />
+    <link rel="stylesheet" href="/styles/menu-style.css" />
+    <link rel="stylesheet" href="/styles/button-variants.css" />
+    <link rel="stylesheet" href="/styles/explore.css" />
+    <script type="module" src="/js/utils/auth-check.js"></script>
+    <script type="module" src="/js/components/profile-menu.js"></script>
+    <script src="/js/components/loader.js"></script>
+    <script type="module" src="/js/pages/menu/map-creation.js"></script>
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon" />
+    <title>GeoExplorer | Explore - Explore Official & Community Maps</title>
+</head>
+
+<body>
+    <div data-component="/components/site-header.html"></div>
+
+    <main class="explore-panel">
+        <h2 class="title">Create Your Map</h2>
+
+        <div class="explore-columns">
+            <div class="explore-panel-section">
+                <h3>Info</h3>
+                <p class="panel-description">Write info about your map like name, description, difficulty, and paste the
+                    JSON location data.</p>
+                <div class="line"></div>
+
+                <form id="map-form">
+                    <label for="map-name">
+                        <h4>Name</h4>
+                    </label>
+                    <input type="text" id="map-name" placeholder="Enter map name (max. 30 characters)" maxlength="30"
+                        required />
+
+                    <label for="map-description">
+                        <h4>Description</h4>
+                    </label>
+                    <textarea id="map-description" placeholder="Enter a short description... (max. 100 characters)"
+                        rows="3" maxlength="100" required></textarea>
+
+                    <label for="map-difficulty">
+                        <h4>Difficulty</h4>
+                    </label>
+                    <div class="custom-select-container">
+                        <div class="custom-select-trigger">Select difficulty</div>
+                        <div class="custom-select-options">
+                            <span data-value="Easy">Easy</span>
+                            <span data-value="Medium">Medium</span>
+                            <span data-value="Hard">Hard</span>
+                        </div>
+                    </div>
+                    <input type="hidden" name="map-difficulty" id="map-difficulty" required />
+
+                    <div class="tag-selection-wrapper">
+                        <div class="tag-section">
+                            <div class="tag-section-label">Available Tags</div>
+                            <div id="available-tags" class="tag-options"></div>
+                        </div>
+                        <div class="tag-section">
+                            <div class="tag-section-label">Selected Tags</div>
+                            <div id="selected-tags" class="selected-tags"></div>
+                            <input type="hidden" id="map-tags" name="tags">
+                        </div>
+                    </div>
+
+                    <label for="map-json">
+                        <h4>Locations (JSON format)</h4>
+                    </label>
+                    <textarea id="map-json" placeholder='Paste your location JSON here...' rows="10"
+                        required></textarea>
+
+                    <button type="submit" class="publish-button refined-button">Publish</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html">About</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#contact">Contact</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#privacy">Privacy Policy</a>
+        </div>
+        <p>© 2025 GeoExplorer. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

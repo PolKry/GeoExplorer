@@ -1,0 +1,388 @@
+/* === Main Layout === */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.party-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.party-container {
+    margin: 0 auto;
+    width: 60%;
+    max-width: 1100px;
+    padding: 2.5rem;
+    border-radius: 20px;
+    background: rgba(20, 20, 20, 0.85);
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 255, 174, 0.3);
+    user-select: none;
+}
+
+.party-lobby-title {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 2px 2px 8px #000;
+    user-select: none;
+}
+
+.party-header {
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.2rem;
+}
+
+#party-code {
+    font-weight: bold;
+    color: #00ffae;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+#copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #00ffae;
+    transition: transform 0.25s ease, color 0.25s ease;
+}
+
+#copy-btn:hover {
+    transform: scale(1.25);
+    color: #00ffd0;
+}
+
+/* === Player Section === */
+.party-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.party-section {
+    flex: 1;
+    min-width: 320px;
+    max-width: 480px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.party-section h3 {
+    margin-bottom: 1rem;
+    color: #00ffae;
+    font-weight: bold;
+}
+
+/* Players List */
+.players ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.players ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    user-select: none;
+
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.players ul li:hover {
+    background-color: rgba(0, 255, 174, 0.15);
+    transform: translateY(-2px);
+}
+
+.players ul li .left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.players ul li .star {
+    font-size: 1.2rem;
+}
+
+.players ul li .username {
+    font-weight: 500;
+}
+
+.players ul li .username.offline {
+    color: gray;
+}
+
+.players ul li .username.online {
+    color: white;
+}
+
+.players ul li .points {
+    font-weight: 600;
+    color: #e0be00;
+}
+
+.players ul li.host {
+    border: 1.5px solid rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.25);
+    background: rgba(255, 215, 0, 0.07);
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+.players ul li.host:hover {
+    background-color: rgba(255, 215, 0, 0.12);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.35);
+    transform: translateY(-2px);
+}
+
+#panel-left,
+#panel-right {
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+#panel-left .players,
+#panel-right .players {
+    flex: 1;
+}
+
+#panel-left .blue-team {
+    color: #0099ff;
+}
+
+#panel-right .red-team {
+    color: #ff4c4c;
+}
+
+/* Team Colors */
+.players ul li.team-blue {
+    border-left: 4px solid #0099ff;
+}
+
+.players ul li.team-red {
+    border-left: 4px solid #ff4c4c;
+}
+
+/* Layouts */
+.ffa-layout .party-body {
+    justify-content: center;
+}
+
+.ffa-layout .party-section {
+    width: 90%;
+    max-width: 800px;
+}
+
+.party-container.team-mode .players ul {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.5rem;
+}
+
+.party-container.ffa-layout .players ul {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    justify-content: center;
+    gap: 0.7rem;
+}
+
+/* === Settings Section === */
+.setting-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.setting-group label {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: #00ffae;
+}
+
+.setting-group select,
+.setting-group input {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.6rem;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.setting-group select:focus,
+.setting-group input:focus {
+    border-color: #00ffae;
+}
+
+/* Footer Buttons */
+.party-footer {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.party-footer button {
+    border: none;
+    border-radius: 12px;
+    padding: 0.9rem 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+}
+
+.party-footer .primary {
+    display: none;
+    background-color: #00ffae;
+    color: #000;
+    box-shadow: 0 0 10px rgba(0, 255, 174, 0.3);
+}
+
+.party-footer .rejoin {
+    display: none;
+    background-color: #007bff;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+.party-footer .secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+.party-footer button:hover {
+    transform: scale(1.05);
+}
+
+/* Close button */
+#disband-close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+#disband-close-btn .close-symbol {
+    font-size: 2.3rem;
+    color: #ff4c4c;
+    font-weight: bold;
+    line-height: 1;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+#disband-close-btn:hover .close-symbol {
+    transform: rotate(90deg) scale(1.1);
+    color: #ff6b6b;
+}
+
+/* === Toasts === */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+
+    background: rgba(15, 25, 35, 0.9);
+    color: #00ffae;
+    padding: 0.9rem 1.4rem;
+    border-radius: 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    box-shadow: 0 0 20px rgba(0, 255, 174, 0.3);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 255, 174, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.35s ease;
+    z-index: 9999;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.success {
+    border-left: 4px solid #00ffae;
+    color: #00ffae;
+}
+
+.toast.error {
+    border-left: 4px solid #ff4c4c;
+    color: #ff4c4c;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    transition: all 0.25s ease;
+}
+
+.status-dot.online {
+    background-color: #00ffae;
+    box-shadow: 0 0 8px #00ffae;
+}
+
+.status-dot.offline {
+    background-color: #ff4c4c;
+    box-shadow: 0 0 8px #ff4c4c;
+    opacity: 0.7;
+}
+
+/* === Responsive === */
+@media (max-width: 700px) {
+    .party-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .party-section {
+        width: 90%;
+    }
+
+    .party-footer button {
+        width: 100%;
+    }
+}

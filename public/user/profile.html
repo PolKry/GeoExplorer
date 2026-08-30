@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles/menu-style.css" />
+    <link rel="stylesheet" href="/styles/profile-style.css" />
+    <script type="module" src="/js/utils/auth-check.js"></script>
+    <script src="/js/components/loader.js"></script>
+    <link rel="icon" href="/Resources/Images/icon.ico" type="image/x-icon" />
+    <title>GeoExplorer | My Profile</title>
+</head>
+
+<body>
+    <div data-component="/components/site-header.html"></div>
+
+    <div class="wave-container" data-component="/components/top-waves.html"></div>
+
+    <main class="explore-panel fade-in">
+        <section class="profile-header">
+            <div class="profile-top">
+                <img src="/Resources/Images/profile.png" alt="Avatar" class="profile-avatar" />
+                <input type="file" id="profile-file-input" accept="image/*" style="display: none;" />
+
+                <div class="profile-info">
+                    <h2 class="nickname" id="nickname"></h2>
+                    <hr class="nickname-separator" />
+                    <div class="profile-meta">
+                        <div class="meta-row">
+                            <span class="meta-label">Bio:</span>
+                            <span class="meta-value" id="bio-text">
+                                Globe-trotter with a love for coastal maps and obscure locations. Lorem ipsum dolor sit
+                                amet consectetur...
+                            </span>
+                            <button class="edit-btn" data-target="bio-text">✏️</button>
+                        </div>
+                        <div class="meta-row">
+                            <span class="meta-label">Country:</span>
+                            <span class="meta-value" id="country-text">
+                                <div class="edit-select-wrapper">
+
+                                </div>
+                                <img id="country-flag" src="https://flagcdn.com/w20/cz.png" alt="Czech flag"
+                                    class="flag-icon" />
+                                Czech Republic
+                            </span>
+                            <button class="edit-btn" data-target="country-text">✏️</button>
+                        </div>
+                        <div class="meta-row">
+                            <span class="meta-label">Joined:</span>
+                            <span class="meta-value" id="creation-date">March 2025</span>
+                        </div>
+                    </div>
+
+                    <p class="level-label"></p>
+                    <div class="level-bar">
+                        <div class="level-fill" style="width: 0%;"></div>
+                    </div>
+                    <small class="level-progress"></small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Grid Below -->
+        <section class="profile-stats-grid">
+            <div class="stat-card">
+                <h3>Games Played</h3>
+                <p></p>
+            </div>
+            <div class="stat-card">
+                <h3>Average Score</h3>
+                <p></p>
+            </div>
+            <div class="stat-card">
+                <h3>Max Score</h3>
+                <p></p>
+            </div>
+            <div class="stat-card">
+                <h3>Longest Streak</h3>
+                <p></p>
+            </div>
+            <div class="stat-card">
+                <h3>Accuracy</h3>
+                <p></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="wave-container" data-component="/components/bottom-waves.html"></div>
+
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html">About</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#contact">Contact</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#privacy">Privacy Policy</a>
+        </div>
+        <p>© 2025 GeoExplorer. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="/js/components/profile-menu.js"></script>
+    <script type="module" src="/js/pages/user/profile.js"></script>
+</body>
+
+</html>

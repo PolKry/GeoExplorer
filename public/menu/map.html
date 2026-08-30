@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/menu-style.css">
+    <link rel="stylesheet" href="/styles/map-style.css">
+    <link rel="stylesheet" href="/styles/button-variants.css">
+    <link rel="stylesheet" href="/libs/leaflet/dist/leaflet.css">
+    <script type="module" src="/js/utils/auth-check.js"></script>
+    <script type="module" src="/js/components/profile-menu.js"></script>
+    <script src="/js/components/loader.js"></script>
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon">
+    <script src="/libs/turf/turf.min.js" defer></script>
+    <script src="/libs/leaflet/dist/leaflet.js" defer></script>
+    <script src="/libs/leaflet/dist/leaflet.pattern.js" defer></script>
+    <script type="module" src="/js/pages/menu/map.js"></script>
+    <script src="/js/pages/menu/map-preview.js" defer></script>
+
+    <title>GeoExplorer | Explore - Explore Official & Community Maps</title>
+</head>
+
+<body>
+    <div data-component="/components/site-header.html"></div>
+
+    <main>
+        <div id="loading-screen">
+            <div class="spinner"></div>
+            <img src="/Resources/Images/Icon.ico" />
+            <div class="loading-text">Loading<span class="dots"></span></div>
+        </div>
+
+        <section class="map-panel">
+            <div class="map-background">
+                <div class="map-header">
+                    <div class="image-wrapper">
+                        <img class="map-profile" id="mapThumbnail" alt="Map thumbnail" />
+                        <div class="image-loader" id="icon-loader"></div>
+                    </div>
+                    <div class="map-info">
+                        <h3 id="mapName"></h3>
+                        <p class="map-author" id="mapAuthor"></p>
+                        <p class="map-date" id="mapDate"></p>
+                    </div>
+                    <div class="map-settings">
+                        <div class="setting-group">
+                            <label for="gameType">Type of game</label>
+                            <select id="gameType">
+                                <option value="moving">Moving</option>
+                                <option value="no-move">No move</option>
+                                <option value="nmpz">NMPZ</option>
+                            </select>
+                        </div>
+                        <div class="setting-group">
+                            <label for="timeRange">Round Time <span id="timeValue"></span></label>
+                            <input type="range" id="timeRange" min="5" max="600" value="60" step="5" />
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="tag-header">Map Tags <span class="tag-subtitle">(region, difficulty, style)</span></h4>
+                <div class="map-tags" id="tag-container">
+                    <span class="tag">Peru</span>
+                    <span class="tag">Hard</span>
+                    <span class="tag">Official</span>
+                </div>
+
+                <div class="line"></div>
+                <p class="map-description" id="mapDescription"></p>
+                <button class="play-button refined-button" id="playButton">Play map</button>
+            </div>
+        </section>
+
+        <section class="map-dashboard-vertical">
+            <div class="map-container" id="map-container">
+                <div id="static-map"></div>
+                <div class="image-loader" id="preview-loader"></div>
+
+                <!-- Score slider over the map -->
+                <div class="score-slider-overlay">
+                    <h4>Your Score: <span id="userScoreValue"></span></h4>
+                    <div class="slider-wrapper">
+                        <div class="slider-track">
+                            <div class="tier-separator" id="sepBronze"></div>
+                            <div class="tier-separator" id="sepSilver"></div>
+                            <div class="tier-separator" id="sepGold"></div>
+                            <div class="tier-separator" id="sepDiamond"></div>
+
+                            <div class="slider-thumb" id="userScoreThumb"></div>
+                        </div>
+                        <div class="tier-labels">
+                            <span id="tierNone">None</span>
+                            <span id="tierBronze">Bronze</span>
+                            <span id="tierSilver">Silver</span>
+                            <span id="tierGold">Gold</span>
+                            <span id="tierDiamond">Diamond</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="leaderboard">
+                <div class="category-wrapper">
+                    <h4 id="top-players">Top Players</h4>
+                    <h4 id="best-time">Best Time</h4>
+                    <h4 id="most-points">Most Points</h4>
+                </div>
+                <div class="leaderboard-container">
+                    <ol id="leaderboard-list"></ol>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html">About</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#contact">Contact</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#privacy">Privacy Policy</a>
+        </div>
+        <p>© 2025 GeoExplorer. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

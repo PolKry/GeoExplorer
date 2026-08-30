@@ -1,0 +1,2214 @@
+[
+  {
+    "name": "World",
+    "image": "/Resources/Images/Maps/Official/World.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "CountryGroup",
+    "description": "A comprehensive map of the entire planet, featuring all continents, oceans, and major countries. Great for testing your global geography skills.",
+    "srcName": "World",
+    "tags": [
+      "Official",
+      "Challenge",
+      "Landmark",
+      "Training"
+    ],
+    "fallbackFile": "/composites/World.json",
+    "maxDistance": 14000000
+  },
+  {
+    "name": "North America",
+    "image": "/Resources/Images/Maps/Official/NorthAmerica.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "CountryGroup",
+    "description": "From the Rocky Mountains to the Great Lakes, this map explores the vast and varied landscapes of North America.",
+    "srcName": "NorthAmerica",
+    "tags": [
+      "Official",
+      "Landmark",
+      "Nature"
+    ],
+    "fallbackFile": "/composites/NorthAmerica.json",
+    "maxDistance": 8979010
+  },
+  {
+    "name": "United States",
+    "image": "/Resources/Images/Maps/Official/UnitedStates.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore all 50 states, major cities, and key geographic features of the United States in this detailed map.",
+    "srcName": "US",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/US.json",
+    "maxDistance": 7600375
+  },
+  {
+    "name": "Canada",
+    "image": "/Resources/Images/Maps/Official/Canada.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Canada's vast provinces, territories, and major cities like Toronto, Vancouver, and Montreal.",
+    "srcName": "CA",
+    "tags": [
+      "Official",
+      "Nature",
+      "Snow",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/CA.json",
+    "maxDistance": 4631167
+  },
+  {
+    "name": "Greenland",
+    "image": "/Resources/Images/Maps/Official/Greenland.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the world’s largest island, known for its vast ice sheets, Arctic climate, and indigenous Inuit culture.",
+    "srcName": "GL",
+    "tags": [
+      "Official",
+      "Snow",
+      "Nature",
+      "Challenge"
+    ],
+    "fallbackFile": "/countries/GL.json",
+    "maxDistance": 1936060,
+    "skipAutoGen": true
+  },
+  {
+    "name": "Mexico",
+    "image": "/Resources/Images/Maps/Official/Mexico.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "From deserts to jungles, discover Mexico’s states, cultural landmarks, and vibrant cities.",
+    "srcName": "MX",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural",
+      "Desert",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/MX.json",
+    "maxDistance": 2975580
+  },
+  {
+    "name": "Bermuda",
+    "image": "/Resources/Images/Maps/Official/Bermuda.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Bermuda's subtropical islands known for pink sand beaches and maritime history.",
+    "srcName": "BM",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/BM.json",
+    "maxDistance": 22491
+  },
+  {
+    "name": "Puerto Rico",
+    "image": "/Resources/Images/Maps/Official/PuertoRico.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the beautiful island of Puerto Rico, a U.S. territory with historic cities, tropical beaches, and lively culture.",
+    "srcName": "PR",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/PR.json",
+    "maxDistance": 250276
+  },
+  {
+    "name": "Guam",
+    "image": "/Resources/Images/Maps/Official/Guam.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the island of Guam in the western Pacific, a U.S. territory with official Street View coverage and tropical scenery.",
+    "srcName": "GU",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/GU.json",
+    "maxDistance": 43159
+  },
+  {
+    "name": "Northern Mariana Islands",
+    "image": "/Resources/Images/Maps/Official/NorthernMarianaIslands.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Visit the Northern Mariana Islands including Saipan and Tinian — remote U.S. territories with rich history and Pacific landscapes.",
+    "srcName": "MP",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/MP.json",
+    "maxDistance": 23300,
+    "skipAutoGen": true
+  },
+  {
+    "name": "U.S. Virgin Islands",
+    "image": "/Resources/Images/Maps/Official/USVirginIslands.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the U.S. Virgin Islands in the Caribbean, including St. Thomas and St. Croix, covered by Google Street View.",
+    "srcName": "VI",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/VI.json",
+    "maxDistance": 60320
+  },
+  {
+    "name": "American Samoa",
+    "image": "/Resources/Images/Maps/Official/AmericanSamoa.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore American Samoa, a South Pacific U.S. territory featuring lush islands and Street View-covered areas like Pago Pago.",
+    "srcName": "AS",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/AS.json",
+    "maxDistance": 50346
+  },
+  {
+    "name": "Panama",
+    "image": "/Resources/Images/Maps/Official/Panama.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Panama’s famous canal, tropical forests, and vibrant culture bridging North and South America.",
+    "srcName": "PA",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Urban",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/PA.json",
+    "maxDistance": 597555
+  },
+  {
+    "name": "Costa Rica",
+    "image": "/Resources/Images/Maps/Official/CostaRica.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Costa Rica, a Central American country known for rainforests, volcanoes, beaches, rich biodiversity, and excellent Street View coverage across cities and rural areas.",
+    "srcName": "CR",
+    "tags": [
+      "Official",
+      "Nature",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/CR.json",
+    "maxDistance": 371409
+  },
+  {
+    "name": "Guatemala",
+    "image": "/Resources/Images/Maps/Official/Guatemala.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Guatemala’s rich Mayan heritage, volcanoes, and lush landscapes.",
+    "srcName": "GT",
+    "tags": [
+      "Official",
+      "Historical",
+      "Nature",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/GT.json",
+    "maxDistance": 443970
+  },
+  {
+    "name": "Dominican Republic",
+    "image": "/Resources/Images/Maps/Official/DominicanRepublic.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the Caribbean island’s beaches, mountains, and colonial history.",
+    "srcName": "DO",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Historical",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/DO.json",
+    "maxDistance": 345153
+  },
+  {
+    "name": "South America",
+    "image": "/Resources/Images/Maps/Official/SouthAmerica.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "CountryGroup",
+    "description": "From the Amazon rainforest to the Andes mountains, this map explores the diverse geography of South America.",
+    "srcName": "SouthAmerica",
+    "tags": [
+      "Official",
+      "Nature",
+      "Landmark",
+      "Challenge"
+    ],
+    "fallbackFile": "/composites/SouthAmerica.json",
+    "maxDistance": 7572130
+  },
+  {
+    "name": "Curaçao",
+    "image": "/Resources/Images/Maps/Official/Curacao.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Curaçao’s vibrant culture, coral reefs, and unique Caribbean architecture.",
+    "srcName": "CW",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Urban",
+      "Themed"
+    ],
+    "fallbackFile": "/countries/CW.json",
+    "maxDistance": 55816
+  },
+  {
+    "name": "Brazil",
+    "image": "/Resources/Images/Maps/Official/Brazil.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Brazil’s diverse geography, from the Amazon rainforest to major cities like São Paulo and Rio de Janeiro.",
+    "srcName": "BR",
+    "tags": [
+      "Official",
+      "Nature",
+      "Urban",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/BR.json",
+    "maxDistance": 4311000
+  },
+  {
+    "name": "Argentina",
+    "image": "/Resources/Images/Maps/Official/Argentina.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "From Patagonia to Buenos Aires, explore Argentina’s diverse regions and natural beauty.",
+    "srcName": "AR",
+    "tags": [
+      "Official",
+      "Nature",
+      "Urban",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/AR.json",
+    "maxDistance": 3035987
+  },
+  {
+    "name": "Uruguay",
+    "image": "/Resources/Images/Maps/Official/Uruguay.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Uruguay’s coastline, capital Montevideo, and rolling countryside.",
+    "srcName": "UY",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Urban",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/UY.json",
+    "maxDistance": 575043
+  },
+  {
+    "name": "Uruguay",
+    "image": "/Resources/Images/Maps/Official/Uruguay.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Uruguay’s coastline, capital Montevideo, and rolling countryside.",
+    "srcName": "UY",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Urban",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/UY.json",
+    "maxDistance": 575043
+  },
+  {
+    "name": "Paraguay",
+    "image": "/Resources/Images/Maps/Official/Paraguay.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Medium",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Paraguay’s rivers, capital Asunción, and vast rural landscapes.",
+    "srcName": "PY",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/PY.json",
+    "maxDistance": 950000
+  },
+  {
+    "name": "Ecuador",
+    "image": "/Resources/Images/Maps/Official/Ecuador.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Ecuador’s unique geography including the Andes, Amazon, and the Galápagos Islands.",
+    "srcName": "EC",
+    "tags": [
+      "Official",
+      "Nature",
+      "Challenge",
+      "Island"
+    ],
+    "fallbackFile": "/countries/EC.json",
+    "maxDistance": 1255814
+  },
+  {
+    "name": "Peru",
+    "image": "/Resources/Images/Maps/Official/Peru.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Peru’s diverse landscapes from the Andes and the Amazon rainforest to the Pacific coast and ancient Incan heritage.",
+    "srcName": "PE",
+    "tags": [
+      "Official",
+      "Nature",
+      "Challenge",
+      "Mountains"
+    ],
+    "fallbackFile": "/countries/PE.json",
+    "maxDistance": 1819878
+  },
+  {
+    "name": "Bolivia",
+    "image": "/Resources/Images/Maps/Official/Bolivia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Bolivia’s high-altitude landscapes, including the Andes, the Altiplano, and the Amazon basin.",
+    "srcName": "BO",
+    "tags": [
+      "Official",
+      "Nature",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/BO.json",
+    "maxDistance": 1355412
+  },
+  {
+    "name": "Chile",
+    "image": "/Resources/Images/Maps/Official/Chile.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the long, narrow country of Chile, stretching from deserts to icy fjords.",
+    "srcName": "CL",
+    "tags": [
+      "Official",
+      "Nature",
+      "Desert",
+      "Snow"
+    ],
+    "fallbackFile": "/countries/CL.json",
+    "maxDistance": 4036758
+  },
+  {
+    "name": "Colombia",
+    "image": "/Resources/Images/Maps/Official/Colombia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "From Andean peaks to Caribbean coasts, explore the cities and regions of Colombia.",
+    "srcName": "CO",
+    "tags": [
+      "Official",
+      "Urban",
+      "Nature",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/CO.json",
+    "maxDistance": 1538689
+  },
+  {
+    "name": "Belgium",
+    "image": "/Resources/Images/Maps/Official/Belgium.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Belgium’s historic towns, chocolate culture, and European institutions.",
+    "srcName": "BE",
+    "tags": [
+      "Official",
+      "Urban",
+      "Historical",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/BE.json",
+    "maxDistance": 289603
+  },
+  {
+    "name": "Bulgaria",
+    "image": "/Resources/Images/Maps/Official/Bulgaria.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Bulgaria’s mountains, Black Sea coast, and historic cities.",
+    "srcName": "BG",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/BG.json",
+    "maxDistance": 565820
+  },
+  {
+    "name": "Croatia",
+    "image": "/Resources/Images/Maps/Official/Croatia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Croatia’s Adriatic coast, islands, and cultural heritage.",
+    "srcName": "HR",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Historical",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/HR.json",
+    "maxDistance": 438014
+  },
+  {
+    "name": "Greece",
+    "image": "/Resources/Images/Maps/Official/Greece.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Greece’s ancient ruins, islands, and Mediterranean climate.",
+    "srcName": "GR",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Historical",
+      "Themed"
+    ],
+    "fallbackFile": "/countries/GR.json",
+    "maxDistance": 438014
+  },
+  {
+    "name": "Hungary",
+    "image": "/Resources/Images/Maps/Official/Hungary.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Hungary’s capital Budapest, Danube River, and historic sites.",
+    "srcName": "HU",
+    "tags": [
+      "Official",
+      "Urban",
+      "Historical",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/HU.json",
+    "maxDistance": 532868
+  },
+  {
+    "name": "Iceland",
+    "image": "/Resources/Images/Maps/Official/Iceland.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Iceland’s volcanic landscapes, glaciers, and waterfalls.",
+    "srcName": "IS",
+    "tags": [
+      "Official",
+      "Snow",
+      "Nature",
+      "Challenge"
+    ],
+    "fallbackFile": "/countries/IS.json",
+    "maxDistance": 559169
+  },
+  {
+    "name": "Denmark",
+    "image": "/Resources/Images/Maps/Official/Denmark.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Denmark’s islands, capital Copenhagen, and flat landscapes.",
+    "srcName": "DK",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/DK.json",
+    "maxDistance": 453797
+  },
+  {
+    "name": "Estonia",
+    "image": "/Resources/Images/Maps/Official/Estonia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Estonia’s forests, medieval Tallinn, and Baltic coast.",
+    "srcName": "EE",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/EE.json",
+    "maxDistance": 354321
+  },
+  {
+    "name": "Ireland",
+    "image": "/Resources/Images/Maps/Official/Ireland.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Ireland’s green countryside, historic castles, and vibrant cities.",
+    "srcName": "IE",
+    "tags": [
+      "Official",
+      "Rural",
+      "Historical",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/IE.json",
+    "maxDistance": 457395
+  },
+  {
+    "name": "Europe",
+    "image": "/Resources/Images/Maps/Official/Europe.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "CountryGroup",
+    "description": "Dive into Europe’s rich geography. This map covers all European countries, capitals, and important cultural and historical regions.",
+    "srcName": "Europe",
+    "tags": [
+      "Official",
+      "Challenge",
+      "Historical",
+      "Landmark"
+    ],
+    "fallbackFile": "/composites/Europe.json",
+    "maxDistance": 4904000
+  },
+  {
+    "name": "Czech Republic",
+    "image": "/Resources/Images/Maps/Official/CzechRepublic.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the regions, cities, and natural landmarks of the Czech Republic, including Prague, Bohemia, and Moravia.",
+    "srcName": "CZ",
+    "tags": [
+      "Official",
+      "Urban",
+      "Nature",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/CZ.json",
+    "maxDistance": 457395
+  },
+  {
+    "name": "Albania",
+    "image": "/Resources/Images/Maps/Official/Albania.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Albania’s rugged coastline, mountains, and historic towns.",
+    "srcName": "AL",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Rural",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/AL.json",
+    "maxDistance": 300571
+  },
+  {
+    "name": "Andorra",
+    "image": "/Resources/Images/Maps/Official/Andorra.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the tiny principality nestled in the Pyrenees mountains between France and Spain.",
+    "srcName": "AD",
+    "tags": [
+      "Official",
+      "Snow",
+      "Nature",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/AD.json",
+    "maxDistance": 26459
+  },
+  {
+    "name": "Austria",
+    "image": "/Resources/Images/Maps/Official/Austria.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Austria’s alpine landscapes, historic Vienna, and rich cultural heritage.",
+    "srcName": "AT",
+    "tags": [
+      "Official",
+      "Snow",
+      "Historical",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/AT.json",
+    "maxDistance": 479880
+  },
+  {
+    "name": "Latvia",
+    "image": "/Resources/Images/Maps/Official/Latvia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Latvia’s forests, beaches, and capital Riga.",
+    "srcName": "LV",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/LV.json",
+    "maxDistance": 482752
+  },
+  {
+    "name": "Liechtenstein",
+    "image": "/Resources/Images/Maps/Official/Liechtenstein.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the tiny alpine country nestled between Switzerland and Austria.",
+    "srcName": "LI",
+    "tags": [
+      "Official",
+      "Snow",
+      "Rural",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/LI.json",
+    "maxDistance": 17471,
+    "skipAutoGen": true
+  },
+  {
+    "name": "Lithuania",
+    "image": "/Resources/Images/Maps/Official/Lithuania.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Lithuania’s rich history, forests, and Baltic coast.",
+    "srcName": "LT",
+    "tags": [
+      "Official",
+      "Nature",
+      "Historical",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/LT.json",
+    "maxDistance": 455821
+  },
+  {
+    "name": "Luxembourg",
+    "image": "/Resources/Images/Maps/Official/Luxembourg.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Luxembourg’s small but historic and wealthy country.",
+    "srcName": "LU",
+    "tags": [
+      "Official",
+      "Historical",
+      "Urban",
+      "Wealthy"
+    ],
+    "fallbackFile": "/countries/LU.json",
+    "maxDistance": 60476
+  },
+  {
+    "name": "Malta",
+    "image": "/Resources/Images/Maps/Official/Malta.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the Mediterranean island nation known for its rich history and clear waters.",
+    "srcName": "MT",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Historical",
+      "Island"
+    ],
+    "fallbackFile": "/countries/MT.json",
+    "maxDistance": 39249
+  },
+  {
+    "name": "San Marino",
+    "image": "/Resources/Images/Maps/Official/SanMarino.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the tiny independent republic surrounded by Italy.",
+    "srcName": "SM",
+    "tags": [
+      "Official",
+      "Small",
+      "Historical",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/SM.json",
+    "maxDistance": 10266
+  },
+  {
+    "name": "Serbia",
+    "image": "/Resources/Images/Maps/Official/Serbia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Serbia’s rivers, historic sites, and vibrant cities.",
+    "srcName": "RS",
+    "tags": [
+      "Official",
+      "Historical",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/RS.json",
+    "maxDistance": 427390
+  },
+  {
+    "name": "Slovakia",
+    "image": "/Resources/Images/Maps/Official/Slovakia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Slovakia’s mountains, castles, and cultural heritage.",
+    "srcName": "SK",
+    "tags": [
+      "Official",
+      "Mountains",
+      "Historical",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/SK.json",
+    "maxDistance": 417453
+  },
+  {
+    "name": "Monaco",
+    "image": "/Resources/Images/Maps/Official/Monaco.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the tiny city-state on the French Riviera known for luxury and casinos.",
+    "srcName": "MC",
+    "tags": [
+      "Official",
+      "Small",
+      "Urban",
+      "Luxury"
+    ],
+    "fallbackFile": "/countries/MC.json",
+    "maxDistance": 3047,
+    "skipAutoGen": true
+  },
+  {
+    "name": "Montenegro",
+    "image": "/Resources/Images/Maps/Official/Montenegro.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Montenegro’s stunning Adriatic coast and mountainous interior.",
+    "srcName": "ME",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Mountains",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/ME.json",
+    "maxDistance": 152764
+  },
+  {
+    "name": "Netherlands",
+    "image": "/Resources/Images/Maps/Official/Netherlands.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the Netherlands’ canals, tulip fields, and vibrant cities like Amsterdam.",
+    "srcName": "NL",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Floral"
+    ],
+    "fallbackFile": "/countries/NL.json",
+    "maxDistance": 374170
+  },
+  {
+    "name": "North Macedonia",
+    "image": "/Resources/Images/Maps/Official/NorthMacedonia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore North Macedonia’s mountains, lakes, and historic cities.",
+    "srcName": "MK",
+    "tags": [
+      "Official",
+      "Mountains",
+      "Lakes",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/MK.json",
+    "maxDistance": 897901
+  },
+  {
+    "name": "Poland",
+    "image": "/Resources/Images/Maps/Official/Poland.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Poland’s cities, historical landmarks, and scenic countryside.",
+    "srcName": "PL",
+    "tags": [
+      "Official",
+      "Urban",
+      "Historical",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/PL.json",
+    "maxDistance": 691782
+  },
+  {
+    "name": "Portugal",
+    "image": "/Resources/Images/Maps/Official/Portugal.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Portugal’s Atlantic coastline, historic Lisbon, and beautiful islands.",
+    "srcName": "PT",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Historical",
+      "Island"
+    ],
+    "fallbackFile": "/countries/PT.json",
+    "maxDistance": 1022044
+  },
+  {
+    "name": "Romania",
+    "image": "/Resources/Images/Maps/Official/Romania.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Romania’s castles, Carpathian mountains, and Danube delta.",
+    "srcName": "RO",
+    "tags": [
+      "Official",
+      "Castles",
+      "Mountains",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/RO.json",
+    "maxDistance": 693303
+  },
+  {
+    "name": "Slovenia",
+    "image": "/Resources/Images/Maps/Official/Slovenia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Slovenia’s lakes, mountains, and charming towns.",
+    "srcName": "SI",
+    "tags": [
+      "Official",
+      "Rural",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/SI.json",
+    "maxDistance": 221476
+  },
+  {
+    "name": "Switzerland",
+    "image": "/Resources/Images/Maps/Official/Switzerland.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Switzerland’s Alps, lakes, and renowned cities like Zurich and Geneva.",
+    "srcName": "CH",
+    "tags": [
+      "Official",
+      "Nature",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/CH.json",
+    "maxDistance": 293814
+  },
+  {
+    "name": "Ukraine",
+    "image": "/Resources/Images/Maps/Official/Ukraine.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Ukraine’s vast steppes, Carpathian mountains, and historic cities.",
+    "srcName": "UA",
+    "tags": [
+      "Official",
+      "Rural",
+      "Mountains",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/UA.json",
+    "maxDistance": 1424552
+  },
+  {
+    "name": "Germany",
+    "image": "/Resources/Images/Maps/Official/Germany.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Detailed map of Germany showcasing its federal states, major cities like Berlin and Munich, and historical areas.",
+    "srcName": "DE",
+    "tags": [
+      "Official",
+      "Historical",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/DE.json",
+    "maxDistance": 991445
+  },
+  {
+    "name": "France",
+    "image": "/Resources/Images/Maps/Official/France.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore France's diverse regions, historical cities, and famous landmarks from Paris to Provence.",
+    "srcName": "FR",
+    "tags": [
+      "Official",
+      "Historical",
+      "Urban",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/FR.json",
+    "maxDistance": 1491445
+  },
+  {
+    "name": "United Kingdom",
+    "image": "/Resources/Images/Maps/Official/UnitedKingdom.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Includes England, Scotland, Wales, and Northern Ireland with their key cities and landmarks.",
+    "srcName": "GB",
+    "tags": [
+      "Official",
+      "Historical",
+      "Urban",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/GB.json",
+    "maxDistance": 1080100
+  },
+  {
+    "name": "Italy",
+    "image": "/Resources/Images/Maps/Official/Italy.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Uncover Italy's regions and cities, from Rome and Milan to Venice and Sicily.",
+    "srcName": "IT",
+    "tags": [
+      "Official",
+      "Historical",
+      "Urban",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/IT.json",
+    "maxDistance": 1264636
+  },
+  {
+    "name": "Spain",
+    "image": "/Resources/Images/Maps/Official/Spain.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Spain's autonomous regions, including Catalonia, Andalusia, and Basque Country.",
+    "srcName": "ES",
+    "tags": [
+      "Official",
+      "Historical",
+      "Regions",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/ES.json",
+    "maxDistance": 1907084
+  },
+  {
+    "name": "Norway",
+    "image": "/Resources/Images/Maps/Official/Norway.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Norway's fjords, mountains, and cities in this map highlighting the country’s stunning geography.",
+    "srcName": "NO",
+    "tags": [
+      "Official",
+      "Mountains",
+      "Coastal",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/NO.json",
+    "maxDistance": 2477300
+  },
+  {
+    "name": "Sweden",
+    "image": "/Resources/Images/Maps/Official/Sweden.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Map of Sweden including key cities, provinces, and the country’s iconic landscapes stretching across Scandinavia.",
+    "srcName": "SE",
+    "tags": [
+      "Official",
+      "Regions",
+      "Urban",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/SE.json",
+    "maxDistance": 1563866
+  },
+  {
+    "name": "Finland",
+    "image": "/Resources/Images/Maps/Official/Finland.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the northern beauty of Finland, including its lakes, forests, and cities like Helsinki and Tampere.",
+    "srcName": "FI",
+    "tags": [
+      "Official",
+      "Nature",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/FI.json",
+    "maxDistance": 1434122
+  },
+  {
+    "name": "Faroe Islands",
+    "image": "/Resources/Images/Maps/Official/FaroeIslands.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover the rugged, volcanic archipelago located between Iceland and Norway.",
+    "srcName": "FO",
+    "tags": [
+      "Official",
+      "Nature",
+      "Island"
+    ],
+    "fallbackFile": "/countries/FO.json",
+    "maxDistance": 104011
+  },
+  {
+    "name": "Jersey",
+    "image": "/Resources/Images/Maps/Official/Jersey.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Jersey, the largest of the Channel Islands near France.",
+    "srcName": "JE",
+    "tags": [
+      "Official",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/JE.json",
+    "maxDistance": 22870
+  },
+  {
+    "name": "Isle of Man",
+    "image": "/Resources/Images/Maps/Official/IsleOfMan.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the self-governing British Crown dependency in the Irish Sea.",
+    "srcName": "IM",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/IM.json",
+    "maxDistance": 40977
+  },
+  {
+    "name": "Asia",
+    "image": "/Resources/Images/Maps/Official/Asia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "CountryGroup",
+    "description": "Covering the largest and most diverse continent, this map showcases the landscapes, nations, and cities that define Asia.",
+    "srcName": "Asia",
+    "tags": [
+      "Official",
+      "Rural",
+      "Urban",
+      "Nature"
+    ],
+    "fallbackFile": "/composites/Asia.json",
+    "maxDistance": 11705000
+  },
+  {
+    "name": "Russia",
+    "image": "/Resources/Images/Maps/Official/Russia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Covering the largest country in the world, this map includes Russian cities, regions, and its massive geographic scale.",
+    "srcName": "RU",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/RU.json",
+    "maxDistance": 7345049
+  },
+  {
+    "name": "Kazakhstan",
+    "image": "/Resources/Images/Maps/Official/Kazakhstan.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Kazakhstan’s vast steppes, modern cities, and rich cultural heritage in Central Asia.",
+    "srcName": "KZ",
+    "tags": [
+      "Official",
+      "Rural",
+      "Urban",
+      "Nature",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/KZ.json",
+    "maxDistance": 2475371
+  },
+  {
+    "name": "Mongolia",
+    "image": "/Resources/Images/Maps/Official/Mongolia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Mongolia’s expansive grasslands, Gobi desert, and traditional nomadic lifestyle.",
+    "srcName": "MN",
+    "tags": [
+      "Official",
+      "Rural",
+      "Desert",
+      "Nature",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/MN.json",
+    "maxDistance": 2098964
+  },
+  {
+    "name": "Kyrgyzstan",
+    "image": "/Resources/Images/Maps/Official/Kyrgyzstan.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Kyrgyzstan’s stunning mountain ranges, alpine lakes, and nomadic culture in Central Asia.",
+    "srcName": "KG",
+    "tags": [
+      "Official",
+      "Nature",
+      "Historical",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/KG.json",
+    "maxDistance": 749708
+  },
+  {
+    "name": "India",
+    "image": "/Resources/Images/Maps/Official/India.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Navigate through India’s complex regions, states, and vibrant cities in this challenging map.",
+    "srcName": "IN",
+    "tags": [
+      "Official",
+      "Urban",
+      "Historical",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/IN.json",
+    "maxDistance": 2502749
+  },
+  {
+    "name": "Japan",
+    "image": "/Resources/Images/Maps/Official/Japan.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Map of Japan showcasing its islands, major cities, and cultural landmarks.",
+    "srcName": "JP",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/JP.json",
+    "maxDistance": 2300024
+  },
+  {
+    "name": "South Korea",
+    "image": "/Resources/Images/Maps/Official/SouthKorea.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Detailed map of South Korea including its provinces, capital Seoul, and urban centers.",
+    "srcName": "KR",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/KR.json",
+    "maxDistance": 511717
+  },
+  {
+    "name": "Taiwan",
+    "image": "/Resources/Images/Maps/Official/Taiwan.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Taiwan’s diverse terrain—from vibrant night markets to lush mountain ranges and coastal towns.",
+    "srcName": "TW",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/TW.json",
+    "maxDistance": 325213
+  },
+  {
+    "name": "Thailand",
+    "image": "/Resources/Images/Maps/Official/Thailand.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Thailand’s temples, tropical islands, and bustling urban life in this colorful Southeast Asian country.",
+    "srcName": "TH",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/TH.json",
+    "maxDistance": 1369572
+  },
+  {
+    "name": "Vietnam",
+    "image": "/Resources/Images/Maps/Official/Vietnam.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Map highlighting Vietnam’s diverse geography from mountains to coastline and major cities.",
+    "srcName": "VN",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/VN.json",
+    "maxDistance": 1690359
+  },
+  {
+    "name": "Indonesia",
+    "image": "/Resources/Images/Maps/Official/Indonesia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the archipelago of Indonesia, featuring thousands of islands, volcanoes, and diverse cultures.",
+    "srcName": "ID",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/ID.json",
+    "maxDistance": 1690359
+  },
+  {
+    "name": "Philippines",
+    "image": "/Resources/Images/Maps/Official/Philippines.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Visit the Philippines’ island regions, historic towns, and natural wonders across the Pacific.",
+    "srcName": "PH",
+    "tags": [
+      "Official",
+      "Historical",
+      "Nature",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/PH.json",
+    "maxDistance": 1393309
+  },
+  {
+    "name": "Sri Lanka",
+    "image": "/Resources/Images/Maps/Official/SriLanka.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the tropical island nation of Sri Lanka, featuring ancient ruins, lush forests, and vibrant cities.",
+    "srcName": "LK",
+    "tags": [
+      "Official",
+      "Historical",
+      "Nature",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/LK.json",
+    "maxDistance": 394732
+  },
+  {
+    "name": "Bhutan",
+    "image": "/Resources/Images/Maps/Official/Bhutan.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the Himalayan kingdom of Bhutan, known for its stunning mountain landscapes, rich culture, and ancient monasteries.",
+    "srcName": "BT",
+    "tags": [
+      "Official",
+      "Historical",
+      "Nature",
+      "Challenge"
+    ],
+    "fallbackFile": "/countries/BT.json",
+    "maxDistance": 301574
+  },
+  {
+    "name": "Singapore",
+    "image": "/Resources/Images/Maps/Official/Singapore.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the modern city-state of Singapore, featuring sleek architecture, cultural districts, and tropical gardens.",
+    "srcName": "SG",
+    "tags": [
+      "Official",
+      "Urban",
+      "Nature",
+      "Training"
+    ],
+    "fallbackFile": "/countries/SG.json",
+    "maxDistance": 53652
+  },
+  {
+    "name": "Hong Kong",
+    "image": "/Resources/Images/Maps/Official/HongKong.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Hong Kong’s skyscrapers, harbors, and mountains in this vibrant urban center.",
+    "srcName": "HK",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Nature",
+      "Training"
+    ],
+    "fallbackFile": "/countries/HK.json",
+    "maxDistance": 52418
+  },
+  {
+    "name": "Macau",
+    "image": "/Resources/Images/Maps/Official/Macau.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Macau’s fusion of Portuguese and Chinese culture, historic quarters, and famous landmarks.",
+    "srcName": "MO",
+    "tags": [
+      "Official",
+      "Urban",
+      "Historical",
+      "Landmark",
+      "Training"
+    ],
+    "fallbackFile": "/countries/MO.json",
+    "maxDistance": 11126
+  },
+  {
+    "name": "Malaysia",
+    "image": "/Resources/Images/Maps/Official/Malaysia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Malaysia’s urban centers, tropical islands, and lush rainforests in Southeast Asia.",
+    "srcName": "MY",
+    "tags": [
+      "Official",
+      "Urban",
+      "Nature",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/MY.json",
+    "maxDistance": 1993661
+  },
+  {
+    "name": "Bangladesh",
+    "image": "/Resources/Images/Maps/Official/Bangladesh.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Bangladesh’s vibrant culture, dense cities, rivers, and rural landscapes.",
+    "srcName": "BD",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural",
+      "Challenge"
+    ],
+    "fallbackFile": "/countries/BD.json",
+    "maxDistance": 556747
+  },
+  {
+    "name": "United Arab Emirates",
+    "image": "/Resources/Images/Maps/Official/UAE.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Tour the futuristic cities and desert landscapes of the United Arab Emirates, including Dubai and Abu Dhabi.",
+    "srcName": "AE",
+    "tags": [
+      "Official",
+      "Urban",
+      "Desert"
+    ],
+    "fallbackFile": "/countries/AE.json",
+    "maxDistance": 445743
+  },
+  {
+    "name": "Oman",
+    "image": "/Resources/Images/Maps/Official/Oman.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Oman’s desert landscapes, historic forts, and stunning coastline along the Arabian Peninsula.",
+    "srcName": "OM",
+    "tags": [
+      "Official",
+      "Desert",
+      "Historical",
+      "Coastal"
+    ],
+    "fallbackFile": "/countries/OM.json",
+    "maxDistance": 840630
+  },
+  {
+    "name": "Qatar",
+    "image": "/Resources/Images/Maps/Official/Qatar.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Qatar’s modern architecture, cultural centers, and desert surroundings.",
+    "srcName": "QA",
+    "tags": [
+      "Official",
+      "Urban",
+      "Desert",
+      "Training"
+    ],
+    "fallbackFile": "/countries/QA.json",
+    "maxDistance": 163726
+  },
+  {
+    "name": "Israel",
+    "image": "/Resources/Images/Maps/Official/Israel.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Travel through Israel’s ancient cities, coastal towns, and desert landscapes rich in history and culture.",
+    "srcName": "IL",
+    "tags": [
+      "Official",
+      "Historical",
+      "Coastal",
+      "Desert",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/IL.json",
+    "maxDistance": 396845
+  },
+  {
+    "name": "Lebanon",
+    "image": "/Resources/Images/Maps/Official/Lebanon.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Lebanon’s Mediterranean coast, ancient ruins, and vibrant cultural heritage.",
+    "srcName": "LB",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Historical",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/LB.json",
+    "maxDistance": 181495
+  },
+  {
+    "name": "Jordan",
+    "image": "/Resources/Images/Maps/Official/Jordan.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Visit Petra, the Dead Sea, and other landmarks of Jordan’s majestic terrain and historic regions.",
+    "srcName": "JO",
+    "tags": [
+      "Official",
+      "Historical",
+      "Desert",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/JO.json",
+    "maxDistance": 463844
+  },
+  {
+    "name": "Africa",
+    "image": "/Resources/Images/Maps/Official/Africa.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "CountryGroup",
+    "description": "A vast continent with incredible diversity in culture, terrain, and history. Explore African countries, capitals, and geographic landmarks.",
+    "srcName": "Africa",
+    "tags": [
+      "Official",
+      "Nature",
+      "Historical",
+      "Rural"
+    ],
+    "fallbackFile": "/composites/Africa.json",
+    "maxDistance": 463844
+  },
+  {
+    "name": "South Africa",
+    "image": "/Resources/Images/Maps/Official/SouthAfrica.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the diverse landscapes of South Africa, from Cape Town’s coastlines to the savannas of Kruger National Park.",
+    "srcName": "ZA",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/ZA.json",
+    "maxDistance": 1604038
+  },
+  {
+    "name": "Botswana",
+    "image": "/Resources/Images/Maps/Official/Botswana.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Venture through the natural beauty of Botswana, featuring national parks, urban areas, and desert regions.",
+    "srcName": "BW",
+    "tags": [
+      "Official",
+      "Nature",
+      "Urban",
+      "Desert",
+      "Training"
+    ],
+    "fallbackFile": "/countries/BW.json",
+    "maxDistance": 871137
+  },
+  {
+    "name": "Namibia",
+    "image": "/Resources/Images/Maps/Official/Namibia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "From the Skeleton Coast to the Namib Desert, explore Namibia's dramatic geography and cultural highlights.",
+    "srcName": "NA",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Desert",
+      "Nature",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/NA.json",
+    "maxDistance": 1713904
+  },
+  {
+    "name": "Lesotho",
+    "image": "/Resources/Images/Maps/Official/Lesotho.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Tour the mountainous kingdom of Lesotho, nestled entirely within South Africa.",
+    "srcName": "LS",
+    "tags": [
+      "Official",
+      "Rural",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/LS.json",
+    "maxDistance": 213010
+  },
+  {
+    "name": "Kenya",
+    "image": "/Resources/Images/Maps/Official/Kenya.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Kenya’s capital Nairobi, stunning national parks, and diverse regional landscapes.",
+    "srcName": "KE",
+    "tags": [
+      "Official",
+      "Urban",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/KE.json",
+    "maxDistance": 991018
+  },
+  {
+    "name": "Uganda",
+    "image": "/Resources/Images/Maps/Official/Uganda.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Discover Uganda's lush forests, lakes, and vibrant cities in this detailed map.",
+    "srcName": "UG",
+    "tags": [
+      "Official",
+      "Nature",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/UG.json",
+    "maxDistance": 724881
+  },
+  {
+    "name": "Rwanda",
+    "image": "/Resources/Images/Maps/Official/Rwanda.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Rwanda’s rolling hills and lush green countryside known as the Land of a Thousand Hills.",
+    "srcName": "RW",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/RW.json",
+    "maxDistance": 300000
+  },
+  {
+    "name": "Ghana",
+    "image": "/Resources/Images/Maps/Official/Ghana.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Ghana’s Atlantic coast, cultural landmarks, and historical sites.",
+    "srcName": "GH",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Landmark",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/GH.json",
+    "maxDistance": 854881
+  },
+  {
+    "name": "Nigeria",
+    "image": "/Resources/Images/Maps/Official/Nigeria.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Hard",
+    "type": "Official",
+    "category": "Country",
+    "description": "Dive into Africa's most populous country with bustling cities, diverse terrain, and regional landmarks.",
+    "srcName": "NG",
+    "tags": [
+      "Official",
+      "Urban",
+      "Landmark"
+    ],
+    "fallbackFile": "/countries/NG.json",
+    "maxDistance": 1537653
+  },
+  {
+    "name": "Egypt",
+    "image": "/Resources/Images/Maps/Official/Egypt.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Visit Egypt’s ancient monuments, deserts, and cities along the Nile River.",
+    "srcName": "EG",
+    "tags": [
+      "Official",
+      "Desert",
+      "Historical",
+      "Urban"
+    ],
+    "fallbackFile": "/countries/EG.json",
+    "maxDistance": 1248012,
+    "skipAutoGen": true
+  },
+  {
+    "name": "Tunisia",
+    "image": "/Resources/Images/Maps/Official/Tunisia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Tunisia’s Mediterranean coastlines, desert oases, and historical cities.",
+    "srcName": "TN",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Desert",
+      "Historical"
+    ],
+    "fallbackFile": "/countries/TN.json",
+    "maxDistance": 711278
+  },
+  {
+    "name": "Senegal",
+    "image": "/Resources/Images/Maps/Official/Senegal.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Medium",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore Senegal's Atlantic coastline, vibrant Dakar, and diverse landscapes from savannah to river regions.",
+    "srcName": "SN",
+    "tags": [
+      "Official",
+      "Urban",
+      "Rural",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/SN.json",
+    "maxDistance": 850000
+  },
+  {
+    "name": "Réunion",
+    "image": "/Resources/Images/Maps/Official/Reunion.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "A French overseas department in the Indian Ocean, Réunion features dramatic volcanic terrain and scenic coastal towns.",
+    "srcName": "RE",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/RE.json",
+    "maxDistance": 62895
+  },
+  {
+    "name": "São Tomé and Príncipe",
+    "image": "/Resources/Images/Maps/Official/SaoTomeAndPrincipe.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the island nation of São Tomé and Príncipe off the coast of Central Africa, known for its lush rainforests and coastal villages.",
+    "srcName": "ST",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/ST.json",
+    "maxDistance": 32895
+  },
+  {
+    "name": "Oceania",
+    "image": "/Resources/Images/Maps/Official/Oceania.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "CountryGroup",
+    "description": "Journey through the stunning islands of Oceania, from Australia’s vast Outback to the tropical beaches of Guam.",
+    "srcName": "Oceania",
+    "tags": [
+      "Official",
+      "Nature",
+      "Coastal",
+      "Rural",
+      "Desert"
+    ],
+    "fallbackFile": "/composites/Oceania.json",
+    "maxDistance": 8076000
+  },
+  {
+    "name": "Australia",
+    "image": "/Resources/Images/Maps/Official/Australia.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the land Down Under — from coastal cities to the Outback, this map includes Australia’s key regions and cities.",
+    "srcName": "AU",
+    "tags": [
+      "Official",
+      "Urban",
+      "Coastal",
+      "Desert"
+    ],
+    "fallbackFile": "/countries/AU.json",
+    "maxDistance": 3823776
+  },
+  {
+    "name": "New Zealand",
+    "image": "/Resources/Images/Maps/Official/NewZealand.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the beautiful islands of New Zealand, including Wellington, Auckland, and natural wonders.",
+    "srcName": "NZ",
+    "tags": [
+      "Official",
+      "Nature",
+      "Coastal",
+      "Rural"
+    ],
+    "fallbackFile": "/countries/NZ.json",
+    "maxDistance": 1338198
+  },
+  {
+    "name": "Christmas Island",
+    "image": "/Resources/Images/Maps/Official/ChristmasIsland.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Normal",
+    "type": "Official",
+    "category": "Country",
+    "description": "Explore the tropical island territory of Australia known for its unique wildlife and coral reefs.",
+    "srcName": "CX",
+    "tags": [
+      "Official",
+      "Coastal",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/CX.json",
+    "maxDistance": 20020
+  },
+  {
+    "name": "Antarctica",
+    "image": "/Resources/Images/Maps/Official/Antarctica.png",
+    "author": "GeoExplorer",
+    "date": "2025-08-06",
+    "difficulty": "Easy",
+    "type": "Official",
+    "category": "Country",
+    "description": "A frozen continent at the bottom of the world. Learn about Antarctica’s research stations, terrain, and remote location.",
+    "srcName": "AQ",
+    "tags": [
+      "Official",
+      "Snow",
+      "Nature"
+    ],
+    "fallbackFile": "/countries/AQ.json",
+    "maxDistance": 20020,
+    "skipAutoGen": true
+  }
+]

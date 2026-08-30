@@ -1,0 +1,50 @@
+<header class="site-header">
+  <a class="brand" href="/" aria-label="GeoExplorer home">
+    <img src="/Resources/Images/Icon.ico" alt="" width="40" height="40">
+    <span>GeoExplorer</span>
+  </a>
+
+  <button id="hamburger" class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="nav-menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <div class="nav-container">
+    <nav id="nav-menu" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/menu/explore.html">Explore</a>
+      <div class="dropdown">
+        <button class="dropdown-toggle" type="button" aria-expanded="false">
+          <span>Multiplayer</span>
+          <span class="dropdown-chevron" aria-hidden="true">▾</span>
+        </button>
+        <div class="dropdown-content">
+          <span class="nav-coming-soon">Duels (Solo) <small>In progress</small></span>
+          <span class="nav-coming-soon">Duels (Team) <small>In progress</small></span>
+          <div id="modes-separator"></div>
+          <a href="/party/create.html">Create Party</a>
+          <a href="/party/join.html">Join Party</a>
+        </div>
+      </div>
+      <a href="/menu/game-modes.html">Game Modes</a>
+      <a href="/menu/leaderboard.html">Leaderboard</a>
+    </nav>
+  </div>
+
+  <div class="vertical-separator" aria-hidden="true"></div>
+  <a href="/login.html" id="login-button">Login</a>
+  <div id="profile-wrapper" style="display: none;">
+    <button id="profile-trigger" type="button" aria-expanded="false" aria-controls="profile-menu">
+      <img id="profile-icon" src="/Resources/Images/profile.png" alt="">
+      <span class="profile-trigger-label"></span>
+      <span class="profile-chevron" aria-hidden="true">▾</span>
+    </button>
+    <div id="profile-menu" class="hidden">
+      <a href="/user/profile.html">My Profile</a>
+      <a href="/user/settings.html">Settings</a>
+      <a href="/user/account.html">Account</a>
+      <div id="gray-line"></div>
+      <button id="logout-btn" type="button">Logout</button>
+    </div>
+  </div>
+</header>
+<script type="module" src="/js/components/site-header.js"></script>

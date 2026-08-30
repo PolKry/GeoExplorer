@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon" />
+    <title>GeoExplorer - Game</title>
+    <script src="/js/api/legacy-http.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link rel="stylesheet" href="/styles/game-style.css">
+    <link rel="stylesheet" href="/styles/game-country-style.css">
+    </script>
+</head>
+
+<body>
+    <div id="game-id" data-game-id="<%= gameId %>"></div>
+
+    <div id="ending-screen">
+        <div id="map-dark-overlay"></div>
+        <div id="ending-map" class="responsive"></div>
+        <div id="ending-info-panel">
+            <p id="total-streak-text">0</p>
+        </div>
+        <div id="ending-menu-panel">
+            <button class="styled-button" id="breakdown-button">
+                <img src="/Resources/Images/BreakdownWhite.png" alt="Breakdown Button" />
+            </button>
+            <button class="styled-button" id="play-again-button">Play Again</button>
+            <button class="styled-button" id="menu-button">
+                <img src="/Resources/Images/Menu.png" alt="Menu Button" />
+            </button>
+        </div>
+    </div>
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <img src="/Resources/Images/Icon.ico" />
+        <div class="loading-text">Loading<span class="dots"></span></div>
+    </div>
+
+    <div id="answer-panel">
+        <div id="answer-map-panel">
+            <h1>Your Score:</h1>
+            <div id="separator"></div>
+            <div id="answer-map"></div>
+            <h2 id="streak-count-text">0 Streak</h2>
+            <h3 id="info-text"></h3>
+            <button class="styled-button" id="proceed-button" hidden>Continue</button>
+            <div id="end-buttons" hidden>
+                <button class="styled-button" id="play-again-answer">Play Again</button>
+                <button class="styled-button" id="exit-answer">Exit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-panel">
+        <p>Map <span id="map-info">World</span></p>
+        <p>Streak <span id="total-streak-info">0</span></p>
+    </div>
+
+    <div id="time-panel">
+        <span id="time-info"></span>
+    </div>
+
+    <div id="street-view">
+        <div id="map-panel">
+            <div id="guess-map"></div>
+            <button class="styled-button" id="guess-button" disabled>Submit Guess</button>
+        </div>
+    </div>
+
+</body>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyXXmz8cCxGH8P60ThWl0MbUyUOi3P_RQ&loading=async"></script>
+<script src="/js/Game/shared/game-base.js" defer></script>
+<script src="/js/Game/init-game.js" defer></script>
+<script src="/js/Game/Country/game-socket.js" defer></script>
+<script src="/js/Game/Country/game-script.js" defer></script>
+
+</html>

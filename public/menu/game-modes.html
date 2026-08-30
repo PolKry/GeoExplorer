@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/menu-style.css">
+    <link rel="stylesheet" href="/styles/game-mode-style.css">
+    <script type="module" src="/js/utils/auth-check.js"></script>
+    <script type="module" src="/js/components/profile-menu.js"></script>
+    <script src="/js/components/loader.js"></script>
+    <script type="module" src="/js/pages/menu/game-modes.js"></script>
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon">
+    <title>GeoExplorer | Game Modes - Play Against Others</title>
+</head>
+
+<body>
+    <div data-component="/components/site-header.html"></div>
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <img src="/Resources/Images/Icon.ico" />
+        <div class="loading-text">Loading<span class="dots"></span></div>
+    </div>
+
+    <div class="wave-container" data-component="/components/top-waves.html"></div>
+
+    <main class="game-modes-panel">
+        <h2 class="title">Game Modes</h2>
+        <div class="multi-columns">
+            <div class="multi-panel">
+                <h3>Competitive</h3>
+                <p class="panel-description">Face off in intense real-time matches against other players.</p>
+                <div class="line"></div>
+                <div class="panel-content">
+                    <button>Duels</button>
+                    <button>Team Duels</button>
+                </div>
+            </div>
+            <div class="multi-panel">
+                <h3>Events</h3>
+                <p class="panel-description">Join limited-time events with unique rules and rewards.</p>
+                <div class="line"></div>
+                <div class="panel-content">
+                    <button>Empty</button>
+                    <button>Empty</button>
+                </div>
+            </div>
+            <div class="multi-panel">
+                <h3>Experimental</h3>
+                <p class="panel-description">Try out upcoming game modes and test new features.</p>
+                <div class="line"></div>
+                <div class="panel-content">
+                    <button id="country-mode-button">Country</button>
+                    <button>Empty</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <footer class="footer">
+        <div class="wave-container" data-component="/components/bottom-waves.html"></div>
+
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html">About</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#contact">Contact</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#privacy">Privacy Policy</a>
+        </div>
+        <p>© 2025 GeoExplorer. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

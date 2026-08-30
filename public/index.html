@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/menu-style.css">
+  <link rel="stylesheet" href="/styles/index-style.css">
+  <script type="module" src="/js/components/profile-menu.js"></script>
+  <script src="/js/components/loader.js"></script>
+  <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon">
+  <title>GeoExplorer | Home - Can You Guess Where You Are?</title>
+</head>
+
+<body>
+  <div data-component="/components/site-header.html"></div>
+
+  <div class="wave-container" data-component="/components/top-waves.html"></div>
+
+  <section class="intro-section">
+    <h1>Can You Guess Where You Are?</h1>
+    <p>Explore the world, one image at a time. Compete with friends or challenge yourself!</p>
+    <div class="buttons">
+      <a class="cta-button cta-button--explore" href="/menu/explore.html">
+        <span class="cta-icon" aria-hidden="true">⌖</span>
+        <span class="cta-content">
+          <span class="cta-label">Explore</span>
+          <span class="cta-hint">Discover new places</span>
+        </span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta-button cta-button--create" href="/party/create.html">
+        <span class="cta-icon" aria-hidden="true">✦</span>
+        <span class="cta-content">
+          <span class="cta-label">Create Party</span>
+          <span class="cta-hint">Invite your friends</span>
+        </span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta-button cta-button--join" href="/party/join.html">
+        <span class="cta-icon" aria-hidden="true">↗</span>
+        <span class="cta-content">
+          <span class="cta-label">Join by Code</span>
+          <span class="cta-hint">Jump into a game</span>
+        </span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta-button cta-button--custom" href="/menu/map-creation.html">
+        <span class="cta-icon" aria-hidden="true">✎</span>
+        <span class="cta-content">
+          <span class="cta-label">Create Custom Map</span>
+          <span class="cta-hint">Make your own challenge</span>
+        </span>
+        <span class="cta-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="wave-container" data-component="/components/bottom-waves.html"></div>
+
+  <div class="section-divider">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 150" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="grad1" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0%" stop-color="#111" />
+          <stop offset="100%" stop-color="#1a1a1a" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#grad1)"
+        d=" M0,0 C180,20 300,60 420,40 C540,20 660,60 780,40 C900,20 1020,60 1140,40 C1260,20 1380,60 1440,20 L1440,150 L0,150 Z">
+      </path>
+    </svg>
+  </div>
+
+  <h2 class="modes-title">Game Modes</h2>
+  <section class="modes">
+    <div class="mode-card">
+      <h3>🌍 World Explorer</h3>
+      <p>Random global locations to test your knowledge.</p>
+    </div>
+    <div class="mode-card">
+      <h3>🧩 Custom Maps</h3>
+      <p>User-generated challenges with unique themes.</p>
+    </div>
+    <div class="mode-card">
+      <h3>⏱️ Timed Rush</h3>
+      <p>Race against the clock to guess the location.</p>
+    </div>
+    <div class="mode-card">
+      <h3>🧑‍🤝‍🧑 Multiplayer Showdown</h3>
+      <p>Compete head-to-head with other players.</p>
+    </div>
+  </section>
+
+  <section class="leaderboard">
+    <h2>🏆 Today's Top Players:</h2>
+    <ul id="home-global-daily" class="leaderboard-list"></ul>
+    <a href="/menu/leaderboard.html" class="leaderboard-button">View Full Leaderboard</a>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-links">
+      <a id="scrollTopBtn">Home</a>
+      <div class="footer-link-separator"></div>
+      <a href="/menu/info.html">About</a>
+      <div class="footer-link-separator"></div>
+      <a href="/menu/info.html#about">Contact</a>
+      <div class="footer-link-separator"></div>
+      <a href="/menu/info.html#privacy">Privacy Policy</a>
+    </div>
+    <p>© 2025 GeoExplorer. All rights reserved.</p>
+  </footer>
+
+  <script type="module" src="/js/pages/home.js"></script>
+</body>
+
+</html>

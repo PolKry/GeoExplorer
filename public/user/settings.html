@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles/settings-style.css" />
+    <link rel="stylesheet" href="/styles/menu-style.css" />
+    <script type="module" src="/js/utils/auth-check.js"></script>
+    <script src="/js/components/loader.js"></script>
+    <link rel="icon" href="/Resources/Images/icon.ico" type="image/x-icon" />
+    <title>GeoExplorer | Settings</title>
+</head>
+
+<body>
+    <div data-component="/components/site-header.html"></div>
+
+    <div class="wave-container" data-component="/components/top-waves.html"></div>
+
+    <main class="explore-panel fade-in" role="main">
+        <div class="explore-columns">
+            <h2 id="site-settings-title" class="title">Site Settings</h2>
+            <section class="explore-panel-section">
+                <p class="panel-description">
+                    Customize your GeoExplorer experience. These preferences affect gameplay and display.
+                </p>
+                <div class="line"></div>
+
+                <form class="loginForm" id="settings-form">
+                    <h4>Default Map Type</h4>
+                    <div class="custom-select-container">
+                        <div class="custom-select-trigger"></div>
+                        <div class="custom-select-options">
+                            <span data-value="Street View">Street View</span>
+                            <span data-value="Satellite">Satellite</span>
+                            <span data-value="Hybrid">Hybrid</span>
+                        </div>
+                        <input type="hidden" id="map-style" name="map-style" value="">
+                    </div>
+
+                    <h4>Audio & Display Settings</h4>
+
+                    <!-- Sliders -->
+                    <div class="setting slider-setting">
+                        <label for="music-volume">Music Volume: <span id="music-volume-label">50%</span></label>
+                        <input type="range" id="music-volume" min="0" max="100" value="50" minlength="1"
+                            maxlength="3">
+                    </div>
+                    <div class="setting slider-setting">
+                        <label for="sfx-volume">Sound Effects Volume: <span id="sfx-volume-label">50%</span></label>
+                        <input type="range" id="sfx-volume" min="0" max="100" value="50" minlength="1"
+                            maxlength="3">
+                    </div>
+
+                    <!-- Toggles -->
+                    <div class="setting toggle-setting">
+                        <input type="checkbox" id="sound-toggle" checked>
+                        <label for="sound-toggle">Enable Sound</label>
+                    </div>
+                    <div class="setting toggle-setting">
+                        <input type="checkbox" id="fullscreen-toggle">
+                        <label for="fullscreen-toggle">Enable Fullscreen</label>
+                    </div>
+
+                    <button type="submit" class="saveBtn" aria-label="Save site settings">Save Settings</button>
+                    <div id="update-message" class="update-message" aria-live="polite" role="alert"></div>
+                </form>
+
+                <div class="line"></div>
+
+                <section class="danger-zone" aria-label="Danger zone for resetting settings">
+                    <h3>Reset Settings</h3>
+                    <p>
+                        <strong>Warning:</strong> Resetting your settings will restore default preferences.
+                        <br />
+                        This action <span>cannot be undone</span>.
+                    </p>
+
+                    <button id="open-delete-btn" class="deleteBtn" type="button">Reset Settings</button>
+                </section>
+            </section>
+        </div>
+    </main>
+
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="delete-modal-overlay" style="display:none;">
+        <div class="delete-modal">
+
+            <button class="close-btn" id="delete-close-btn" aria-label="Close">
+                <span class="close-symbol">&times;</span>
+            </button>
+
+            <h2>Reset Settings</h2>
+
+            <p>
+                Are you sure you want to reset your settings?
+                <br>
+                <span class="warning-text">This action cannot be undone.</span>
+            </p>
+
+            <div class="modal-actions">
+                <button class="danger" id="delete-confirm-btn">Reset</button>
+                <button class="secondary" id="delete-cancel-btn">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="wave-container" data-component="/components/bottom-waves.html"></div>
+
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html">About</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#contact">Contact</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#privacy">Privacy Policy</a>
+        </div>
+        <p>© 2025 GeoExplorer. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="/js/components/profile-menu.js"></script>
+    <script type="module" src="/js/pages/user/settings.js"></script>
+</body>
+
+</html>

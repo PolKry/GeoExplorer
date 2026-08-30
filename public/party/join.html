@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/menu-style.css">
+    <link rel="stylesheet" href="/styles/join-party-site.css">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="/js/utils/auth-check.js"></script>
+    <script type="module" src="/js/components/profile-menu.js"></script>
+    <script src="/js/components/loader.js"></script>
+
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon">
+    <title>GeoExplorer | Join Party - Play With Others</title>
+</head>
+
+<body>
+    <div data-component="/components/site-header.html"></div>
+
+    <main class="join-code-panel">
+        <div class="join-container fade-in">
+            <h2 class="title">Join Party</h2>
+            <p class="subtitle">Enter your party code below to join a game with friends</p>
+            <form id="join-party-form" method="post">
+                <div class="multi-columns">
+                    <div class="multi-panel"><input class="code-input" maxlength="1" type="text" name="code1" required>
+                    </div>
+                    <div class="multi-panel"><input class="code-input" maxlength="1" type="text" name="code2" required>
+                    </div>
+                    <div class="multi-panel"><input class="code-input" maxlength="1" type="text" name="code3" required>
+                    </div>
+                    <div class="multi-panel"><input class="code-input" maxlength="1" type="text" name="code4" required>
+                    </div>
+                    <div class="multi-panel"><input class="code-input" maxlength="1" type="text" name="code5" required>
+                    </div>
+                    <div class="multi-panel"><input class="code-input" maxlength="1" type="text" name="code6" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="join-button">Join Party</button>
+                <div id="update-message" class="update-message" aria-live="polite" role="alert"></div>
+
+                <p class="info-text">Don't have a code? <a href="/party/create.html">Create a party</a></p>
+            </form>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="wave-container" data-component="/components/bottom-waves.html"></div>
+
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html">About</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#contact">Contact</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#privacy">Privacy Policy</a>
+        </div>
+        <p>© 2025 GeoExplorer. All rights reserved.</p>
+    </footer>
+</body>
+
+<script type="module" src="/js/pages/party/join.js"></script>
+
+</html>

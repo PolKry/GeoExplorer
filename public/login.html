@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/styles/menu-style.css" />
+    <link rel="stylesheet" href="/styles/login-style.css" />
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon" />
+    <script type="module" src="/js/pages/auth/login.js"></script>
+    <script src="/js/components/loader.js"></script>
+
+    <title>GeoExplorer | Login</title>
+</head>
+
+<body>
+    <div class="wave-container" data-component="/components/top-waves.html"></div>
+
+    <section id="login-panel">
+        <div class="login-container">
+            <h2>Login to <strong class="green-title">GeoExplorer</strong></h2>
+            <form method="POST" class="loginForm" id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="E-mail" autocomplete="email" pattern="\S+"
+                        required />
+                    <small class="input-feedback"></small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password-input" name="password" placeholder="••••••••"
+                        autocomplete="current-password" minlength="8" maxlength="20" pattern="\S+" required />
+                    <small class="input-feedback">Leave blank to keep current password. Minimum 8
+                        characters.</small>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+                <div id="update-message" class="update-message" aria-live="polite" role="alert"></div>
+            </form>
+            <p class="footer-text">Don't have an account yet? <a href="/register.html">Register here!</a></p>
+        </div>
+    </section>
+
+    <div class="wave-container" data-component="/components/fixed-bottom-waves.html"></div>
+
+    <script src="/js/utils/form-utils.js" defer></script>
+
+</body>
+
+</html>

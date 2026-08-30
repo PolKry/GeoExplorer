@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon" />
+    <title>GeoExplorer - Game</title>
+    <script src="/js/api/legacy-http.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link rel="stylesheet" href="/styles/game-style.css">
+    <link rel="stylesheet" href="/styles/game-ffa-style.css">
+</head>
+
+<body>
+    <div id="game-id" data-game-id="<%= gameId %>"></div>
+
+    <div id="ending-screen">
+        <div id="map-dark-overlay"></div>
+        <div id="ending-map" class="responsive"></div>
+        <div id="ending-info-panel" class="ffa-ending-panel">
+            <div class="ffa-ending-header">
+                <div class="ffa-ending-title-block">
+                    <p class="ffa-ending-eyebrow">FFA Match Complete</p>
+                    <h1>Final Results</h1>
+                </div>
+                <div class="ffa-ending-summary">
+                    <span class="ffa-ending-summary-label">Top score</span>
+                    <span class="ffa-ending-summary-score" id="ffa-ending-summary-score">0 pts</span>
+                </div>
+            </div>
+            <div id="final-results-list"></div>
+        </div>
+        <div id="ending-menu-panel">
+            <button class="styled-button" id="breakdown-button">
+                <img src="/Resources/Images/BreakdownWhite.png" alt="Breakdown Button" />
+            </button>
+            <button class="styled-button" id="back-button">Back</button>
+        </div>
+    </div>
+
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <img src="/Resources/Images/Icon.ico" />
+        <div class="loading-text">Loading<span class="dots"></span></div>
+    </div>
+
+    <div id="answer-panel">
+        <div id="answer-map-panel" class="ffa-answer-panel">
+            <h1>Round Results</h1>
+            <div id="separator"></div>
+
+            <div class="ffa-answer-content">
+                <div id="answer-map"></div>
+
+                <div class="ffa-results-card">
+                    <h2>Leaderboard</h2>
+                    <div id="round-results-list"></div>
+                </div>
+            </div>
+
+            <h2 id="points-text">0 Points</h2>
+            <h3 id="info-text">You are 0 km away!</h3>
+
+            <button class="styled-button" id="proceed-button" hidden>Continue</button>
+            <div class="waiting-button" id="waiting-for-host-to-proceed" hidden>Waiting on party host to proceed...</div>
+        </div>
+    </div>
+
+    <div id="info-panel" class="ffa-info-panel">
+        <div class="ffa-match-info">
+            <p>Map <span id="map-info">World</span></p>
+            <p>Round <span id="round-info">0 / 5</span></p>
+        </div>
+
+        <div class="ffa-player-list">
+            <h3>Players</h3>
+            <div id="players-list"></div>
+        </div>
+    </div>
+
+    <div id="time-panel">
+        <span id="time-info"></span>
+    </div>
+    
+    <div id="guess-status-popup"></div>
+
+    <div id="street-view">
+        <div id="blocker" style="position: absolute; inset: 0; z-index: 10;"></div>
+        <div id="map-panel">
+            <div id="guess-map"></div>
+            <button class="styled-button" id="guess-button" disabled>Submit Guess</button>
+        </div>
+    </div>
+</body>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyXXmz8cCxGH8P60ThWl0MbUyUOi3P_RQ&loading=async"></script>
+<script src="/js/Game/shared/game-base.js" defer></script>
+<script src="/js/Game/init-game.js" defer></script>
+<script src="/js/Game/ffa/game-socket.js" defer></script>
+<script src="/js/Game/ffa/game-script.js" defer></script>
+
+</html>

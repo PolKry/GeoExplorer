@@ -1,0 +1,107 @@
+const mapRepository = require('../repositories/map.repository');
+const locationDataRepository = require('../repositories/location-data.repository');
+const userProfileRepository = require('../repositories/user-profile.repository');
+const mapFileRepository = require('../repositories/map-file.repository');
+
+const PAGE_SIZE = 12;
+
+function getPageInfo(page) {
+  const parsedPage = parseInt(page, 10) || 1;
+  return {
+    page: parsedPage,
+    pageSize: PAGE_SIZE,
+    skip: (parsedPage - 1) * PAGE_SIZE
+  };
+}
+
+async function getMaps(page) {
+  const { pageSize, skip } = getPageInfo(page);
+  const [maps, total] = await Promise.all([
+    mapRepository.findPaginated({}, { skip, limit: pageSize }),
+    mapRepository.count()
+  ]);
+  return { maps, hasMore: skip + pageSize < total };
+}
+
+async function getAllMaps() {
+  const [officialMaps, communityMaps] = await Promise.all([
+    mapRepository.findPublic({ type: { $ne: 'Community' } }),
+    mapRepository.findPublic({ type: 'Community' })
+  ]);
+  return { officialMaps, communityMaps };
+}
+
+async function searchMaps({ userId, query = '', type = '', onlyFavMaps = false }) {
+  const profile = await userProfileRepository.findByUserId(userId);
+  const filter = { type };
+
+  if (onlyFavMaps && profile?.favoriteMaps?.length > 0) {
+    filter.name = { $in: profile.favoriteMaps };
+    if (query) {
+      filter.name.$in = profile.favoriteMaps.filter((name) =>
+        name.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+  } else {
+    filter.name = { $regex: query, $options: 'i' };
+  }
+
+  return { maps: await mapRepository.findPublic(filter) };
+}
+
+async function getMapData({ id, map }) {
+  if (!id && !map) {
+    const error = new Error('Missing id or map parameter');
+    error.status = 400;
+    throw error;
+  }
+
+  const mapData = id
+    ? await mapRepository.findById(id)
+    : await mapRepository.findByName(map);
+
+  if (!mapData) {
+    const error = new Error('Map not found');
+    error.status = 404;
+    throw error;
+  }
+
+  const response = { mapData };
+
+  if (mapData.category === 'Community' || mapData.type === 'Community') {
+    response.locations = await locationDataRepository.findByMapId(mapData._id);
+  } else if (mapData.fallbackFile) {
+    const fallback = mapFileRepository.readLocationFallback(mapData.fallbackFile);
+    response.codes = Array.isArray(fallback?.includes) ? fallback.includes : [];
+  }
+
+  return response;
+}
+
+async function getCommunityMaps(page) {
+  const { pageSize, skip } = getPageInfo(page);
+  const filter = { type: 'Community' };
+  const [maps, total] = await Promise.all([
+    mapRepository.findPaginated(filter, { skip, limit: pageSize }),
+    mapRepository.count(filter)
+  ]);
+  return { maps, hasMore: skip + pageSize < total };
+}
+
+async function searchCommunityMaps(query = '') {
+  return {
+    maps: await mapRepository.findPublic({
+      type: 'Community',
+      name: { $regex: query, $options: 'i' }
+    })
+  };
+}
+
+module.exports = {
+  getMaps,
+  getAllMaps,
+  searchMaps,
+  getMapData,
+  getCommunityMaps,
+  searchCommunityMaps
+};

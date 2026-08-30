@@ -1,0 +1,56 @@
+//const fileInput = document.getElementById('profile-file-input');
+//
+//// Open file picker on avatar click
+//avatarElement.addEventListener('click', () => {
+//    fileInput.click();
+//});
+//
+//// Handle file selection
+//fileInput.addEventListener('change', async () => {
+//    const file = fileInput.files[0];
+//    if (!file) return;
+//
+//    const token = localStorage.getItem('token');
+//    if (!token) {
+//        alert('You must be logged in to view this page.');
+//        window.location.href = '/login.html';
+//        return;
+//    }
+//
+//    // Preview immediately
+//    const reader = new FileReader();
+//    reader.onload = () => {
+//        avatarElement.src = reader.result;
+//    };
+//    reader.readAsDataURL(file);
+//
+//    try {
+//        const resUser = await fetch('/api/auth/me', {
+//            headers: { Authorization: 'Bearer ' + token }
+//        });
+//
+//        if (!resUser.ok) {
+//            alert('Failed to load user info. Please log in again.');
+//            localStorage.removeItem('token');
+//            window.location.href = '/login.html';
+//            return;
+//        }
+//
+//        const user = await resUser.json();
+//
+//        const formData = new FormData();
+//        formData.append('profilePic', file);
+//
+//        const res = await fetch(`/api/uploadProfileImage/${user._id}`, {
+//            method: 'POST',
+//            headers: { 'Authorization': 'Bearer ' + token },
+//            body: formData
+//        });
+//
+//        if (!res.ok) throw new Error('Upload failed');
+//
+//        console.log('✅ Profile picture updated successfully!');
+//    } catch (err) {
+//        console.error('❌ Upload failed:', err);
+//    }
+//});

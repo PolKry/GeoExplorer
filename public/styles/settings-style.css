@@ -1,0 +1,386 @@
+/* Account Page Layout */
+main.explore-panel {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.explore-columns {
+    width: 90%;
+    max-width: 700px;
+    background-color: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(6px);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.explore-panel-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.panel-description {
+    font-size: 1rem;
+    color: #cccccc;
+}
+
+.line {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Account Form */
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.loginForm label {
+    font-weight: bold;
+    font-size: 0.95rem;
+}
+
+/* Save Button */
+.saveBtn {
+    padding: 0.75rem 1.5rem;
+    margin-top: 15px;
+    background-color: #00ffae;
+    color: #000;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.saveBtn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 255, 174, 0.3);
+}
+
+.saveBtn:active {
+    transform: scale(0.95);
+    box-shadow: 0 4px 8px rgba(0, 255, 174, 0.2);
+}
+
+/* Danger Zone */
+.danger-zone {
+    background-color: rgba(255, 0, 0, 0.07);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.danger-zone h3 {
+    color: #ff5e5e;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.danger-zone p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}
+
+.danger-zone span {
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+.deleteBtn {
+    padding: 0.6rem 1.2rem;
+    background-color: transparent;
+    color: #ff5e5e;
+    font-weight: bold;
+    border: 1px solid #ff5e5e;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.deleteBtn:hover {
+    background-color: #ff5e5e;
+    color: #000;
+}
+
+.custom-select-container {
+    position: relative;
+    width: 100%;
+    font-family: sans-serif;
+    user-select: none;
+}
+
+.custom-select-trigger {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #2c2c2c;
+    color: white;
+    padding: 10px 16px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.custom-select-options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+    margin-top: 10px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.custom-select-container.open .custom-select-options {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.custom-select-options span {
+    all: unset;
+    padding: 10px 16px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.custom-select-options span:hover {
+    color: #00ffae;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+form select {
+    border: 1px solid #3ee86c;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+form select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: #2a2a2a;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+form select:focus {
+    outline: none;
+    border-color: #28c75a;
+    transform: scale(1.02);
+    box-shadow: 0 0 6px 2px rgba(46, 204, 113, 0.4);
+}
+
+label {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+/* Container for each setting */
+.setting {
+    margin-bottom: 1.5rem;
+}
+
+.setting label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: #ccc;
+    margin-bottom: 0.5rem;
+}
+
+.toggle-setting label {
+    font-size: 0.95rem;
+    color: #ccc;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+/* MODAL OVERLAY */
+#delete-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.25s ease;
+}
+
+#delete-modal-overlay.show {
+    display: flex !important;
+}
+
+.delete-modal {
+    background: rgba(20, 20, 20, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 25px rgba(255, 76, 76, 0.25);
+    border: 1px solid rgba(255, 76, 76, 0.25);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    animation: slideUp 0.35s ease;
+}
+
+.delete-modal h2 {
+    margin-bottom: 0.5rem;
+    color: #ff4c4c;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 5px #000;
+}
+
+.delete-modal p {
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.warning-text {
+    display: block;
+    margin-top: 0.3rem;
+    color: #ff4c4c;
+    font-weight: 600;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.delete-modal button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.delete-modal button.danger {
+    padding: 0.6rem 1.2rem;
+    background-color: transparent;
+    color: #ff5e5e;
+    font-weight: bold;
+    border: 1px solid #ff5e5e;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.delete-modal button.danger:hover {
+    background-color: #ff5e5e;
+    color: #000;
+}
+
+.delete-modal button.secondary {
+    padding: 0.7rem 1.4rem;
+    background: transparent;
+    color: #ccc;
+    border: 1px solid #555;
+    border-radius: 25px;
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.delete-modal button.secondary:hover {
+    background: #333;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.close-btn .close-symbol {
+    font-size: 2.3rem;
+    color: #ff4c4c;
+    font-weight: bold;
+    line-height: 1;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.close-btn:hover .close-symbol {
+    transform: rotate(90deg) scale(1.1);
+    color: #ff6b6b;
+}
+
+/* ANIMATIONS */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoExplorer | Party Lobby</title>
+
+  <link rel="stylesheet" href="/styles/menu-style.css">
+  <link rel="stylesheet" href="/styles/party.css">
+  <link rel="icon" href="/Resources/Images/icon.ico" type="image/x-icon">
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script type="module" src="/js/utils/auth-check.js"></script>
+  <script type="module" src="/js/components/profile-menu.js"></script>
+  <script src="/js/components/loader.js"></script>
+  <script type="module" src="../js/pages/party/create.js"></script>
+</head>
+
+<body>
+  <div data-component="/components/site-header.html"></div>
+
+  <main class="party-main">
+    <div id="loading-screen">
+      <div class="spinner"></div>
+      <img src="/Resources/Images/Icon.ico" />
+      <div class="loading-text">Loading<span class="dots"></span></div>
+    </div>
+
+    <div class="party-container fade-in">
+      <h2 class="party-lobby-title">Party Lobby</h2>
+
+      <div class="party-header">
+        <span class="party-code-container">
+          Party Code:
+          <span id="party-code" title="Click to copy">XXXXXX</span>
+        </span>
+      </div>
+
+      <div class="party-body">
+        <!-- Panel for FFA / Team 1 -->
+        <div class="party-section players" id="panel-left">
+          <h3>Players</h3>
+          <ul id="players-list-left"></ul>
+        </div>
+
+        <!-- Panel for Team 2 (only used in Teams mode) -->
+        <div class="party-section players" id="panel-right" style="display:none;">
+          <h3>Team 2</h3>
+          <ul id="players-list-right"></ul>
+        </div>
+      </div>
+
+      <div class="party-footer">
+        <button id="open-settings-btn" class="secondary">Settings</button>
+        <button id="start-game-btn" class="primary">Start Game</button>
+        <button id="rejoin-game-btn" class="rejoin">Rejoin</button>
+        <button id="terminate-game-btn" class="danger">Terminate Game</button>
+        <button id="kick-offline-btn" class="danger">Kick Offline</button>
+        <button id="disband-btn" class="secondary">Disband</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wave-container" data-component="/components/bottom-waves.html"></div>
+
+    <div class="footer-links">
+      <a href="/index.html">Home</a>
+      <div class="footer-link-separator"></div>
+      <a href="/menu/info.html">About</a>
+      <div class="footer-link-separator"></div>
+      <a href="/menu/info.html#contact">Contact</a>
+      <div class="footer-link-separator"></div>
+      <a href="/menu/info.html#privacy">Privacy Policy</a>
+    </div>
+    <p>© 2025 GeoExplorer. All rights reserved.</p>
+  </footer>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal-overlay" style="display: none;">
+    <div class="settings-modal">
+      <button class="close-btn" id="close-settings-btn" aria-label="Close">
+        <span class="close-symbol">&times;</span>
+      </button>
+      <h2>Game Settings</h2>
+
+      <div class="setting-group">
+        <label>Game Mode</label>
+        <div class="custom-dropdown">
+          <div class="dropdown-selected" id="game-mode-modal">Free For All</div>
+          <ul class="dropdown-options">
+            <li data-value="ffa">Free For All</li>
+            <li data-value="teams">Teams</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label>Map</label>
+        <div class="map-dropdown" id="map-dropdown">
+          <input type="text" class="dropdown-search" placeholder="Search maps..." />
+          <div class="dropdown-selected" id="map-modal">Loading maps...</div>
+          <ul class="dropdown-options" id="map-options">
+            <li disabled>Loading maps...</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label>Rounds</label>
+        <input class="number-input" id="rounds-modal" type="number" value="5" min="1" max="20" />
+      </div>
+
+      <div class="setting-group toggle-setting" title="Waits for each player to guess">
+        <label>Unlimited Time</label>
+        <input type="checkbox" id="unlimited-time-modal">
+      </div>
+
+      <div class="setting-group" id="time-setting">
+        <label>Round Time (seconds)</label>
+        <input id="time-modal" type="number" value="60" min="10" max="300" />
+      </div>
+
+      <div class="setting-group">
+        <label>Max multiplier</label>
+        <input id="max-multiplier-modal" type="number" value="8" min="1" max="15" />
+      </div>
+
+      <div class="setting-group toggle-setting" title="Wait for the first guess to start the timer">
+        <label>First guess starts timer</label>
+        <input type="checkbox" id="first-guess-modal" checked>
+      </div>
+
+      <div class="setting-group toggle-setting" title="The game will count only the closest guess for each team">
+        <label>Count only closest guess</label>
+        <input type="checkbox" id="count-closest-guess-modal">
+      </div>
+      <button id="save-settings-btn" class="primary">Save</button>
+    </div>
+  </div>
+
+  <!-- Disband / Confirmation Modal -->
+  <div class="modal-overlay" id="disband-modal-overlay" style="display:none;">
+    <div class="disband-modal">
+      <button class="close-btn" id="disband-close-btn" aria-label="Close">
+        <span class="close-symbol">&times;</span>
+      </button>
+      <h2>Disband Party</h2>
+      <p>Are you sure you want to disband this party? This action cannot be undone.</p>
+      <div style="display:flex; justify-content:center; gap:1rem;">
+        <button class="danger" id="disband-confirm-btn">Disband</button>
+        <button class="secondary" id="disband-cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

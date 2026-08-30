@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/menu-style.css">
+    <link rel="stylesheet" href="/styles/explore-style.css">
+    <link rel="stylesheet" href="/styles/button-variants.css">
+    <script type="module" src="/js/utils/auth-check.js"></script>
+    <script type="module" src="/js/components/profile-menu.js"></script>
+    <script src="/js/components/loader.js"></script>
+    <link rel="Icon" href="/Resources/Images/icon.ico" type="image/x-icon">
+    <title>GeoExplorer | Explore - Explore Official & Community Maps</title>
+</head>
+
+<body>
+    <div data-component="/components/site-header.html"></div>
+
+    <div class="wave-container" data-component="/components/top-waves.html"></div>
+
+    <main class="explore-panel">
+        <h2 class="title">Explore Maps</h2>
+
+        <div class="explore-columns">
+            <div class="explore-panel-section">
+                <h3>Official Maps</h3>
+                <p class="panel-description">Maps created and verified by our developers.</p>
+                <div class="search-wrapper">
+                    <div class="search-input-group">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" placeholder="Search official maps..." class="map-search"
+                            id="map-search-official" />
+                    </div>
+
+                    <div class="toggle-setting" title="Search only for your favorite maps">
+                        <label>Only Favorite Maps</label>
+                        <input type="checkbox" id="fav-maps-only-official-toggle">
+                    </div>
+                </div>
+
+
+                <div class="line"></div>
+                <div class="map-list" id="map-list-official"></div>
+                <button class="loadMoreBtn refined-button" id="load-more-official">Load More</button>
+            </div>
+
+            <div class="explore-panel-section">
+                <a href="/menu/map-creation.html">
+                    <button id="create-your-map">Create Your Own Map</button>
+                </a>
+                <h3>Community Maps</h3>
+                <p class="panel-description">Maps created by players like you.</p>
+                <div class="search-wrapper">
+                    <div class="search-input-group">
+
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" placeholder="Search community maps..." class="map-search"
+                            id="map-search-community" />
+                    </div>
+
+                    <div class="toggle-setting" title="Search only for your favorite maps">
+                        <label>Only Favorite Maps</label>
+                        <input type="checkbox" id="fav-maps-only-community-toggle">
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="map-list" id="map-list-community"></div>
+                <button class="loadMoreBtn refined-button" id="load-more-community">Load More</button>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer class="footer">
+        <div class="wave-container" data-component="/components/bottom-waves.html"></div>
+        
+        <div class="footer-links">
+            <a href="/index.html">Home</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html">About</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#contact">Contact</a>
+            <div class="footer-link-separator"></div>
+            <a href="/menu/info.html#privacy">Privacy Policy</a>
+        </div>
+        <p>© 2025 GeoExplorer. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
+<script type="module" src="/js/pages/menu/explore.js"></script>
