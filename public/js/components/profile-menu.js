@@ -1,4 +1,4 @@
-import { getToken } from "../utils/auth.js";
+import { logout } from "../utils/storage.js";
 
 function initializeProfileMenu() {
   const profileWrapper = document.getElementById("profile-wrapper");
@@ -25,8 +25,8 @@ function initializeProfileMenu() {
   });
 
   logoutBtn?.addEventListener("click", () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    logout();
+
     window.location.reload();
   });
 }

@@ -1,5 +1,6 @@
 import { joinPartyByCode } from "../../api/party-api.js";
 import { requireToken } from "../../utils/auth.js";
+import { getPartyCode, setPartyCode } from "../../utils/storage.js";
 import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,7 +16,7 @@ function hydrateCodeInputs(inputs) {
     inputs[0].focus();
     inputs[0].setSelectionRange(1, 1);
 
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) return;
 
     inputs.forEach((input, index) => {
@@ -79,7 +80,7 @@ function bindJoinForm(inputs) {
         try {
             const party = await joinPartyByCode(code);
             
-            localStorage.setItem("partyCode", party.code);
+            setPartyCode(party.code);
             window.location.href = "/party/waiting-room.html";
         } catch (err) {
             console.error("Error joining party:", err.message);

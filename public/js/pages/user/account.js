@@ -1,13 +1,18 @@
 import { deleteAccount } from "../../api/auth-api.js";
+import { apiFetch } from "../../api/http.js";
+import { requireToken } from "../../utils/auth.js";
+import { clearStorage, setUsername } from "../../utils/storage.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    const accountForm = document.getElementById("account-form");
     const deleteModal = document.getElementById("delete-modal-overlay");
     const openDeleteBtn = document.getElementById("open-delete-btn");
     const closeDeleteBtn = document.getElementById("delete-close-btn");
     const cancelDeleteBtn = document.getElementById("delete-cancel-btn");
     const confirmDeleteBtn = document.getElementById("delete-confirm-btn");
 
-    if (!deleteModal || !openDeleteBtn) return;
+    // Assigns input values
+    await assignValues()
 
     // OPEN MODAL
     const openDeleteModal = () => {
@@ -26,7 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
     closeDeleteBtn?.addEventListener("click", closeDeleteModal);
     cancelDeleteBtn?.addEventListener("click", closeDeleteModal);
 
-    // click outside modal
+    // Submit Form
+    accountForm.addEventListener("submit", updateAccount);
+
+    // Click outside modal
     deleteModal.addEventListener("click", (e) => {
         if (e.target === deleteModal) closeDeleteModal();
     });
@@ -42,11 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmDeleteBtn.textContent = "Deleting...";
         confirmDeleteBtn.disabled = true;
 
+        // TODO: Add modals
         try {
             await deleteAccount();
             alert("Account deleted. Logging out...");
-            localStorage.removeItem("token");
-            localStorage.removeItem("username");
+            clearStorage();
+
             window.location.href = "/login.html";
         } catch (err) {
             alert(err.message || "Network error");
@@ -55,3 +64,51 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+async function assignValues() {
+    const token = requireToken();
+    if (!token) return;
+
+    const userRes = await apiFetch('/api/auth/me');
+    const userData = await userRes.json();
+
+    document.getElementById("username").value = userData.username;
+    document.getElementById("email").value = userData.email;
+}
+
+async function updateAccount(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const newPassword = document.getElementById("password-input").value;
+    const currentPassword = document.getElementById("current-password").value;
+
+    const token = requireToken();
+    if (!token) return;
+
+    try {
+        const userRes = await apiFetch("/api/auth/update-account", {
+            method: "PUT",
+            body: JSON.stringify({
+                username,
+                newPassword: newPassword,
+                currentPassword
+            })
+        });
+
+        const userData = await userRes.json();
+
+        if (!userRes.ok) {
+            throw new Error(userData.message || "Failed to update account");
+        }
+
+        alert("Account updated successfully.");
+
+        if (userData.username) {
+            setUsername(userData.username);
+        }
+
+    } catch (err) {
+        alert(err.message || "Failed to update account");
+    }
+}

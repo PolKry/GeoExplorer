@@ -11,7 +11,7 @@ function getRandomInt(min, max) {
 
 async function getAuthorFromToken(authHeader) {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    const error = new Error('Valid toke is missing.');
+    const error = new Error('Valid token is missing.');
     error.status = 401;
     throw error;
   }

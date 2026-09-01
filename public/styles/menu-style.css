@@ -403,7 +403,7 @@ nav a.active:hover::after {
     border: 1px solid #ff4c4c;
 }
 
-.loginForm .input-feedback {
+.basic-form .input-feedback {
     color: #ccc;
 }
 

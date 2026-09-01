@@ -1,8 +1,13 @@
+import {
+  setToken,
+  setUsername
+} from "../../utils/storage.js";
+
 import { loginUser } from "../../api/auth-api.js";
 import { showMessage } from "../../utils/toast.js";
 
 function setupLoginForm() {
-  const form = document.getElementById('loginForm');
+  const form = document.getElementById('basic-form');
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
@@ -26,8 +31,10 @@ function setupLoginForm() {
 
     try {
       const json = await loginUser(data);
-      localStorage.setItem("token", json.token);
-      localStorage.setItem("username", json.username);
+      
+      setToken(json.token);
+      setUsername(json.username)
+
       window.location.href = '/index.html';
       showMessage('Successful login!', 'success');
     } catch (err) {

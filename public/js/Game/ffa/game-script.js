@@ -1,3 +1,9 @@
+import {
+    getToken,
+    getPartyHostId,
+    getPartyCode
+} from "../../utils/storage.js";
+
 // Audio
 let enabledSound = true;
 let effectVolume = 0.5;
@@ -23,7 +29,7 @@ let playerColor = "#007BFF";
 const submitGuessButton = document.getElementById("guess-button");
 
 function getCurrentUserId() {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) return null;
 
     try {
@@ -32,10 +38,6 @@ function getCurrentUserId() {
         console.error("Failed to read current user id", err);
         return null;
     }
-}
-
-function getPartyHostId() {
-    return localStorage.getItem("partyHostId");
 }
 
 function redirectBackToParty() {
@@ -47,7 +49,7 @@ function redirectBackToParty() {
         return;
     }
 
-    if (localStorage.getItem("partyCode")) {
+    if (getPartyCode()) {
         window.location.href = "/party/waiting-room.html";
         return;
     }

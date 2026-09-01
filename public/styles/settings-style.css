@@ -42,13 +42,13 @@ main.explore-panel {
 }
 
 /* Account Form */
-.loginForm {
+.basic-form {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
 }
 
-.loginForm label {
+.basic-form label {
     font-weight: bold;
     font-size: 0.95rem;
 }

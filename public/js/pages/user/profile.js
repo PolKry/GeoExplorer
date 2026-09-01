@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         // apiFetch user, stats, and countries in parallel
         const [resUser, resProfile, resStats, resCountries] = await Promise.all([
-            apiFetch('/api/auth/me', { headers: { Authorization: 'Bearer ' + token } }),
-            apiFetch('/api/users/me', { headers: { Authorization: 'Bearer ' + token } }),
-            apiFetch('/api/users/stats', { headers: { Authorization: 'Bearer ' + token } }),
+            apiFetch('/api/auth/me'),
+            apiFetch('/api/users/me'),
+            apiFetch('/api/users/stats'),
             apiFetch('/api/countries')
         ]);
 
@@ -115,10 +115,6 @@ function makeBioEditable(profile, token) {
             try {
                 const res = await apiFetch(`/api/users/${profile._id}/bio`, {
                     method: 'PUT',
-                    headers: {
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/json'
-                    },
                     body: JSON.stringify({ bio: input.value })
                 });
                 if (!res.ok) throw new Error('Failed to update bio');
@@ -182,10 +178,6 @@ function makeCountryEditable(profile, token, countries) {
             try {
                 const res = await apiFetch(`/api/users/${profile._id}/country`, {
                     method: 'PUT',
-                    headers: {
-                        'Authorization': 'Bearer ' + token,
-                        'Content-Type': 'application/json'
-                    },
                     body: JSON.stringify({ name: selectedOption.textContent, code: selectedOption.value })
                 });
                 if (!res.ok) throw new Error('Failed to update country');

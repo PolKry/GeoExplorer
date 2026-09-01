@@ -2,7 +2,7 @@ import { registerUser } from "../../api/auth-api.js";
 import { showMessage } from "../../utils/toast.js";
 
 function setupLoginForm() {
-    const form = document.querySelector('#loginForm');
+    const form = document.querySelector('#basic-form');
     if (!form) return;
 
     form.addEventListener('submit', async (e) => {

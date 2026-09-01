@@ -1,4 +1,5 @@
 import { apiFetch } from "../../api/http.js";
+import { getSettings, setSettings } from "../../utils/storage.js";
 import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -108,31 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-
-            const token = localStorage.getItem('token');
-            if (!token) {
-                alert('You must be logged in to view this page.');
-                window.location.href = '/login.html';
-                return;
-            }
-
-            const profileRes = await apiFetch(`/api/users/me`, {
-                headers: { Authorization: 'Bearer ' + token }
-            });
+            const profileRes = await apiFetch(`/api/users/me`);
 
             if (!profileRes.ok) throw new Error('Failed to apiFetch user profile info');
 
             const profileData = await profileRes.json();
-
-            localStorage.setItem("settings", JSON.stringify(payload));
+            const settings = JSON.stringify(payload);
+            setSettings(settings);
 
             const res = await apiFetch(`/api/users/${profileData._id}/settings`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify(payload)
+                body: settings
             });
 
             if (!res.ok) {
@@ -150,25 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function AssignValues() {
-    const saved = localStorage.getItem("settings");
+    const saved = getSettings();
     if (saved) {
         const settings = JSON.parse(saved);
         applySettings(settings);
     }
 
-    const token = localStorage.getItem('token');
-    if (!token) {
-        alert('You must be logged in to view this page.');
-        window.location.href = '/login.html';
-        return;
-    }
-
     try {
-        const res = await apiFetch(`/api/users/me`, {
-            headers: { Authorization: 'Bearer ' + token }
-        });
-
+        const res = await apiFetch(`/api/users/me`);
         const data = await res.json();
+
         if (!res.ok) {
             showMessage(data.message || 'Failed to fetch user profile info', 'error');
             return;
@@ -176,7 +154,7 @@ async function AssignValues() {
 
         if (data.settings) {
             applySettings(data.settings);
-            localStorage.setItem("settings", JSON.stringify(data.settings)); // sync back
+            setSettings(JSON.stringify(data.settings)); // sync back
         }
     } catch (err) {
         showMessage("Error loading settings.", "error");
@@ -236,31 +214,17 @@ async function resetSettings() {
 
     applySettings(defaults);
 
-    // Save locally
-    localStorage.setItem("settings", JSON.stringify(defaults));
+    setSettings(JSON.stringify(defaults));
 
     // Send to backend
     try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('You must be logged in to reset settings.');
-            window.location.href = '/login.html';
-            return;
-        }
-
-        const profileRes = await apiFetch(`/api/users/me`, {
-            headers: { Authorization: 'Bearer ' + token }
-        });
+        const profileRes = await apiFetch(`/api/users/me`);
         if (!profileRes.ok) throw new Error('Failed to apiFetch user profile info');
 
         const profileData = await profileRes.json();
 
         const res = await apiFetch(`/api/users/${profileData._id}/settings`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
             body: JSON.stringify(defaults)
         });
 

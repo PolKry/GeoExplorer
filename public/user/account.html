@@ -26,22 +26,23 @@
                 </p>
                 <div class="line"></div>
 
-                <form class="loginForm" novalidate>
+                <form class="basic-form" id="account-form" novalidate autocomplete="off">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Username" autocomplete="username"
-                        required minlength="4" maxlength="20" pattern="\S+" />
+                    <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required
+                        minlength="4" maxlength="20" pattern="\S+" />
                     <small class="input-feedback"></small>
 
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="E-mail" autocomplete="email" disabled
+                    <input type="email" id="email" name="email" placeholder="E-mail" autocomplete="off" disabled
                         aria-disabled="true" />
                     <small class="input-feedback"></small>
 
                     <label for="password-input">New Password</label>
-                    <input type="password" id="password-input" name="password-input" placeholder="••••••••"
+                    <input type="password" id="password-input" name="new-password" placeholder="••••••••"
                         autocomplete="new-password" minlength="8" maxlength="20" pattern="\S+" />
-                    <small class="input-feedback">Leave blank to keep current password. Minimum 8
-                        characters.</small>
+                    <small class="input-feedback">
+                        Leave blank to keep current password. Minimum 8 characters.
+                    </small>
 
                     <div id="password-strength" class="password-strength">
                         <div class="strength-bar"></div>
@@ -50,11 +51,12 @@
 
                     <label for="current-password">Current Password</label>
                     <input type="password" id="current-password" name="current-password" placeholder="••••••••"
-                        autocomplete="current-password" minlength="8" maxlength="20" pattern="\S+" />
-                    <small class="input-feedback"></small>
+                        autocomplete="off" minlength="8" maxlength="20" pattern="\S+" />
+                    <small id="password-strength-text" class="password-strength-text"></small>
 
-                    <button type="submit" class="saveBtn" aria-label="Save account changes">Update Account</button>
-                    <div id="update-message" class="update-message" aria-live="polite" role="alert"></div>
+                    <button type="submit" class="saveBtn" aria-label="Save account changes">
+                        Update Account
+                    </button>
                 </form>
 
                 <div class="line"></div>

@@ -1,5 +1,10 @@
+import {
+    getToken,
+    logout
+} from "../utils/storage.js";
+
 export async function apiFetch(url, options = {}) {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     const headers = {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -9,8 +14,8 @@ export async function apiFetch(url, options = {}) {
     const res = await fetch(url, { ...options, headers });
 
     if (res.status === 401) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
+        logout();
+
         window.location.href = "/login.html";
         throw new Error("Unauthorized");
     }

@@ -23,6 +23,12 @@ import {
     updatePlayerStatus,
     updatePlayerStatusBatch,
 } from "../../renderers/party-renderer.js";
+import {
+    getPartyCode,
+    removePartyCode,
+    setPartyCode,
+    setPartyHostId
+} from "../../utils/storage.js";
 
 const socket = window.io("/party");
 
@@ -52,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 function bindUnloadHandler(token) {
     window.addEventListener("beforeunload", () => {
         socket.emit("leave-party", {
-            partyCode: localStorage.getItem("partyCode"),
+            partyCode: getPartyCode(),
             userId: getUserIdFromToken(token),
         });
     });
@@ -167,8 +173,8 @@ async function loadParty() {
     try {
         currentParty = await loadOrCreateParty();
         window.currentParty = currentParty;
-        localStorage.setItem("partyCode", currentParty.code);
-        localStorage.setItem("partyHostId", String(currentParty.host));
+        setPartyCode(currentParty.code);
+        setPartyHostId(String(currentParty.host));
 
         socket.emit("join-party", {
             partyCode: currentParty.code,
@@ -183,7 +189,7 @@ async function loadParty() {
 }
 
 async function startGame() {
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) return alert("No party Id found");
 
     setLoadingScreenActive(true);
@@ -198,7 +204,7 @@ async function startGame() {
 }
 
 async function saveSettings() {
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) return alert("No party Id found");
 
     try {
@@ -215,7 +221,7 @@ async function saveSettings() {
 }
 
 async function swapTeam(userId) {
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) return alert("No party Id found");
 
     currentParty = await swapPartyPlayer(partyCode, userId);
@@ -224,7 +230,7 @@ async function swapTeam(userId) {
 }
 
 async function terminateGame() {
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) return alert("No party Id found");
 
     currentParty = await terminatePartyGame(partyCode);
@@ -233,7 +239,7 @@ async function terminateGame() {
 }
 
 async function kickOfflinePlayers() {
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) return alert("No party Id found");
 
     currentParty = await kickOfflinePartyPlayers(partyCode);
@@ -242,7 +248,7 @@ async function kickOfflinePlayers() {
 }
 
 async function kickPlayer(userId) {
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) return alert("No party Id found");
 
     const hostId = typeof currentParty.host === "string" ? currentParty.host : currentParty.host._id;
@@ -262,7 +268,7 @@ async function disbandCurrentParty() {
         if (!res.ok) throw new Error("Failed to disband party");
 
         showToast("Party disbanded", "success");
-        localStorage.removeItem("partyCode");
+        removePartyCode();
         window.location.href = "/";
     } catch (err) {
         console.error(err);

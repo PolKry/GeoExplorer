@@ -46,7 +46,7 @@ password.addEventListener('input', () => {
     strengthText.style.color = colors[strength - 1] || "#ccc";
 });
 
-document.querySelectorAll('.loginForm input').forEach(input => {
+document.querySelectorAll('.basic-form input').forEach(input => {
     const feedback = input.nextElementSibling;
     // Store the original text
     const originalText = feedback.textContent;

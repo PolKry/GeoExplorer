@@ -99,13 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const token = localStorage.getItem('token');
             const response = await apiFetch('/api/mapCreationRoutes/validate-json', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
                 body: JSON.stringify(mapData),
             });
 

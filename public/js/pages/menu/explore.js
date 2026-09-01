@@ -1,4 +1,5 @@
 import { apiFetch } from "../../api/http.js";
+import { getToken } from "../../utils/storage.js";
 
 let officialPage = 1;
 let communityPage = 1;
@@ -267,7 +268,7 @@ communitySearchInput.addEventListener("keydown", (event) => {
 });
 
 async function getFavMaps() {
-  const token = localStorage.getItem('token');
+  const token = getToken();
   if (!token) {
     alert('You must be logged in to view this page.');
     window.location.href = '/login.html';
@@ -290,7 +291,7 @@ async function getFavMaps() {
 async function addOrRemoveFavMap(mapName) {
   if (!mapName) return;
 
-  const token = localStorage.getItem('token');
+  const token = getToken();
   if (!token) {
     alert('You must be logged in to view this page.');
     window.location.href = '/login.html';

@@ -43,18 +43,18 @@ main.explore-panel {
 }
 
 /* Account Form */
-.loginForm {
+.basic-form {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
 }
 
-.loginForm label {
+.basic-form label {
     font-weight: bold;
     font-size: 0.95rem;
 }
 
-.loginForm input {
+.basic-form input {
     padding: 0.6rem 0.8rem;
     border: 1px solid #555;
     border-radius: 8px;
@@ -76,7 +76,7 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
 }
 
-.loginForm input:focus {
+.basic-form input:focus {
     background-color: #222 !important;
     box-shadow: 0 0 6px #00ffae88 !important;
 }
@@ -168,7 +168,7 @@ input:-webkit-autofill:active {
     color: #000;
 }
 
-.loginForm input:disabled {
+.basic-form input:disabled {
     background-color: #232323;
     color: #888;
     cursor: not-allowed;

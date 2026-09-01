@@ -6,6 +6,7 @@ import {
     updatePlayerStatus,
     updatePlayerStatusBatch,
 } from "../../renderers/party-renderer.js";
+import { getPartyCode, removePartyCode, setPartyCode, setPartyHostId } from "../../utils/storage.js";
 
 const socket = window.io("/party");
 
@@ -54,7 +55,7 @@ function bindPageRestoreReload() {
 }
 
 async function loadParty() {
-    const partyCode = localStorage.getItem("partyCode");
+    const partyCode = getPartyCode();
     if (!partyCode) {
         window.location.href = "/";
         return;
@@ -65,14 +66,14 @@ async function loadParty() {
         window.currentParty = currentParty;
 
         if (!isCurrentUserInParty()) {
-            localStorage.removeItem("partyCode");
+            removePartyCode();
             showToast("You are no longer part of this party.", "error");
             window.location.href = "/menu/game-modes.html";
             return;
         }
 
-        localStorage.setItem("partyCode", currentParty.code);
-        localStorage.setItem("partyHostId", String(currentParty.host));
+        setPartyCode(currentParty.code);
+        setPartyHostId(String(currentParty.host));
 
         socket.emit("join-party", {
             partyCode: currentParty.code,
@@ -100,7 +101,7 @@ function bindUnloadHandler() {
 async function leaveCurrentParty() {
     try {
         await leaveParty();
-        localStorage.removeItem("partyCode");
+        removePartyCode
         window.location.href = "/";
     } catch (err) {
         console.error(err);
@@ -182,13 +183,13 @@ socket.on("party-updated", party => {
 });
 
 socket.on("player-kicked", () => {
-    localStorage.removeItem("partyCode");
+    removePartyCode();
     window.location.href = "/";
 });
 
 socket.on("party-disbanded", () => {
     showToast("The host disbanded the party.", "error");
-    localStorage.removeItem("partyCode");
+    removePartyCode();
 
     setTimeout(() => {
         window.location.href = "/menu/game-modes.html";

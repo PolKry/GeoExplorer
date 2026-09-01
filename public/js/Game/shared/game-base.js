@@ -1,3 +1,7 @@
+import {
+    getToken
+} from "../../utils/storage.js";
+
 (function () {
     const shared = window.GameShared = window.GameShared || {};
 
@@ -10,7 +14,7 @@
     shared.createSocket = function createSocket() {
         const socket = io("/game", {
             auth: {
-                token: localStorage.getItem("token")
+                token: getToken()
             }
         });
 

@@ -1,3 +1,7 @@
+import {
+  getUsername
+} from "../utils/storage.js";
+
 const normalizePath = path => path === "/index.html" ? "/" : path.replace(/\/$/, "");
 
 function initializeHeader() {
@@ -42,7 +46,7 @@ function initializeHeader() {
   });
 
   const profileLabel = header.querySelector(".profile-trigger-label");
-  profileLabel.textContent = localStorage.getItem("username") || "Account";
+  profileLabel.textContent = getUsername() || "Account";
 
   document.addEventListener("click", event => {
     if (!dropdown.contains(event.target)) {
