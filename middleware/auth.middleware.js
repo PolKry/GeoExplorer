@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken');
+const { sendAuthError } = require('../controllers/response.controller');
 
 function auth(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer '))
-    return res.status(401).json({ message: 'No token, authorization denied.' });
+    return sendAuthError(res, new Error('No token, authorization denied.'), 'No token, authorization denied.');
 
   const token = authHeader.split(' ')[1];
 
@@ -14,7 +15,7 @@ function auth(req, res, next) {
     next();
   } catch (err) {
     console.error('JWT error:', err);
-    res.status(401).json({ message: 'Invalid token.' });
+    return sendAuthError(res, err, 'Invalid token.');
   }
 }
 

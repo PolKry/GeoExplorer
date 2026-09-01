@@ -1,4 +1,5 @@
 const { getGameClass } = require("../game/getGameClass");
+const { sendError } = require('./response.controller');
 const gameService = require('../services/game.service');
 
 exports.startPointsMode = async (req, res) => {
@@ -25,11 +26,7 @@ exports.startPointsMode = async (req, res) => {
             roundTime: session.settings.roundTime
         });
     } catch (err) {
-        console.error("Failed to start points game:", err);
-
-        res.status(400).json({
-            error: err.message
-        });
+        sendError(res, { ...err, status: 400 }, 'Failed to start points game');
     }
 };
 
@@ -57,11 +54,7 @@ exports.startCountryMode = async (req, res) => {
             roundTime: session.settings.roundTime
         });
     } catch (err) {
-        console.error("Failed to start country game:", err);
-
-        res.status(400).json({
-            error: err.message
-        });
+        sendError(res, { ...err, status: 400 }, 'Failed to start country game');
     }
 };
 
