@@ -15,6 +15,7 @@ The project started as a way to learn more about web development, multiplayer sy
 
   * Points
   * Country Streak
+  * FFA
   * Teams
 * **Multiplayer parties** with friends
 * **Custom maps**
@@ -69,7 +70,7 @@ Maps can be organized using categories and tags such as:
 
 `Official` · `Community` · `Urban` · `Coastal` · `Nature`
 
-Some map and geographic data is stored locally, while community-created maps are stored in MongoDB.
+Some maps and geographic data are stored locally, while community-created maps are stored in MongoDB.
 
 ---
 
@@ -99,9 +100,55 @@ npm install
 Create a `.env` file with the required environment variables:
 
 ```env
-MONGO_URI=your_mongodb_connection_string
+# =========================
+# SERVER CONFIGURATION
+# =========================
+PORT=4444
+NODE_ENV=development
+
+# =========================
+# JWT & SESSION
+# =========================
 JWT_SECRET=your_secret
-GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+JWT_EXPIRES_IN=1d
+COOKIE_SECRET=your_cookie_secret
+
+# =========================
+# EMAIL (Verification & Reset)
+# =========================
+EMAIL_USER=email_to_send_emails_from
+EMAIL_PASS=password_to_the_email
+BASE_URL=http://localhost:4444
+
+# =========================
+# GOOGLE API (Restricted in Console!)
+# =========================
+GOOGLE_API_KEY=your_google_maps_api_key
+
+# =========================
+# DATABASE
+# =========================
+MONGO_URI=your_mongodb_connection_string
+
+# =========================
+# Auth
+# =========================
+MIN_USERNAME_LENGHT=4
+MAX_USERNAME_LENGHT=14
+
+MIN_PASSWORD_LENGHT=8
+MAX_PASSWORD_LENGHT=20
+
+# =========================
+# Gameplay
+# =========================
+GAME_FINISHED_MAX_LIFETIME_MIN=5
+GAME_UNFINISHED_MAX_LIFETIME_MIN=10
+
+# =========================
+# Other 3rd party keys
+# =========================¨
+REST_COUNTRIES_API_KEY=your_rest_api_key
 ```
 
 Start the server:
