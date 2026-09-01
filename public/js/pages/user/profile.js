@@ -1,10 +1,9 @@
 import { apiFetch } from "../../api/http.js";
-import { requireToken } from "../../utils/auth.js";
 
 const avatarElement = document.querySelector('.profile-avatar');
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const token = requireToken();
+    const token = getToken();
     if (!token) return;
 
     try {

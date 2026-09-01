@@ -22,11 +22,7 @@
   <div data-component="/components/site-header.html"></div>
 
   <main class="party-main">
-    <div id="loading-screen">
-      <div class="spinner"></div>
-      <img src="/Resources/Images/Icon.ico" />
-      <div class="loading-text">Loading<span class="dots"></span></div>
-    </div>
+    <div id="loading-screen"></div>
 
     <div class="party-container fade-in">
       <h2 class="party-lobby-title">Party Lobby</h2>
@@ -38,18 +34,26 @@
         </span>
       </div>
 
-      <div class="party-body">
-        <!-- Panel for FFA / Team 1 -->
+      <div class="party-body" id="party-body">
+
         <div class="party-section players" id="panel-left">
           <h3>Players</h3>
+
+          <div class="players-loading">
+            <div class="shimmer player-skeleton"></div>
+            <div class="shimmer player-skeleton"></div>
+            <div class="shimmer player-skeleton"></div>
+            <div class="shimmer player-skeleton"></div>
+          </div>
+
           <ul id="players-list-left"></ul>
         </div>
 
-        <!-- Panel for Team 2 (only used in Teams mode) -->
         <div class="party-section players" id="panel-right" style="display:none;">
           <h3>Team 2</h3>
           <ul id="players-list-right"></ul>
         </div>
+
       </div>
 
       <div class="party-footer">

@@ -1,12 +1,12 @@
 import { getPartyByCode, leaveParty } from "../../api/party-api.js";
-import { getUserIdFromToken, requireToken } from "../../utils/auth.js";
+import { getUserIdFromToken } from "../../utils/auth.js";
 import { showToast } from "../../utils/toast.js";
 import {
     renderParty,
     updatePlayerStatus,
     updatePlayerStatusBatch,
 } from "../../renderers/party-renderer.js";
-import { getPartyCode, removePartyCode, setPartyCode, setPartyHostId } from "../../utils/storage.js";
+import { getPartyCode, getToken, removePartyCode, setPartyCode, setPartyHostId } from "../../utils/storage.js";
 
 const socket = window.io("/party");
 
@@ -18,7 +18,7 @@ const renderHandlers = {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const token = requireToken();
+    const token = getToken();
     if (!token) return;
 
     currentUserId = getUserIdFromToken(token);

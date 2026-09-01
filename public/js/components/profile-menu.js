@@ -1,4 +1,4 @@
-import { logout } from "../utils/storage.js";
+import { getToken, logout } from "../utils/storage.js";
 
 function initializeProfileMenu() {
   const profileWrapper = document.getElementById("profile-wrapper");

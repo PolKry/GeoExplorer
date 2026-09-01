@@ -1,4 +1,4 @@
-import { apiFetch, apiFetchJson } from "./http.js";
+import { apiFetch } from "./http.js";
 
 export async function fetchUserScore(mapSrcName) {
     try {

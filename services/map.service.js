@@ -66,16 +66,27 @@ async function getMapData({ id, map }) {
     throw error;
   }
 
-  const response = { mapData };
-
-  if (mapData.category === 'Community' || mapData.type === 'Community') {
-    response.locations = await locationDataRepository.findByMapId(mapData._id);
+  // Build the tags array with descriptions
+  mapData.tags = await mapRepository.getTagDescriptions(
+    mapData.tags || []
+  );
+  
+  // Fetch location data for community maps or fallback codes for official maps
+  if (mapData.type === 'Community') {
+    mapData.locations = await locationDataRepository.findByMapId(mapData._id);
   } else if (mapData.fallbackFile) {
     const fallback = mapFileRepository.readLocationFallback(mapData.fallbackFile);
-    response.codes = Array.isArray(fallback?.includes) ? fallback.includes : [];
+    mapData.codes = Array.isArray(fallback?.includes) ? fallback.includes : [];
   }
 
-  return response;
+  if (mapData.category === 'Community' || mapData.type === 'Community') {
+    mapData.locations = await locationDataRepository.findByMapId(mapData._id);
+  } else if (mapData.fallbackFile) {
+    const fallback = mapFileRepository.readLocationFallback(mapData.fallbackFile);
+    mapData.codes = Array.isArray(fallback?.includes) ? fallback.includes : [];
+  }
+
+  return mapData;
 }
 
 async function getCommunityMaps(page) {

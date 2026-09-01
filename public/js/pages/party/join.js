@@ -1,6 +1,5 @@
 import { joinPartyByCode } from "../../api/party-api.js";
-import { requireToken } from "../../utils/auth.js";
-import { getPartyCode, setPartyCode } from "../../utils/storage.js";
+import { getPartyCode, setPartyCode, getToken } from "../../utils/storage.js";
 import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -69,7 +68,8 @@ function bindJoinForm(inputs) {
     document.getElementById("join-party-form").addEventListener("submit", async event => {
         event.preventDefault();
 
-        if (!requireToken()) return;
+        const token = getToken();
+        if (!token) return;
 
         const code = inputs.map(input => input.value).join("").trim().toUpperCase();
         if (code.length < inputs.length) {

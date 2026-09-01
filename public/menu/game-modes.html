@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/menu-style.css">
     <link rel="stylesheet" href="/styles/game-mode-style.css">
+
     <script type="module" src="/js/utils/auth-check.js"></script>
     <script type="module" src="/js/components/profile-menu.js"></script>
     <script src="/js/components/loader.js"></script>
@@ -17,12 +18,7 @@
 <body>
     <div data-component="/components/site-header.html"></div>
 
-    <div id="loading-screen">
-        <div class="spinner"></div>
-        <img src="/Resources/Images/Icon.ico" />
-        <div class="loading-text">Loading<span class="dots"></span></div>
-    </div>
-
+    <div id="loading-screen"></div>
     <div class="wave-container" data-component="/components/top-waves.html"></div>
 
     <main class="game-modes-panel">

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles/menu-style.css">
     <link rel="stylesheet" href="/styles/map-style.css">
+
     <link rel="stylesheet" href="/styles/button-variants.css">
     <link rel="stylesheet" href="/libs/leaflet/dist/leaflet.css">
     <script type="module" src="/js/utils/auth-check.js"></script>
@@ -16,7 +17,6 @@
     <script src="/libs/leaflet/dist/leaflet.js" defer></script>
     <script src="/libs/leaflet/dist/leaflet.pattern.js" defer></script>
     <script type="module" src="/js/pages/menu/map.js"></script>
-    <script src="/js/pages/menu/map-preview.js" defer></script>
 
     <title>GeoExplorer | Explore - Explore Official & Community Maps</title>
 </head>
@@ -25,11 +25,7 @@
     <div data-component="/components/site-header.html"></div>
 
     <main>
-        <div id="loading-screen">
-            <div class="spinner"></div>
-            <img src="/Resources/Images/Icon.ico" />
-            <div class="loading-text">Loading<span class="dots"></span></div>
-        </div>
+        <div id="loading-screen"></div>
 
         <section class="map-panel">
             <div class="map-background">
@@ -60,15 +56,11 @@
                 </div>
 
                 <h4 class="tag-header">Map Tags <span class="tag-subtitle">(region, difficulty, style)</span></h4>
-                <div class="map-tags" id="tag-container">
-                    <span class="tag">Peru</span>
-                    <span class="tag">Hard</span>
-                    <span class="tag">Official</span>
-                </div>
+                <div class="map-tags" id="tag-container"></div>
 
                 <div class="line"></div>
                 <p class="map-description" id="mapDescription"></p>
-                <button class="play-button refined-button" id="playButton">Play map</button>
+                <button class="play-button refined-button" id="play-button">Play map</button>
             </div>
         </section>
 

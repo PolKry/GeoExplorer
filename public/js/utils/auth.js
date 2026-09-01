@@ -1,4 +1,4 @@
-import { logout } from "./storage";
+import { logout } from "./storage.js";
 
 export function getUserIdFromToken(token) {
     try {

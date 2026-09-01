@@ -10,7 +10,7 @@ import {
     swapPartyPlayer,
     terminatePartyGame,
 } from "../../api/party-api.js";
-import { getUserIdFromToken, requireToken } from "../../utils/auth.js";
+import { getUserIdFromToken } from "../../utils/auth.js";
 import {
     bindCustomDropdowns,
     readSettingsForm,
@@ -25,12 +25,15 @@ import {
 } from "../../renderers/party-renderer.js";
 import {
     getPartyCode,
+    getToken,
     removePartyCode,
     setPartyCode,
     setPartyHostId
 } from "../../utils/storage.js";
 
 const socket = window.io("/party");
+
+const disbandBtn = document.getElementById("disband-confirm-btn");
 
 let currentParty;
 
@@ -41,7 +44,7 @@ const renderHandlers = {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const token = requireToken();
+    const token = getToken();
     if (!token) return;
 
     bindUnloadHandler(token);
@@ -101,7 +104,7 @@ function bindDisbandControls() {
     });
     document.getElementById("disband-close-btn").addEventListener("click", closeOverlay);
     document.getElementById("disband-cancel-btn").addEventListener("click", closeOverlay);
-    document.getElementById("disband-confirm-btn").addEventListener("click", disbandCurrentParty);
+    disbandBtn.addEventListener("click", disbandCurrentParty);
 }
 
 async function populateMapDropdown() {
@@ -169,9 +172,16 @@ function bindMapDropdown({ selected, optionsList, search }) {
     });
 }
 
+function hidePlayersLoading() {
+    document.querySelectorAll(".players-loading").forEach(loader => {
+        loader.remove();
+    });
+}
+
 async function loadParty() {
     try {
         currentParty = await loadOrCreateParty();
+
         window.currentParty = currentParty;
         setPartyCode(currentParty.code);
         setPartyHostId(String(currentParty.host));
@@ -182,6 +192,8 @@ async function loadParty() {
         });
 
         renderCurrentParty();
+        hidePlayersLoading();
+
     } catch (err) {
         console.error(err);
         showToast("Failed to load or create party", "error");
@@ -224,6 +236,11 @@ async function swapTeam(userId) {
     const partyCode = getPartyCode();
     if (!partyCode) return alert("No party Id found");
 
+    if (currentParty.mode !== "teams") {
+        showToast("Team swapping is only available in team mode.", "error");
+        return;
+    }
+
     currentParty = await swapPartyPlayer(partyCode, userId);
     window.currentParty = currentParty;
     renderCurrentParty();
@@ -264,8 +281,11 @@ async function kickPlayer(userId) {
 
 async function disbandCurrentParty() {
     try {
-        const res = await endParty();
-        if (!res.ok) throw new Error("Failed to disband party");
+        disbandBtn.disabled = true;
+        disbandBtn.textContent = "Disbanding...";
+        disbandBtn.classList.add("disabled");
+
+        await endParty();
 
         showToast("Party disbanded", "success");
         removePartyCode();
@@ -273,6 +293,10 @@ async function disbandCurrentParty() {
     } catch (err) {
         console.error(err);
         showToast("Failed to disband party", "error");
+
+        disbandBtn.disabled = false;
+        disbandBtn.textContent = "Disband";
+        disbandBtn.classList.remove("disabled");
     }
 }
 

@@ -15,13 +15,8 @@ export function setToken(token) {
 }
 
 export function removeToken() {
-    const token = getToken();
-    if (!token) {
-        window.location.href = "/login.html";
-        return null;
-    }
-
     localStorage.removeItem(STORAGE_KEYS.TOKEN);
+    return null;
 }
 
 export function getUsername() {

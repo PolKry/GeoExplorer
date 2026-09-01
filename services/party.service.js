@@ -80,13 +80,16 @@ async function endParty(userId) {
     error.status = 400;
     throw error;
   }
-
+  
   const party = await getPartyOrThrow(userProfile.partyCode);
   kickAllFromParty(party.code);
-
+  
   await partyRepository.deletePartyByCode(userProfile.partyCode);
   PartyManager.remove(userProfile.partyCode);
   await userProfileRepository.updateMany({ partyCode: userProfile.partyCode }, { $set: { partyCode: null } });
+  
+  console.log("Ending party for user:", userId, "with party code:", userProfile.partyCode);
+  return { message: 'Party ended successfully' };
 }
 
 async function joinParty(userId, partyId) {
@@ -303,7 +306,7 @@ async function updateSettings(userId, partyId, settings) {
   validatePartyId(partyId);
   const io = socket.getIO('/party');
   const party = await getPartyOrThrow(partyId);
-  
+
   if (party.host.toString() !== userId) {
     const error = new Error('Only host can change settings');
     error.status = 403;

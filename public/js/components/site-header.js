@@ -46,7 +46,7 @@ function initializeHeader() {
   });
 
   const profileLabel = header.querySelector(".profile-trigger-label");
-  profileLabel.textContent = getUsername() || "Account";
+  profileLabel.textContent = getUsername() || "Log In";
 
   document.addEventListener("click", event => {
     if (!dropdown.contains(event.target)) {

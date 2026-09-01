@@ -1,7 +1,6 @@
 import { deleteAccount } from "../../api/auth-api.js";
 import { apiFetch } from "../../api/http.js";
-import { requireToken } from "../../utils/auth.js";
-import { clearStorage, setUsername } from "../../utils/storage.js";
+import { clearStorage, getToken, setUsername } from "../../utils/storage.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const accountForm = document.getElementById("account-form");
@@ -66,7 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function assignValues() {
-    const token = requireToken();
+    const token = getToken();
     if (!token) return;
 
     const userRes = await apiFetch('/api/auth/me');
@@ -83,7 +82,7 @@ async function updateAccount(event) {
     const newPassword = document.getElementById("password-input").value;
     const currentPassword = document.getElementById("current-password").value;
 
-    const token = requireToken();
+    const token = getToken();
     if (!token) return;
 
     try {
