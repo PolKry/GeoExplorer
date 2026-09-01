@@ -3,6 +3,7 @@ const PointsMode = require("./modes/PointsMode");
 const CountryMode = require("./modes/CountryStreakMode");
 const FFAMode = require("./modes/FFAMode");
 const TeamsMode = require("./modes/TeamMode");
+const { ValidationError } = require("../utils/app-error.utils");
 
 // Map mode string => class
 const modes = {
@@ -19,7 +20,7 @@ const modes = {
  */
 function getGameClass(mode) {
     const GameClass = modes[mode];
-    if (!GameClass) throw new Error(`Unknown game mode: ${mode}`);
+    if (!GameClass) throw new ValidationError(`Unknown game mode: ${mode}`);
     return GameClass;
 }
 
@@ -37,7 +38,7 @@ function getModeFromClass(modeInstance) {
         if (cls === ModeClass) return mode;
     }
 
-    throw new Error("Unknown game mode class");
+    throw new ValidationError("Unknown game mode class");
 }
 
 module.exports = {

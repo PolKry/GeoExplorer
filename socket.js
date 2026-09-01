@@ -1,9 +1,10 @@
+const { ValidationError } = require('./utils/app-error.utils');
 let io;
 
 function init(server) {
   const { Server } = require("socket.io");
   io = new Server(server, {
-    cors: { origin: "*" }, // adjust for production
+    cors: { origin: "*" }, // TODO: What that means? => adjust for production
   });
 
   // Create isolated namespaces
@@ -14,7 +15,7 @@ function init(server) {
 }
 
 function getIO(namespace = "/") {
-  if (!io) throw new Error("Socket.io not initialized!");
+  if (!io) throw new ValidationError("Socket.io not initialized!");
   return io.of(namespace); // returns the namespace instance
 }
 

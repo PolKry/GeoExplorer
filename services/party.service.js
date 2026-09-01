@@ -9,21 +9,18 @@ const { stopRoundTimer } = require('../handlers/timer.handler');
 const userRepository = require('../repositories/user.repository');
 const userProfileRepository = require('../repositories/user-profile.repository');
 const partyRepository = require('../repositories/party.repository');
+const { ValidationError, NotFoundError, ForbiddenError } = require('../utils/app-error.utils');
 
 function validatePartyId(partyId) {
   if (!partyId || typeof partyId !== 'string' || partyId.length < 5) {
-    const error = new Error('Invalid or missing party code.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Invalid or missing party code.');
   }
 }
 
 async function getUserOrThrow(userId) {
   const user = await userRepository.findUserById(userId);
   if (!user) {
-    const error = new Error('User not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found');
   }
   return user;
 }
@@ -31,9 +28,7 @@ async function getUserOrThrow(userId) {
 async function getProfileOrThrow(userId) {
   const profile = await userProfileRepository.findByUserId(userId);
   if (!profile) {
-    const error = new Error('User profile not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User profile not found');
   }
   return profile;
 }
@@ -41,9 +36,7 @@ async function getProfileOrThrow(userId) {
 async function getPartyOrThrow(partyId) {
   const party = await PartyManager.getByCode(partyId);
   if (!party) {
-    const error = new Error('Party not found.');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('Party not found.');
   }
   return party;
 }
@@ -76,9 +69,7 @@ async function createParty(userId) {
 async function endParty(userId) {
   const userProfile = await getProfileOrThrow(userId);
   if (!userProfile.partyCode) {
-    const error = new Error('No active party');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('No active party');
   }
   
   const party = await getPartyOrThrow(userProfile.partyCode);
@@ -137,16 +128,12 @@ async function leaveParty(userId) {
   const userProfile = await getProfileOrThrow(userId);
 
   if (!userProfile.partyCode) {
-    const error = new Error('No active party');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('No active party');
   }
 
   const party = await getPartyOrThrow(userProfile.partyCode);
   if (party.isHost(userId)) {
-    const error = new Error('Host can not leave the party');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Host can not leave the party');
   }
 
   userProfile.partyCode = null;
@@ -161,15 +148,11 @@ async function startPartyGame(userId, partyId) {
   const party = await getPartyOrThrow(partyId);
 
   if (!party.isHost(userId)) {
-    const error = new Error('Only host can start the game');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Only host can start the game');
   }
 
   if (party.isPlaying()) {
-    const error = new Error('This party already has an ongoing game');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('This party already has an ongoing game');
   }
 
   const gameData = await gameController.startGameForParty(party);
@@ -185,9 +168,7 @@ async function swapPlayer(userId, partyId, swapUserId) {
   const party = await getPartyOrThrow(partyId);
 
   if (party.host.toString() !== userId) {
-    const error = new Error('Only host can swap people!');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Only host can swap people!');
   }
 
   if (party.settings.mode === 'teams') {
@@ -197,9 +178,7 @@ async function swapPlayer(userId, partyId, swapUserId) {
       }
     });
   } else if (party.settings.mode === 'ffa') {
-    const error = new Error('Cannot swap players in FFA mode');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Cannot swap players in FFA mode');
   }
 
   await party.persist();
@@ -214,22 +193,16 @@ async function kickPlayer(userId, partyId, kickedUserId) {
   const party = await getPartyOrThrow(partyId);
 
   if (!party.isHost(userId)) {
-    const error = new Error('Only host can kick people!');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Only host can kick people!');
   }
 
   if (party.isHost(kickedUserId)) {
-    const error = new Error('Host can not be kicked!');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Host can not be kicked!');
   }
 
   const kickedUser = party.getPlayer(kickedUserId);
   if (!kickedUser) {
-    const error = new Error('Kicked user could not be found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('Kicked user could not be found');
   }
 
   party.removePlayer(kickedUserId);
@@ -246,9 +219,7 @@ async function kickOfflinePlayers(userId, partyId) {
   const party = await getPartyOrThrow(partyId);
 
   if (!party.isHost(userId)) {
-    const error = new Error('Only host can kick players!');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Only host can kick players!');
   }
 
   const offlinePlayers = party.getOfflinePlayers();
@@ -277,15 +248,11 @@ async function terminateGame(userId, partyId) {
   const party = await getPartyOrThrow(partyId);
 
   if (!party.isHost(userId)) {
-    const error = new Error('Only host can kick players!');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Only host can kick players!');
   }
 
   if (!party.isPlaying()) {
-    const error = new Error('No ongoing game to terminate!');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('No ongoing game to terminate!');
   }
 
   const gameId = party.getGameId();
@@ -308,9 +275,7 @@ async function updateSettings(userId, partyId, settings) {
   const party = await getPartyOrThrow(partyId);
 
   if (party.host.toString() !== userId) {
-    const error = new Error('Only host can change settings');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Only host can change settings');
   }
 
   if (settings.mode === 'teams') {
@@ -332,9 +297,7 @@ async function updateSettings(userId, partyId, settings) {
 async function getParty(userId, partyId) {
   const party = await getPartyOrThrow(partyId);
   if (!party.getPlayer(userId)) {
-    const error = new Error('You are not a member of this party.');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('You are not a member of this party.');
   }
 
   if (party.isPlaying()) {

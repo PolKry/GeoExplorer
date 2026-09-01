@@ -1,13 +1,12 @@
 const userProfileRepository = require('../repositories/user-profile.repository');
 const userStatsRepository = require('../repositories/user-stats.repository');
 const { getXpForLevel } = require('../utils/user-experience.utils');
+const { NotFoundError, ValidationError } = require('../utils/app-error.utils');
 
 async function getMyProfile(userId) {
   const profile = await userProfileRepository.findByUserId(userId);
   if (!profile) {
-    const error = new Error('Profile not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('Profile not found');
   }
   return profile;
 }
@@ -15,9 +14,7 @@ async function getMyProfile(userId) {
 async function getHighestScore(userId, name) {
   const userStats = await userStatsRepository.findByUserId(userId);
   if (!userStats) {
-    const error = new Error('UserStats not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('UserStats not found');
   }
 
   return userStats.countryStats.get(name) || { highestScore: 0 };
@@ -26,16 +23,12 @@ async function getHighestScore(userId, name) {
 async function updateSettings(userId, settings) {
   const required = ['mapStyle', 'musicVolume', 'sfxVolume', 'soundEnabled', 'fullscreenEnabled'];
   if (required.some((field) => settings[field] === undefined)) {
-    const error = new Error('All settings are required');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('All settings are required');
   }
 
   const user = await userProfileRepository.findById(userId);
   if (!user) {
-    const error = new Error('User not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found');
   }
 
   user.settings = settings;
@@ -45,9 +38,7 @@ async function updateSettings(userId, settings) {
 
 async function toggleFavoriteMap(userId, mapName) {
   if (!mapName) {
-    const error = new Error('Country name is required');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Country name is required');
   }
 
   const user = await userProfileRepository.findFavoriteMap(userId, mapName);
@@ -60,16 +51,12 @@ async function toggleFavoriteMap(userId, mapName) {
 
 async function updateCountry(userId, country) {
   if (!country.name || !country.code) {
-    const error = new Error('Country name and code are required');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Country name and code are required');
   }
 
   const user = await userProfileRepository.findById(userId);
   if (!user) {
-    const error = new Error('User not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found');
   }
 
   user.country = country;
@@ -79,16 +66,12 @@ async function updateCountry(userId, country) {
 
 async function updateBio(userId, bio) {
   if (!bio) {
-    const error = new Error('Bio is required');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Bio is required');
   }
 
   const user = await userProfileRepository.findById(userId);
   if (!user) {
-    const error = new Error('User not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found');
   }
 
   user.bio = bio;
@@ -99,9 +82,7 @@ async function updateBio(userId, bio) {
 async function getUsername(userId) {
   const user = await userProfileRepository.findByUserId(userId);
   if (!user) {
-    const error = new Error('Profile not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('Profile not found');
   }
   return user.username;
 }
@@ -109,9 +90,7 @@ async function getUsername(userId) {
 async function getStats(userId) {
   const stats = await userStatsRepository.findByUserId(userId);
   if (!stats) {
-    const error = new Error('User stats not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User stats not found');
   }
 
   return {

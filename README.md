@@ -147,7 +147,7 @@ GAME_UNFINISHED_MAX_LIFETIME_MIN=10
 
 # =========================
 # Other 3rd party keys
-# =========================¨
+# =========================
 REST_COUNTRIES_API_KEY=your_rest_api_key
 ```
 

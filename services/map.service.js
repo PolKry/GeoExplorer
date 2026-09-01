@@ -2,6 +2,7 @@ const mapRepository = require('../repositories/map.repository');
 const locationDataRepository = require('../repositories/location-data.repository');
 const userProfileRepository = require('../repositories/user-profile.repository');
 const mapFileRepository = require('../repositories/map-file.repository');
+const { ValidationError, NotFoundError } = require('../utils/app-error.utils');
 
 const PAGE_SIZE = 12;
 
@@ -51,9 +52,7 @@ async function searchMaps({ userId, query = '', type = '', onlyFavMaps = false }
 
 async function getMapData({ id, map }) {
   if (!id && !map) {
-    const error = new Error('Missing id or map parameter');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Missing id or map parameter');
   }
 
   const mapData = id
@@ -61,9 +60,7 @@ async function getMapData({ id, map }) {
     : await mapRepository.findByName(map);
 
   if (!mapData) {
-    const error = new Error('Map not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('Map not found');
   }
 
   // Build the tags array with descriptions

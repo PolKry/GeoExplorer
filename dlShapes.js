@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 const turf = require('@turf/turf');
+const { BadGatewayError } = require('./utils/app-error.utils');
 
 // === CONFIG ===
 const API_KEY = '2befc2e6f2e7a8f7b3190e4fab247c66'; // <-- replace with your key
@@ -20,7 +21,7 @@ async function downloadAndProcess() {
     });
 
     if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+        throw new BadGatewayError(`OSM API error! status: ${res.status}`);
     }
 
     const geojson = await res.json();

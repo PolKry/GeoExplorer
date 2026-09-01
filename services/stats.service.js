@@ -1,12 +1,13 @@
 const userStatsRepository = require("../repositories/user-stats.repository");
 const gameResultRepository = require("../repositories/game-result.repository");
+const { ValidationError } = require("../utils/app-error.utils");
 
 const { getXpForLevel } = require("../utils/user-experience.utils");
 
 async function createGameResult(engine, mapCode) {
     try {
         if (!engine || !engine.players || engine.players.length === 0) {
-            throw new Error("Invalid engine or no players");
+            throw new ValidationError("Invalid engine or no players");
         }
 
         // Determine winner (highest score)

@@ -63,8 +63,9 @@ function stopRoundTimer(gameId) {
 }
 
 function registerTimerEvents() {
-    const io = getIO("/game");
+    console.log("Registered timer socket events...");
 
+    const io = getIO("/game");
     io.on("connection", (socket) => {
         socket.on("game:join", (gameId) => {
             if (timers.has(gameId)) {

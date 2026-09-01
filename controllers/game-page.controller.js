@@ -1,4 +1,5 @@
 const { getModeFromGameId } = require('../utils/game.utils');
+const { sendValidationError } = require('./response.controller');
 
 function play(req, res) {
   const gameId = req.params.gameId;
@@ -7,7 +8,7 @@ function play(req, res) {
   try {
     res.render(`${mode}-mode`, { gameId });
   } catch (error) {
-    res.status(400).send('Unknown mode: ', error);
+    sendValidationError(res, error, 'Unknown mode: ' + mode);
   }
 }
 

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { BadGatewayError, UnprocessableError } = require('../utils/app-error.utils');
 
 const geojsonPath = path.join(__dirname, '..', 'data', 'preview', 'world.geojson');
 
@@ -23,7 +24,7 @@ async function fetchCountryList() {
     );
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+      throw new BadGatewayError(`Country API error: ${response.status}`);
     }
 
     const json = await response.json();
@@ -31,7 +32,7 @@ async function fetchCountryList() {
     const objects = json.data?.objects;
 
     if (!Array.isArray(objects)) {
-      throw new Error('Invalid API format');
+      throw new UnprocessableError('Invalid country API format');
     }
 
     all.push(...objects);

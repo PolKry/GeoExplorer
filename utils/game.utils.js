@@ -1,4 +1,5 @@
 // utils/gameUtils.js
+const { ValidationError } = require('./app-error.utils');
 
 function toRad(deg) {
   return deg * Math.PI / 180;
@@ -68,7 +69,7 @@ function isValidRoundTime(seconds) {
 
 function normalizeRoundTime(seconds) {
   if (!isValidRoundTime(seconds)) {
-    throw new Error("Invalid round time");
+    throw new ValidationError("Invalid round time");
   }
 
   // Map 5s = infinite

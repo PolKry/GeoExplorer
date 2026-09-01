@@ -4,6 +4,7 @@ const mapRepository = require('../repositories/map.repository');
 const tagRepository = require('../repositories/tag.repository');
 const userRepository = require('../repositories/user.repository');
 const locationDataRepository = require('../repositories/location-data.repository');
+const { AuthError, ValidationError, NotFoundError, ConflictError } = require('../utils/app-error.utils');
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + Math.ceil(min);
@@ -11,31 +12,23 @@ function getRandomInt(min, max) {
 
 async function getAuthorFromToken(authHeader) {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    const error = new Error('Valid token is missing.');
-    error.status = 401;
-    throw error;
+    throw new AuthError('Valid token is missing.');
   }
 
   let decoded;
   try {
     decoded = jwt.verify(authHeader.split(' ')[1], process.env.JWT_SECRET);
   } catch (err) {
-    const error = new Error('Token not valid.');
-    error.status = 401;
-    throw error;
+    throw new AuthError('Token not valid.');
   }
 
   if (!decoded.userId) {
-    const error = new Error('Token does not contains userId.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Token does not contains userId.');
   }
 
   const user = await userRepository.findUserById(decoded.userId);
   if (!user) {
-    const error = new Error('User not found.');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found.');
   }
 
   return user.username || user.email || user._id.toString();
@@ -43,27 +36,19 @@ async function getAuthorFromToken(authHeader) {
 
 async function validateMapPayload({ name, description, difficulty, locations, tags }) {
   if (typeof name !== 'string' || name.length === 0 || name.length > 30) {
-    const error = new Error('Unvalid "name": string 1-30 characters.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Unvalid "name": string 1-30 characters.');
   }
 
   if (typeof description !== 'string' || description.length > 100) {
-    const error = new Error('Unvalid "description": max 100 characters.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Unvalid "description": max 100 characters.');
   }
 
   if (!Array.isArray(tags)) {
-    const error = new Error('Field "tags" must be an array.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Field "tags" must be an array.');
   }
 
   if (tags.some((tagName) => typeof tagName !== 'string' || tagName.trim().length === 0)) {
-    const error = new Error('Every tag must be a non-empty string.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Every tag must be a non-empty string.');
   }
 
   const existingTags = await tagRepository.findNames(tags);
@@ -71,34 +56,24 @@ async function validateMapPayload({ name, description, difficulty, locations, ta
   const invalidTags = tags.filter((tag) => !existingTagNames.includes(tag));
 
   if (invalidTags.length > 0) {
-    const error = new Error(`These tags do not exist: ${invalidTags.join(', ')}`);
-    error.status = 400;
-    throw error;
+    throw new ValidationError(`These tags do not exist: ${invalidTags.join(', ')}`);
   }
 
   if (!['Easy', 'Medium', 'Hard'].includes(difficulty)) {
-    const error = new Error('Unvalid value "difficulty".');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Unvalid value "difficulty".');
   }
 
   if (!Array.isArray(locations) || locations.length === 0) {
-    const error = new Error('Field "locations" must not be empty.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Field "locations" must not be empty.');
   }
 
   if (!locations.every((loc) => typeof loc.lat === 'number' && typeof loc.lng === 'number')) {
-    const error = new Error('Every location has to have number values "lat" a "lng".');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Every location has to have number values "lat" a "lng".');
   }
 
   const existing = await mapRepository.findExistingByName(name);
   if (existing) {
-    const error = new Error('Map with this name already exists.');
-    error.status = 400;
-    throw error;
+    throw new ConflictError('Map with this name already exists.');
   }
 }
 

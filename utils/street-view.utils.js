@@ -6,6 +6,7 @@ const fetch = require("node-fetch");
 
 const MapModel = require("../models/map.model");
 const LocationData = require("../models/location-data.model");
+const { NotFoundError, UnprocessableError, ValidationError } = require("./app-error.utils");
 
 const countryCache = new Map();
 const fallbackCache = new Map();
@@ -48,7 +49,7 @@ async function getCountryPolygon(code) {
             polygons = extractPolygons(geojson);
         }
 
-        if (!polygons.length) throw new Error("Unknown Geometry Type");
+        if (!polygons.length) throw new UnprocessableError("Unknown Geometry Type");
 
         const poly = { type: "MultiPolygon", coordinates: polygons };
 
@@ -218,10 +219,10 @@ function normalizeLocation(loc) {
 
 // Main Entry Point
 async function getRandomLocation(mapId) {
-    if (!mapId) throw new Error("Map id required");
+    if (!mapId) throw new ValidationError("Map id required");
 
     let mapData = await MapModel.findById(mapId).lean();
-    if (!mapData) throw new Error("Map not found:");
+    if (!mapData) throw new NotFoundError("Map not found");
 
     if (mapData.type === "Official") {
         // Official Maps
@@ -241,10 +242,10 @@ async function getOfficialMap(mapData) {
 
         if (mapData.category === "CountryGroup") {
             countryCode = await getCompositeCountry(mapData.fallbackFile);
-            if (!countryCode) throw new Error("Composite country not found");
+            if (!countryCode) throw new UnprocessableError("Composite country not found");
 
             mapData = await MapModel.findOne({ srcName: countryCode }).lean();
-            if (!mapData) throw new Error("Map not found: " + countryCode);
+            if (!mapData) throw new NotFoundError("Map not found: " + countryCode);
         }
 
         const poly = await getCountryPolygon(countryCode);
@@ -273,7 +274,7 @@ async function getUnofficialMap(mapData) {
     const mapId = mapData._id;
 
     const count = await LocationData.countDocuments({ mapId });
-    if (!count) throw new Error("No locations in community map");
+    if (!count) throw new UnprocessableError("No locations in community map");
 
     const random = Math.floor(Math.random() * count);
 
@@ -282,7 +283,7 @@ async function getUnofficialMap(mapData) {
         .skip(random)
         .lean();
 
-    if (!loc) throw new Error("Failed to pick random location");
+    if (!loc) throw new UnprocessableError("Failed to pick random location");
 
     return {
         location: normalizeLocation({

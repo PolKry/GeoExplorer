@@ -1,5 +1,6 @@
 const { getIO } = require("../socket");
 const PartyManager = require("../managers/party.manager");
+const { socketEventHandler } = require('../utils/socket-error.utils');
 
 // userId -> Set(socketIds)
 const onlineUsers = new Map();
@@ -65,12 +66,13 @@ function kickUserFromParty(userId, username, partyCode) {
   Register socket events
 */
 function registerPartyEvents() {
+  console.log("Registered party socket events...");
+  
   const io = getIO("/party");
-
   io.on("connection", (socket) => {
     console.log("Party user connected:", socket.id);
 
-    socket.on("join-party", async ({ partyCode, userId }) => {
+    socket.on("join-party", socketEventHandler(async ({ partyCode, userId }) => {
       if (!partyCode || !userId) return;
 
       const party = await PartyManager.getByCode(partyCode);
@@ -99,9 +101,9 @@ function registerPartyEvents() {
       }
 
       console.log(`User ${userId} joined party ${partyCode}`);
-    });
+    }));
 
-    socket.on("disconnect", async () => {
+    socket.on("disconnect", socketEventHandler(async () => {
       const meta = socketMeta.get(socket.id);
       if (!meta) return;
 
@@ -131,7 +133,7 @@ function registerPartyEvents() {
 
         console.log(`User ${userId} fully disconnected`);
       }
-    });
+    }));
   });
 }
 

@@ -18,6 +18,7 @@ const { getIO } = require("../socket");
 const { getGameClass } = require("../game/getGameClass");
 const { getPlayerColor } = require("../utils/player-color.utils");
 const PartyManager = require("../managers/party.manager");
+const { ValidationError, NotFoundError } = require("../utils/app-error.utils");
 
 /*
     Generates a random id using 2 parts
@@ -41,7 +42,7 @@ async function startGame({
     const hostUser = await userRepository.findUserById(hostUserId);
 
     if (!hostUser) {
-        throw new Error("Host user not found");
+        throw new NotFoundError("Host user not found");
     }
 
     const normalizedSettings = normalizeGameSettings(mode, settings);
@@ -56,7 +57,7 @@ async function startGame({
     const map = await mapRepository.findByCode(mapCode);
 
     if (!map) {
-        throw new Error(`Map not found: ${mapCode}`);
+        throw new NotFoundError(`Map not found: ${mapCode}`);
     }
 
     const players = await userRepository.findUsersByIds(playerIds);
@@ -144,19 +145,19 @@ function normalizeGameSettings(mode, settings = {}) {
     } = settings;
 
     if (!gameplayMode) {
-        throw new Error("Gameplay mode is required");
+        throw new ValidationError("Gameplay mode is required");
     }
 
     if (!mapCode) {
-        throw new Error("Map is required");
+        throw new ValidationError("Map is required");
     }
 
     if (!Number.isInteger(maxRounds) || maxRounds <= 0) {
-        throw new Error("maxRounds must be a positive integer");
+        throw new ValidationError("maxRounds must be a positive integer");
     }
 
     if (!roundTime || roundTime <= 0) {
-        throw new Error("roundTime must be greater than 0");
+        throw new ValidationError("roundTime must be greater than 0");
     }
 
     return {
@@ -241,7 +242,7 @@ function withTimerState(payload, engine) {
 
 async function getStatus(gameId, userId) {
     const engine = GameManager.get(gameId);
-    if (!engine) throw new Error("Game not active");
+    if (!engine) throw new ValidationError("Game not active");
 
     const payload = withTimerState(
         engine.mode.getGameStatusPayload(engine, userId),
@@ -257,7 +258,7 @@ async function getStatus(gameId, userId) {
 */
 async function submitGuess(gameId, userId, guess) {
     const engine = GameManager.get(gameId);
-    if (!engine) throw new Error("Game not active");
+    if (!engine) throw new ValidationError("Game not active");
 
     // If party requires waiting for first guess, and the round hasn't started timing yet,
     // start the timer and set the round.startedAt now so player timing is correct.
@@ -294,7 +295,7 @@ async function endRound(gameId, hostId) {
     if (!engine) return;
 
     if (!engine.isHost(hostId)) {
-        throw new Error("Only the host can end the round");
+        throw new ValidationError("Only the host can end the round");
     }
 
     await engine.endRound();

@@ -3,26 +3,21 @@ const jwt = require('jsonwebtoken');
 
 const userRepository = require('../repositories/user.repository');
 const { sendEmail } = require('../utils/email-sender.utils');
+const { ValidationError, ForbiddenError, NotFoundError, ConflictError } = require('../utils/app-error.utils');
 
 function validateRequired(value, message) {
   if (!value) {
-    const error = new Error(message);
-    error.status = 400;
-    throw error;
+    throw new ValidationError(message);
   }
 }
 
 function validateLength(value, min, max, fieldName) {
   if (value.length < Number(min)) {
-    const error = new Error(`${fieldName} must be at least ${min} characters`);
-    error.status = 400;
-    throw error;
+    throw new ValidationError(`${fieldName} must be at least ${min} characters`);
   }
 
   if (value.length > Number(max)) {
-    const error = new Error(`${fieldName} must not exceed ${max} characters`);
-    error.status = 400;
-    throw error;
+    throw new ValidationError(`${fieldName} must not exceed ${max} characters`);
   }
 }
 
@@ -75,9 +70,7 @@ async function register({ email, username, password }) {
   try {
     const existingUser = await userRepository.findUserByEmail(email, { session });
     if (existingUser) {
-      const error = new Error('Email already in use');
-      error.status = 400;
-      throw error;
+      throw new ConflictError('Email already in use');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -106,22 +99,16 @@ async function register({ email, username, password }) {
 async function login({ email, password }) {
   const user = await userRepository.findUserByEmail(email, { includePassword: true });
   if (!user) {
-    const error = new Error('Invalid credentials');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Invalid credentials');
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    const error = new Error('Invalid credentials');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Invalid credentials');
   }
 
   if (!user.isVerified) {
-    const error = new Error('Verify your email first');
-    error.status = 403;
-    throw error;
+    throw new ForbiddenError('Verify your email first');
   }
 
   return {
@@ -137,16 +124,12 @@ async function verifyEmail(token) {
   try {
     payload = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
-    const error = new Error('Invalid or expired verification token.');
-    error.status = 400;
-    throw error;
+    throw new ValidationError('Invalid or expired verification token.');
   }
 
   const user = await userRepository.findUserById(payload.userId);
   if (!user) {
-    const error = new Error('User not found.');
-    error.status = 400;
-    throw error;
+    throw new NotFoundError('User not found.');
   }
 
   if (user.isVerified) {
@@ -161,9 +144,7 @@ async function verifyEmail(token) {
 async function getMe(userId) {
   const user = await userRepository.findUserById(userId, { excludePassword: true });
   if (!user) {
-    const error = new Error('User not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found');
   }
   return user;
 }
@@ -171,9 +152,7 @@ async function getMe(userId) {
 async function deleteAccount(userId) {
   const user = await userRepository.deleteUserById(userId);
   if (!user) {
-    const error = new Error('User not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found');
   }
 }
 
@@ -182,9 +161,7 @@ async function updateAccount(userId, { username, newPassword, currentPassword })
   const user = await userRepository.findUserById(userId, { includePassword: true });
 
   if (!user) {
-    const error = new Error('User not found');
-    error.status = 404;
-    throw error;
+    throw new NotFoundError('User not found');
   }
 
   if (newPassword) {
@@ -193,9 +170,7 @@ async function updateAccount(userId, { username, newPassword, currentPassword })
 
     const isMatch = await bcrypt.compare(currentPassword, user.password);
     if (!isMatch) {
-      const error = new Error('Current password is incorrect');
-      error.status = 400;
-      throw error;
+      throw new ValidationError('Current password is incorrect');
     }
 
     user.password = await bcrypt.hash(newPassword, 10);

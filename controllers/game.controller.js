@@ -26,7 +26,7 @@ exports.startPointsMode = async (req, res) => {
             roundTime: session.settings.roundTime
         });
     } catch (err) {
-        sendError(res, { ...err, status: 400 }, 'Failed to start points game');
+        sendError(res, err, 'Failed to start points game');
     }
 };
 
@@ -54,7 +54,7 @@ exports.startCountryMode = async (req, res) => {
             roundTime: session.settings.roundTime
         });
     } catch (err) {
-        sendError(res, { ...err, status: 400 }, 'Failed to start country game');
+        sendError(res, err, 'Failed to start country game');
     }
 };
 

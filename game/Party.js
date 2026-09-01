@@ -1,5 +1,6 @@
 const PartyModel = require("../models/party.model");
 const MapModel = require("../models/map.model");
+const { NotFoundError, ValidationError } = require("../utils/app-error.utils");
 const { getPlayerColor: getColor } = require("../utils/player-color.utils");
 const { stopRoundTimer } = require('../handlers/timer.handler');
 const crypto = require("crypto");
@@ -40,7 +41,7 @@ class Party {
         const worldMap = await this.getDefaultMap();
 
         if (!worldMap) {
-            throw new Error("World map not found");
+            throw new NotFoundError("World map not found");
         }
 
         const doc = await PartyModel.create({
@@ -200,7 +201,7 @@ class Party {
     // -------- SETTINGS --------
     updateSettings(userId, newSettings) {
         if (!this.isHost(String(userId))) {
-            throw new Error("Only host can update settings");
+            throw new ValidationError("Only host can update settings");
         }
 
         this.settings = {
@@ -214,7 +215,7 @@ class Party {
     // -------- GAME FLOW --------
     startGame(userId, gameId) {
         if (!this.isHost(String(userId))) {
-            throw new Error("Only host can start the game");
+            throw new ValidationError("Only host can start the game");
         }
 
         this.status = "in_progress";

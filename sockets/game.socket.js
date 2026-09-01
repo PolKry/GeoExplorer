@@ -1,12 +1,14 @@
 const gameService = require('../services/game.service');
 const GameSession = require("../models/game-session.model");
 const GameManager = require("../managers/game.manager");
+const { socketAsyncHandler, socketEventHandler } = require('../utils/socket-error.utils');
 
 const { getIO } = require("../socket");
 
 function registerGameEvents() {
-    const io = getIO("/game");
+    console.log("Registered game socket events...");
 
+    const io = getIO("/game");
     io.on('connection', (socket) => {
         const userId = socket.user.userId.toString();
 
@@ -16,24 +18,20 @@ function registerGameEvents() {
         socket.join(userId);
 
         // --- GAME EVENTS ---
-        socket.on('game:get-status', async ({ gameId }, callback) => {
-            try {
-                const gameData = await gameService.getStatus(gameId, userId);
-                callback(gameData);
-            } catch (err) {
-                callback({ error: err.message });
-            }
-        });
+        socket.on('game:get-status', socketAsyncHandler(async ({ gameId }, callback) => {
+            const gameData = await gameService.getStatus(gameId, userId);
+            callback(gameData);
+        }));
 
-        socket.on('game:submit-guess', async (data) => {
+        socket.on('game:submit-guess', socketEventHandler(async (data) => {
             await gameService.submitGuess(
                 data.gameId,
                 userId,
                 data
             );
-        });
+        }));
 
-        socket.on("game:update-marker", async ({ gameId, position }) => {
+        socket.on("game:update-marker", socketEventHandler(async ({ gameId, position }) => {
             const engine = GameManager.get(gameId);
 
             // Only store valid numbers
@@ -43,15 +41,14 @@ function registerGameEvents() {
                     lng: Number(position.lng)
                 });
             }
-        });
+        }));
 
-
-        socket.on('game:end-round', async ({ gameId }) => {
+        socket.on('game:end-round', socketEventHandler(async ({ gameId }) => {
             await gameService.endRound(gameId, userId);
-        });
+        }));
 
         // --- JOIN GAME ROOM ---
-        socket.on("game:join", async (gameId) => {
+        socket.on("game:join", socketEventHandler(async (gameId) => {
             socket.join(gameId);
 
             if (!socket.data.games) socket.data.games = new Set();
@@ -61,9 +58,9 @@ function registerGameEvents() {
             await gameService.handlePlayerConnection(gameId, userId, socket);
 
             console.log(`Socket ${socket.id} joined game room ${gameId}`);
-        });
+        }));
 
-        socket.on("disconnect", async () => {
+        socket.on("disconnect", socketEventHandler(async () => {
             console.log("User disconnected:", socket.id);
 
             if (!socket.data.games) return;
@@ -76,7 +73,7 @@ function registerGameEvents() {
                     console.error("Failed to mark player offline:", err);
                 }
             }
-        });
+        }));
 
         function waitForEngine(gameId, timeoutMs = 5000) {
             try {

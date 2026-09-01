@@ -1,5 +1,6 @@
 // game/GameEngine.js
 const EventEmitter = require("events");
+const { ValidationError } = require("../utils/app-error.utils");
 
 const { getGameClass } = require("../game/getGameClass");
 const Player = require("./Player");
@@ -297,7 +298,7 @@ class GameEngine extends EventEmitter {
     // Recreates game engine from a database session
     static loadFromSession(session) {
         if (!session.gameId) {
-            throw new Error("Invalid session: missing gameId");
+            throw new ValidationError("Invalid session: missing gameId");
         }
 
         const GameModeClass = getGameClass(session.mode);

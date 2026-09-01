@@ -1,4 +1,5 @@
 const countryRepository = require('../repositories/country.repository');
+const { ValidationError } = require('../utils/app-error.utils');
 
 let cachedCountries = null;
 
@@ -19,7 +20,7 @@ async function fetchCountries() {
 
 function getCountries() {
   if (!cachedCountries) {
-    throw new Error('Countries not loaded. Call fetchCountries() first.');
+    throw new ValidationError('Countries not loaded. Call fetchCountries() first.');
   }
   return cachedCountries;
 }

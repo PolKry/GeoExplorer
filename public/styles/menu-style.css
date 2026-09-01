@@ -581,6 +581,15 @@ nav#nav-menu {
     animation: fadeIn 0.6s ease-in-out;
 }
 
+.wave-container {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+    font-size: 0;
+    overflow: visible;
+    margin-bottom: -2px;
+}
+
 /* Waves */
 .shadow-wave {
     position: absolute;
@@ -595,6 +604,7 @@ nav#nav-menu {
     bottom: 100%;
     left: 0;
     width: 100%;
+    transform: translateY(50px);
 }
 
 .bottom-waves .shadow-wave:nth-child(1) {
@@ -801,7 +811,11 @@ nav#nav-menu {
 }
 
 .site-header .nav-container {
+    flex: 1 1 auto;
+    display: flex;
     justify-content: center;
+    min-width: 0;
+    padding-right: 1rem;
 }
 
 .site-header nav#nav-menu {
@@ -862,10 +876,17 @@ nav#nav-menu {
 }
 
 .site-header .vertical-separator {
-    width: 2px;
-    height: 4rem;
-    margin: 0 -0.65rem 0 0;
-    background: linear-gradient(transparent, rgba(110, 255, 210, 0.6), transparent);
+    width: 1px;
+    height: 3.2rem;
+    margin: 0 0.35rem 0 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(130, 255, 216, 0.9) 20%, rgba(130, 255, 216, 0.9) 80%, transparent 100%);
+    box-shadow: 0 0 12px rgba(112, 255, 205, 0.28);
+}
+
+.site-header #login-button,
+.site-header #profile-wrapper {
+    position: relative;
+    margin-left: 0.2rem;
 }
 
 .site-header #login-button {
