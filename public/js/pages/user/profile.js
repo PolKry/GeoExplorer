@@ -1,4 +1,5 @@
 import { apiFetch } from "../../api/http.js";
+import { getToken } from "../../utils/storage.js";
 
 const avatarElement = document.querySelector('.profile-avatar');
 

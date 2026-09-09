@@ -26,10 +26,11 @@ section {
     max-width: 900px;
     margin: 3.5rem auto;
     padding: 2rem;
-    background-color: rgba(255, 255, 255, 0.03);
+    background: linear-gradient(145deg, var(--geo-panel, rgba(19, 25, 30, 0.96)), var(--geo-panel-alt, rgba(34, 45, 50, 0.9)));
+    border: 1px solid var(--geo-border, rgba(150, 255, 220, 0.18));
     backdrop-filter: blur(6px);
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    border-radius: var(--geo-radius-large, 18px);
+    box-shadow: 0 18px 38px var(--geo-shadow, rgba(0, 0, 0, 0.28));
 }
 
 section h2 {

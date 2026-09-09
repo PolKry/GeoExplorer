@@ -2,11 +2,35 @@ export function renderCompactLeaderboard(containerId, players) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
+    if (!players || players.length === 0) {
+        container.innerHTML = `
+            <li class="leaderboard-empty" role="status">
+                <span class="empty-icon" aria-hidden="true">-</span>
+                <span>No records found yet.</span>
+                <small>Be the first to make the leaderboard.</small>
+            </li>
+        `;
+        return;
+    }
+
     container.innerHTML = players.map((player, index) => `
         <li class="leaderboard-item">
             <span class="rank">${index + 1}</span>
             <span class="username">${player.username}</span>
             <span class="score">${formatScore(player.score)}</span>
+        </li>
+    `).join("");
+}
+
+export function renderLeaderboardLoading(containerId, size = 5) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    container.innerHTML = Array.from({ length: size }, () => `
+        <li class="leaderboard-item leaderboard-skeleton" aria-hidden="true">
+            <span class="shimmer skeleton-rank"></span>
+            <span class="shimmer skeleton-name"></span>
+            <span class="shimmer skeleton-score"></span>
         </li>
     `).join("");
 }

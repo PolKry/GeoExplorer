@@ -22,35 +22,147 @@
     <div class="wave-container" data-component="/components/top-waves.html"></div>
 
     <main class="game-modes-panel">
-        <h2 class="title">Game Modes</h2>
-        <div class="multi-columns">
-            <div class="multi-panel">
-                <h3>Competitive</h3>
-                <p class="panel-description">Face off in intense real-time matches against other players.</p>
-                <div class="line"></div>
-                <div class="panel-content">
-                    <button>Duels</button>
-                    <button>Team Duels</button>
+        <div class="page-header">
+            <p class="eyebrow">Choose your challenge</p>
+            <h2 class="title">Game Modes</h2>
+        </div>
+
+        <div class="mode-grid">
+            <article class="mode-card is-live">
+                <div class="mode-header">
+                    <div class="mode-icon">🌍</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Available</span>
+                        <h3>Country Mode</h3>
+                    </div>
                 </div>
-            </div>
-            <div class="multi-panel">
-                <h3>Events</h3>
-                <p class="panel-description">Join limited-time events with unique rules and rewards.</p>
-                <div class="line"></div>
-                <div class="panel-content">
-                    <button>Empty</button>
-                    <button>Empty</button>
+                <p class="mode-description">Guess the correct country on a global map and climb the leaderboard.</p>
+                <ul class="mode-meta">
+                    <li>Live rounds</li>
+                    <li>World map play</li>
+                    <li>Leaderboard support</li>
+                </ul>
+                <button id="country-mode-button" class="mode-action primary">Play Country</button>
+            </article>
+
+            <article class="mode-card is-upcoming">
+                <div class="mode-header">
+                    <div class="mode-icon">⚡</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Upcoming</span>
+                        <h3>Country Blitz</h3>
+                    </div>
                 </div>
-            </div>
-            <div class="multi-panel">
-                <h3>Experimental</h3>
-                <p class="panel-description">Try out upcoming game modes and test new features.</p>
-                <div class="line"></div>
-                <div class="panel-content">
-                    <button id="country-mode-button">Country</button>
-                    <button>Empty</button>
+                <p class="mode-description">A 60-second sprint where you identify as many countries as possible and build combo streaks.</p>
+                <ul class="mode-meta">
+                    <li>60s challenge</li>
+                    <li>Combo multipliers</li>
+                    <li>Final score</li>
+                </ul>
+                <button class="mode-action secondary" disabled>Coming soon</button>
+            </article>
+
+            <article class="mode-card is-upcoming">
+                <div class="mode-header">
+                    <div class="mode-icon">🚧</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Upcoming</span>
+                        <h3>Border Battle</h3>
+                    </div>
                 </div>
-            </div>
+                <p class="mode-description">Solve border-zone challenges and identify the country in difficult near-border locations.</p>
+                <ul class="mode-meta">
+                    <li>Border rounds</li>
+                    <li>Harder progression</li>
+                    <li>Neighboring pairs</li>
+                </ul>
+                <button class="mode-action secondary" disabled>Coming soon</button>
+            </article>
+
+            <article class="mode-card is-upcoming">
+                <div class="mode-header">
+                    <div class="mode-icon">🎯</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Upcoming</span>
+                        <h3>A or B</h3>
+                    </div>
+                </div>
+                <p class="mode-description">Choose the correct answer from two close options as locations and difficulty ramp up.</p>
+                <ul class="mode-meta">
+                    <li>Fast pace</li>
+                    <li>Two-choice rounds</li>
+                    <li>Difficulty scaling</li>
+                </ul>
+                <button class="mode-action secondary" disabled>Coming soon</button>
+            </article>
+
+            <article class="mode-card is-upcoming">
+                <div class="mode-header">
+                    <div class="mode-icon">🛡️</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Upcoming</span>
+                        <h3>Streak Survival</h3>
+                    </div>
+                </div>
+                <p class="mode-description">Keep the streak alive as long as possible and chase your best score before one mistake ends it.</p>
+                <ul class="mode-meta">
+                    <li>Endless run</li>
+                    <li>Longest streak</li>
+                    <li>High score tracking</li>
+                </ul>
+                <button class="mode-action secondary" disabled>Coming soon</button>
+            </article>
+
+            <article class="mode-card is-upcoming">
+                <div class="mode-header">
+                    <div class="mode-icon">📅</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Upcoming</span>
+                        <h3>Daily Challenge</h3>
+                    </div>
+                </div>
+                <p class="mode-description">A daily rotating challenge with a shared location set, daily score, and streak rewards.</p>
+                <ul class="mode-meta">
+                    <li>Shared daily set</li>
+                    <li>Daily score</li>
+                    <li>Streak progression</li>
+                </ul>
+                <button class="mode-action secondary" disabled>Coming soon</button>
+            </article>
+
+            <article class="mode-card is-progress">
+                <div class="mode-header">
+                    <div class="mode-icon">⚡</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Party mode</span>
+                        <h3>Points Mode</h3>
+                    </div>
+                </div>
+                <p class="mode-description">A score-focused party mode built for live group matches and competitive point chases.</p>
+                <ul class="mode-meta">
+                    <li>Party play</li>
+                    <li>Fast rounds</li>
+                    <li>In development</li>
+                </ul>
+                <button id="points-mode-button" class="mode-action primary">Create party</button>
+            </article>
+
+            <article class="mode-card is-progress">
+                <div class="mode-header">
+                    <div class="mode-icon">🧑‍🤝‍🧑</div>
+                    <div class="mode-copy">
+                        <span class="mode-badge">Party mode</span>
+                        <h3>FFA Mode</h3>
+                    </div>
+                </div>
+                <p class="mode-description">A party free-for-all where players compete directly in the same lobby and race for the top score.</p>
+                <ul class="mode-meta">
+                    <li>Party lobby</li>
+                    <li>Live competition</li>
+                    <li>Ready to host</li>
+                </ul>
+                <button id="ffa-mode-button" class="mode-action primary">Create party</button>
+            </article>
         </div>
     </main>
 

@@ -44,7 +44,7 @@ body {
 .back-button {
     display: inline-block;
     padding: 0.9rem 2.2rem;
-    background-color: #00ffae;
+    background-color: var(--geo-teal);
     border-radius: 8px;
     border: none;
     transition: 0.25s ease;
@@ -52,7 +52,7 @@ body {
 }
 
 .back-button:hover {
-    background-color: #00d790;
+    background-color: var(--geo-teal-dark);
     transform: scale(1.05);
 }
 

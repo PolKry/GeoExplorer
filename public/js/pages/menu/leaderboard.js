@@ -1,5 +1,8 @@
 import { fetchLeaderboard } from "../../api/leaderboard-api.js";
-import { renderCompactLeaderboard } from "../../renderers/leaderboard-renderer.js";
+import {
+  renderCompactLeaderboard,
+  renderLeaderboardLoading,
+} from "../../renderers/leaderboard-renderer.js";
 
 const leaderboardsToLoad = [
   { map: "global", periods: ["daily", "monthly", "total"] },
@@ -9,12 +12,17 @@ const leaderboardsToLoad = [
 ];
 
 async function loadLeaderboards() {
-  for (const { map, periods } of leaderboardsToLoad) {
-    for (const period of periods) {
+  const requests = leaderboardsToLoad.flatMap(({ map, periods }) =>
+    periods.map(async (period) => {
+      const containerId = `${map}-${period}`;
+      renderLeaderboardLoading(containerId);
+
       const topPlayers = await fetchLeaderboard(map, period, 5);
-      renderCompactLeaderboard(`${map}-${period}`, topPlayers);
-    }
-  }
+      renderCompactLeaderboard(containerId, topPlayers);
+    }),
+  );
+
+  await Promise.all(requests);
 }
 
 document.addEventListener("DOMContentLoaded", loadLeaderboards);

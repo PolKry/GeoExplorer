@@ -4,8 +4,19 @@ let startInProgress = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     const countryButton = document.getElementById("country-mode-button");
-    countryButton.addEventListener('click', (e) => {
+    const pointsButton = document.getElementById("points-mode-button");
+    const ffaButton = document.getElementById("ffa-mode-button");
+
+    countryButton?.addEventListener('click', () => {
         startPointsMode();
+    });
+
+    pointsButton?.addEventListener('click', () => {
+        window.location.href = "/party/create.html";
+    });
+
+    ffaButton?.addEventListener('click', () => {
+        window.location.href = "/party/create.html";
     });
 });
 
