@@ -25,6 +25,44 @@ function signVerificationToken(userId) {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
 }
 
+function createPasswordResetToken(userId) {
+  return jwt.sign({ userId, purpose: 'password_reset' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+}
+
+function verifyPasswordResetToken(token) {
+  validateRequired(token, 'Missing password reset token.');
+
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    if (payload.purpose !== 'password_reset') {
+      throw new ValidationError('Invalid password reset token.');
+    }
+    return payload;
+  } catch (error) {
+    if (error instanceof ValidationError) throw error;
+    throw new ValidationError('Invalid or expired password reset token.');
+  }
+}
+
+function normalizeRegistrationProfile({ firstName, lastName, country, bio } = {}) {
+  const cleanFirstName = (firstName || '').trim();
+  const cleanLastName = (lastName || '').trim();
+  const cleanBio = (bio || '').trim();
+  const normalizedCountry = country && (country.name || country.code)
+    ? {
+        name: (country.name || '').trim(),
+        code: (country.code || '').trim()
+      }
+    : { name: '', code: '' };
+
+  return {
+    firstName: cleanFirstName,
+    lastName: cleanLastName,
+    country: normalizedCountry,
+    bio: cleanBio || 'No bio yet. Add one to tell others more about yourself!'
+  };
+}
+
 function buildVerificationEmail(username, verificationLink) {
   return `
     <!DOCTYPE html>
@@ -57,12 +95,44 @@ function buildVerificationEmail(username, verificationLink) {
   `;
 }
 
-async function register({ email, username, password }) {
+function buildPasswordResetEmail(username, resetLink) {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Reset your GeoExplorer password</title>
+      </head>
+      <body style="font-family: Arial, sans-serif; background: #203a43; padding: 30px; margin: 0;">
+        <div style="max-width: 500px; margin: auto; background: #1e1e1e; padding: 30px; border-radius: 12px; box-shadow: 0 0 15px rgba(0, 255, 174, 0.5); color: #fff; text-align: center;">
+          <img src="${process.env.BASE_URL}/Resources/Images/Icon.png" alt="GeoExplorer Logo" style="width: 60px; margin-bottom: 20px;">
+          <h2 style="color: #00ffae; margin-bottom: 10px;">Password reset</h2>
+          <p style="font-size: 1.05em; margin-bottom: 18px;">Hi ${username},</p>
+          <p style="margin-bottom: 28px;">We received a request to reset your GeoExplorer password.</p>
+          <a href="${resetLink}" target="_blank" style="text-decoration: none;">
+            <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto;">
+              <tr>
+                <td style="background-color: #00ffae; padding: 15px 30px; border-radius: 8px; box-shadow: 0 0 10px #00ffae; text-align: center;">
+                  <span style="color: #000; font-weight: bold; font-size: 16px; text-decoration: none; display: inline-block;">Reset Password</span>
+                </td>
+              </tr>
+            </table>
+          </a>
+          <p style="font-size: 0.85em; color: #aaa; margin-top: 28px;">If you did not request this, you can safely ignore this email.</p>
+        </div>
+      </body>
+    </html>
+  `;
+}
+
+async function register({ email, username, password, firstName, lastName, country, bio }) {
   validateRequired(email, 'Email is required');
   validateRequired(password, 'Password is required');
   validateLength(password, process.env.MIN_PASSWORD_LENGHT, process.env.MAX_PASSWORD_LENGHT, 'Password');
   validateRequired(username, 'Username is required');
   validateLength(username, process.env.MIN_USERNAME_LENGHT, process.env.MAX_USERNAME_LENGHT, 'Username');
+
+  const profileData = normalizeRegistrationProfile({ firstName, lastName, country, bio });
 
   const session = await userRepository.startSession();
   session.startTransaction();
@@ -80,7 +150,11 @@ async function register({ email, username, password }) {
       password: hashedPassword,
       createdAt: new Date(),
       role: 'user',
-      isVerified: false
+      isVerified: false,
+      profileData: {
+        ...profileData,
+        bio: profileData.bio
+      }
     }, session);
 
     await session.commitTransaction();
@@ -141,6 +215,37 @@ async function verifyEmail(token) {
   return { alreadyVerified: false };
 }
 
+async function requestPasswordReset({ email }) {
+  validateRequired(email, 'Email is required');
+
+  const user = await userRepository.findUserByEmail(email);
+  if (!user) {
+    return { message: 'If an account with that email exists, a reset link has been sent.' };
+  }
+
+  const token = createPasswordResetToken(user._id);
+  const resetLink = `${process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}`}/forgot-password-reset.html?token=${token}`;
+  await sendEmail(user.email, 'Reset your GeoExplorer password', buildPasswordResetEmail(user.username || user.email, resetLink));
+
+  return { message: 'If an account with that email exists, a reset link has been sent.' };
+}
+
+async function resetPassword({ token, password }) {
+  const payload = verifyPasswordResetToken(token);
+  validateRequired(password, 'New password is required');
+  validateLength(password, process.env.MIN_PASSWORD_LENGHT, process.env.MAX_PASSWORD_LENGHT, 'Password');
+
+  const user = await userRepository.findUserById(payload.userId, { includePassword: true });
+  if (!user) {
+    throw new NotFoundError('User not found');
+  }
+
+  user.password = await bcrypt.hash(password, 10);
+  await user.save();
+
+  return { message: 'Password reset successfully.' };
+}
+
 async function getMe(userId) {
   const user = await userRepository.findUserById(userId, { excludePassword: true });
   if (!user) {
@@ -193,7 +298,12 @@ module.exports = {
   register,
   login,
   verifyEmail,
+  requestPasswordReset,
+  resetPassword,
   getMe,
   deleteAccount,
-  updateAccount
+  updateAccount,
+  normalizeRegistrationProfile,
+  createPasswordResetToken,
+  verifyPasswordResetToken
 };

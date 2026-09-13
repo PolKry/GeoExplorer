@@ -1,5 +1,6 @@
 body {
     overflow: hidden;
+    min-height: 100vh;
     background:
         radial-gradient(circle at top, rgba(0, 255, 174, 0.14), transparent 30%),
         linear-gradient(135deg, #071216 0%, #0d1b22 30%, #132d35 100%);
@@ -7,13 +8,13 @@ body {
 
 #login-panel {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 1rem;
     z-index: 1;
 }
 
@@ -28,8 +29,10 @@ body {
 .login-container {
     position: relative;
     z-index: 1;
-    width: min(100%, 420px);
-    padding: 2rem 1.75rem 1.5rem;
+    width: min(100%, 500px);
+    max-height: calc(100vh - 2rem);
+    overflow: hidden;
+    padding: 1.35rem 1.2rem 1.2rem;
     background: linear-gradient(145deg, rgba(19, 25, 30, 0.96), rgba(31, 41, 46, 0.9));
     border: 1px solid rgba(150, 255, 220, 0.18);
     border-radius: var(--geo-radius-large, 18px);
@@ -38,11 +41,12 @@ body {
 }
 
 .login-container h2 {
-    margin-bottom: 1.5rem;
+    margin-top: -0.2rem;
+    margin-bottom: 1.8rem;
     font-size: clamp(1.8rem, 3vw, 2.3rem);
     text-align: center;
     line-height: 1.2;
-} 
+}
 
 .green-title {
     color: #00ffae;
@@ -51,14 +55,49 @@ body {
 .basic-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     text-align: left;
-    gap: 0.45rem;
+    gap: 0.35rem;
+    min-width: 0;
+}
+
+.form-group.full-width,
+#update-message {
+    width: 100%;
+}
+
+.auth-card-stack {
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-step {
+    display: none;
+    opacity: 0;
+    transform: translateX(16px);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+    min-height: 260px;
+}
+
+.auth-step.is-active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.step-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.8rem;
+}
+
+.step-actions>* {
+    flex: 1;
 }
 
 .form-group label {
@@ -67,8 +106,18 @@ body {
     color: rgba(255, 255, 255, 0.92);
 }
 
-.form-group input {
+.form-group label::after {
+    content: attr(data-required);
+    color: #ff6b7a;
+    margin-left: 0.32rem;
+    font-weight: 800;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
+    box-sizing: border-box;
     padding: 0.8rem 0.9rem;
     border: 1px solid rgba(159, 255, 220, 0.24);
     border-radius: var(--geo-radius, 12px);
@@ -77,13 +126,35 @@ body {
     outline: none;
     caret-color: white;
     transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    font: inherit;
 }
 
 .form-group input:focus,
-.form-group input:-webkit-autofill:focus {
+.form-group input:-webkit-autofill:focus,
+.form-group select:focus,
+.form-group textarea:focus {
     border-color: rgba(0, 255, 174, 0.7);
     background-color: rgba(8, 22, 25, 0.92) !important;
     box-shadow: 0 0 0 3px rgba(0, 255, 174, 0.12), 0 0 0 1000px rgba(8, 22, 25, 0.92) inset !important;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 72px;
+}
+
+@media (max-width: 620px) {
+    .basic-form {
+        display: flex;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-setup-actions {
+        flex-direction: column;
+    }
 }
 
 .form-group .input-feedback,
@@ -105,14 +176,15 @@ input:-webkit-autofill:active {
 
 .login-button {
     width: 100%;
-    padding: 0.85rem 1rem;
-    margin-top: 0.8rem;
+    min-height: 46px;
+    padding: 0.7rem 1rem;
+    margin-top: 0.15rem;
     background: linear-gradient(135deg, #00ffae, #00c78a);
     border: none;
     border-radius: 12px;
     color: #062b1d;
-    font-weight: 900;
-    font-size: 1rem;
+    font-weight: 800;
+    font-size: 0.96rem;
     cursor: pointer;
     box-shadow: 0 12px 22px rgba(0, 255, 174, 0.18);
     transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
@@ -130,7 +202,7 @@ input:-webkit-autofill:active {
 }
 
 .footer-text {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     text-align: center;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.7);
@@ -161,6 +233,106 @@ input:-webkit-autofill:active {
 
 .footer-text a:hover::after {
     width: 100%;
+}
+
+.profile-setup-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(3, 8, 12, 0.7);
+    z-index: 20;
+    padding: 1rem;
+}
+
+.profile-setup-modal.hidden {
+    display: none;
+}
+
+.profile-setup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    text-align: left;
+}
+
+.profile-setup-form label {
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.profile-setup-form select,
+.profile-setup-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8rem 0.9rem;
+    border-radius: 12px;
+    border: 1px solid rgba(159, 255, 220, 0.24);
+    background: rgba(5, 14, 18, 0.72);
+    color: #f4fff9;
+    font: inherit;
+}
+
+.profile-setup-form textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.secondary-button {
+    flex: 1;
+    min-height: 46px;
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(150, 255, 220, 0.2);
+    background: transparent;
+    color: #fff;
+    font-size: 0.92rem;
+    cursor: pointer;
+}
+
+#update-message {
+    display: none !important;
+    position: fixed;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.4rem;
+    transform: translateX(-50%) translateY(20px);
+    max-width: min(90vw, 420px);
+    background: rgba(10, 18, 22, 0.94);
+    color: #00ffae;
+    padding: 0.8rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 255, 174, 0.32);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 255, 174, 0.14);
+    font-size: 0.92rem;
+    line-height: 1.4;
+    opacity: 0;
+    z-index: 1000;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.toast.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast.success {
+    color: #00ffae;
+    border-color: rgba(0, 255, 174, 0.38);
+}
+
+.toast.error {
+    color: #ff6d7d;
+    border-color: rgba(255, 109, 125, 0.38);
 }
 
 .password-strength {

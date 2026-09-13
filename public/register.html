@@ -19,34 +19,67 @@
     <section id="login-panel">
         <div class="login-container">
             <h2>Register to <strong class="green-title">GeoExplorer</strong></h2>
-            <form method="POST" class="basic-form" id="basic-form">
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="E-mail" autocomplete="email" pattern="\S+"
-                        required />
-                    <small class="input-feedback"></small>
+            <div class="auth-card-stack">
+                <div class="auth-step is-active" data-step="1">
+                    <form method="POST" class="basic-form" id="basic-form">
+                        <div class="form-group full-width">
+                            <label for="email" data-required="*">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="E-mail" autocomplete="email" pattern="\S+" required />
+                            <small class="input-feedback"></small>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="username" data-required="*">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Username" autocomplete="username" required minlength="4" maxlength="14" pattern="\S+" />
+                            <small class="input-feedback"></small>
+                        </div>
+                        <button type="button" class="login-button next-step" data-next="2" aria-label="Continue registration">Next</button>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="Username" autocomplete="username"
-                        required minlength="4" maxlength="14" pattern="\S+" />
-                    <small class="input-feedback"></small>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password-input" name="password" placeholder="••••••••"
-                        autocomplete="current-password" minlength="8" maxlength="20" pattern="\S+" required />
-                    <small class="input-feedback">Leave blank to keep current password. Minimum 8
-                        characters.</small>
 
-                    <div id="password-strength" class="password-strength">
-                        <div class="strength-bar"></div>
-                    </div>
-                    <small id="password-strength-text" class="password-strength-text"></small>
+                <div class="auth-step" data-step="2">
+                    <form class="basic-form" id="password-form">
+                        <div class="form-group full-width">
+                            <label for="password-input" data-required="*">Password</label>
+                            <input type="password" id="password-input" name="password" placeholder="••••••••" autocomplete="new-password" minlength="8" maxlength="20" pattern="\S+" required />
+                            <small class="input-feedback">Minimum 8 characters.</small>
+
+                            <div id="password-strength" class="password-strength">
+                                <div class="strength-bar"></div>
+                            </div>
+                            <small id="password-strength-text" class="password-strength-text"></small>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="confirm-password" data-required="*">Confirm password</label>
+                            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Repeat password" autocomplete="new-password" minlength="8" maxlength="20" pattern="\S+" required />
+                            <small class="input-feedback">Repeat your password.</small>
+                        </div>
+                        <div class="step-actions">
+                            <button type="button" class="secondary-button back-step" data-back="1">Back</button>
+                            <button type="button" class="login-button next-step" data-next="3">Next</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit" class="login-button" aria-label="Register User">Register</button>
-                <div id="update-message" class="update-message" aria-live="polite" role="alert"></div>
-            </form>
+
+                <div class="auth-step" data-step="3">
+                    <div class="profile-setup-form">
+                        <label for="setup-country" data-required="*">Country</label>
+                        <select id="setup-country" name="country" required>
+                            <option value="">Select your country</option>
+                        </select>
+
+                        <label for="setup-bio">Bio</label>
+                        <textarea id="setup-bio" name="bio" rows="4" maxlength="220" placeholder="Tell other players a little about yourself..."></textarea>
+                    </div>
+
+                    <div class="step-actions">
+                        <button type="button" class="secondary-button back-step" data-back="2">Back</button>
+                        <button type="button" class="secondary-button" id="skip-profile-btn">Skip</button>
+                        <button type="button" class="login-button" id="save-profile-btn">Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="update-message" class="update-message" aria-live="polite" role="alert"></div>
             <p class="footer-text">Already have an account? <a href="/login.html">Login here!</a></p>
         </div>
     </section>

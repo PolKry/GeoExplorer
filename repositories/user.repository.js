@@ -46,7 +46,7 @@ function createUserAction(doc, session) {
   return UserAction.create([doc], { session });
 }
 
-async function createUserAccount({ email, username, password, createdAt, role, isVerified }, session) {
+async function createUserAccount({ email, username, password, createdAt, role, isVerified, profileData = {} }, session) {
   const [user] = await createUser({ email, username, password, createdAt, role, isVerified }, session);
 
   await createUserStats({
@@ -55,7 +55,7 @@ async function createUserAccount({ email, username, password, createdAt, role, i
     lastUpdated: new Date()
   }, session);
 
-  await createUserProfile({ userId: user._id }, session);
+  await createUserProfile({ userId: user._id, ...profileData }, session);
   await createUserAction({ userId: user._id }, session);
 
   return user;

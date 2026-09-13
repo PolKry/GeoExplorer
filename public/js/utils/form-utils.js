@@ -70,12 +70,26 @@ document.querySelectorAll('.basic-form input').forEach(input => {
 
 function showMessage(message, type = 'success') {
     const msgBox = document.getElementById('update-message');
-    msgBox.textContent = message;
-    msgBox.className = 'update-message ' + type;
-    msgBox.style.display = 'block';
-
-    if (msgBox.timer) clearTimeout(msgBox.timer);
-    msgBox.timer = setTimeout(() => {
+    if (msgBox) {
         msgBox.style.display = 'none';
-    }, 3000);
+        msgBox.textContent = '';
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.textContent = message;
+    toast.setAttribute('role', 'status');
+
+    if (window.innerWidth < 600) {
+        toast.style.left = '50%';
+        toast.style.right = 'auto';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }
+
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('visible'), 10);
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => toast.remove(), 300);
+    }, 2800);
 }

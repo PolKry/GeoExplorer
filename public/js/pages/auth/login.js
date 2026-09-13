@@ -1,10 +1,44 @@
 import {
   setToken,
-  setUsername
+  setUsername,
+  getPendingProfile,
+  removePendingProfile
 } from "../../utils/storage.js";
 
 import { loginUser } from "../../api/auth-api.js";
 import { showMessage } from "../../utils/toast.js";
+import { apiFetch } from "../../api/http.js";
+
+async function applyPendingProfile() {
+  const pendingProfile = getPendingProfile();
+  if (!pendingProfile) return;
+
+  try {
+    const meResponse = await apiFetch('/api/auth/me');
+    if (!meResponse.ok) throw new Error('Unable to load user profile');
+
+    const me = await meResponse.json();
+    const userId = me._id;
+
+    if (pendingProfile.country?.name && pendingProfile.country?.code) {
+      await apiFetch(`/api/users/${userId}/country`, {
+        method: 'PUT',
+        body: JSON.stringify(pendingProfile.country)
+      });
+    }
+
+    if (pendingProfile.bio) {
+      await apiFetch(`/api/users/${userId}/bio`, {
+        method: 'PUT',
+        body: JSON.stringify({ bio: pendingProfile.bio })
+      });
+    }
+  } catch (error) {
+    console.error('Failed to apply pending profile:', error);
+  } finally {
+    removePendingProfile();
+  }
+}
 
 function setupLoginForm() {
   const form = document.getElementById('basic-form');
@@ -34,6 +68,8 @@ function setupLoginForm() {
       
       setToken(json.token);
       setUsername(json.username)
+
+      await applyPendingProfile();
 
       window.location.href = '/index.html';
       showMessage('Successful login!', 'success');

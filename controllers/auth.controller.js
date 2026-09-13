@@ -30,6 +30,22 @@ async function verifyEmail(req, res) {
   }
 }
 
+async function requestPasswordReset(req, res) {
+  try {
+    res.json(await authService.requestPasswordReset(req.body));
+  } catch (error) {
+    sendError(res, error, 'Password reset request failed');
+  }
+}
+
+async function resetPassword(req, res) {
+  try {
+    res.json(await authService.resetPassword(req.body));
+  } catch (error) {
+    sendError(res, error, 'Password reset failed');
+  }
+}
+
 async function me(req, res) {
   try {
     res.json(await authService.getMe(req.user.userId));
@@ -65,6 +81,8 @@ module.exports = {
   register,
   login,
   verifyEmail,
+  requestPasswordReset,
+  resetPassword,
   me,
   deleteAccount,
   updateAccount,

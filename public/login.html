@@ -21,13 +21,13 @@
             <h2>Login to <strong class="green-title">GeoExplorer</strong></h2>
             <form method="POST" class="basic-form" id="basic-form">
                 <div class="form-group">
-                    <label for="email">E-mail</label>
+                    <label for="email" data-required="*">E-mail</label>
                     <input type="email" id="email" name="email" placeholder="E-mail" autocomplete="email" pattern="\S+"
                         required />
                     <small class="input-feedback"></small>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password" data-required="*">Password</label>
                     <input type="password" id="password-input" name="password" placeholder="••••••••"
                         autocomplete="current-password" minlength="8" maxlength="20" pattern="\S+" required />
                     <small class="input-feedback">Leave blank to keep current password. Minimum 8
@@ -36,6 +36,7 @@
                 <button type="submit" class="login-button">Login</button>
                 <div id="update-message" class="update-message" aria-live="polite" role="alert"></div>
             </form>
+            <p class="footer-text"><a href="/forgot-password.html">Forgot my password?</a></p>
             <p class="footer-text">Don't have an account yet? <a href="/register.html">Register here!</a></p>
         </div>
     </section>

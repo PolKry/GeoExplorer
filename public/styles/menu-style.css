@@ -999,15 +999,34 @@ nav#nav-menu {
 }
 
 .site-header #login-button {
-    padding: 0.6rem 1.05rem;
-    border: 1px solid rgba(173, 255, 224, 0.2);
-    background: linear-gradient(135deg, #00d995, #00b984);
-    box-shadow: 0 5px 16px rgba(0, 221, 153, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0.6rem 1rem;
+    border: 1px solid rgba(157, 255, 219, 0.42);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.02);
+    color: #ecfff7;
+    font-size: 0.87rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-.site-header #login-button:hover {
-    background: linear-gradient(135deg, #2affb6, #00cb8d);
+.site-header #login-button:hover,
+.site-header #login-button:focus-visible {
+    background: rgba(113, 255, 200, 0.08);
+    border-color: rgba(171, 255, 226, 0.75);
+    box-shadow: 0 0 0 1px rgba(136, 255, 211, 0.08);
     transform: translateY(-1px);
+    outline: none;
+}
+
+.site-header #login-button:active {
+    transform: translateY(0);
+    background: rgba(113, 255, 200, 0.05);
 }
 
 .site-header #profile-wrapper {

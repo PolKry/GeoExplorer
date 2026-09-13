@@ -3,7 +3,8 @@ const STORAGE_KEYS = {
     USERNAME: "username",
     SETTINGS: "settings",
     PARTY_HOST_ID: "partyHostId",
-    PARTY_CODE: "partyCode"
+    PARTY_CODE: "partyCode",
+    PENDING_PROFILE: "pendingProfile"
 };
 
 export function getToken() {
@@ -67,6 +68,25 @@ export function removePartyCode() {
     localStorage.removeItem(STORAGE_KEYS.PARTY_CODE);
 }
 
+export function getPendingProfile() {
+    const raw = localStorage.getItem(STORAGE_KEYS.PENDING_PROFILE);
+    if (!raw) return null;
+
+    try {
+        return JSON.parse(raw);
+    } catch {
+        return null;
+    }
+}
+
+export function setPendingProfile(profile) {
+    localStorage.setItem(STORAGE_KEYS.PENDING_PROFILE, JSON.stringify(profile));
+}
+
+export function removePendingProfile() {
+    localStorage.removeItem(STORAGE_KEYS.PENDING_PROFILE);
+}
+
 export function logout() {
     removeToken();
 }
@@ -76,4 +96,5 @@ export function clearStorage() {
     removeUsername();
     removePartyHostId();
     removePartyCode();
+    removePendingProfile();
 }
