@@ -19,51 +19,63 @@
     <div class="wave-container" data-component="/components/top-waves.html"></div>
 
     <main class="info-main fade-in">
-        <h1 class="title">GeoExplorer Info</h1>
+        <div class="info-shell">
+            <div class="info-grid">
+                <section id="about" class="info-card info-card--featured">
+                    <div class="info-card-header">
+                        <span class="info-card-icon" aria-hidden="true">◎</span>
+                        <h2>About</h2>
+                    </div>
+                    <p>
+                        GeoExplorer is a geolocation game where you can explore places around the world and test how
+                        well you know your geography. Play on your own, compete with friends, or try different maps
+                        and game modes to keep things interesting.
+                    </p>
+                    <ul class="info-bullets" aria-label="GeoExplorer features">
+                        <li>Explore random locations from around the world</li>
+                        <li>Play on different maps and in different game modes</li>
+                        <li>Compete with friends and other players</li>
+                    </ul>
+                </section>
 
-        <section id="about">
-            <h2>About</h2>
-            <p>
-                GeoExplorer is your modern geolocation challenge platform. Inspired by classic geoguessing gameplay but
-                built with a sleeker interface and smoother user experience, GeoExplorer lets you test your world
-                knowledge
-                through randomly generated Street View locations, custom map packs, and community‑driven challenges.
-            </p>
-        </section>
+                <aside class="info-card info-card--sidebar" id="contact">
+                    <div class="info-card-header">
+                        <span class="info-card-icon" aria-hidden="true">✉</span>
+                        <h2>Contact</h2>
+                    </div>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-label">Email</span>
+                            <a href="mailto:support@geoexplorer.com">support@geoexplorer.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-label">Business</span>
+                            <a href="mailto:business@geoexplorer.com">business@geoexplorer.com</a>
+                        </div>
+                    </div>
+                </aside>
 
-        <section id="contact">
-            <h2>Contact</h2>
-            <div class="contact-info">
-                <p><b>Email: </b>support@geoexplorer.com</p>
-                <p><b>Business inquiries: </b>business@geoexplorer.com</p>
+                <section id="privacy" class="info-card info-card--wide">
+                    <div class="info-card-header">
+                        <span class="info-card-icon" aria-hidden="true">▣</span>
+                        <h2>Privacy Policy</h2>
+                    </div>
+                    <p>
+                        We only collect the information GeoExplorer needs to work properly. This includes things like
+                        your username, email, preferences, and gameplay progress. We use this information to provide
+                        the features of the site and improve your experience.
+                    </p>
+                    <ul class="info-check-list" aria-label="Privacy commitments">
+                        <li>Only collect information needed to run GeoExplorer</li>
+                        <li>Save your progress and preferences for your account</li>
+                        <li>We don't sell your personal information to third parties</li>
+                    </ul>
+                </section>
             </div>
-        </section>
-
-        <section id="privacy">
-            <h2>Privacy Policy</h2>
-            <p>
-                GeoExplorer collects only essential data needed to operate gameplay features, save user progress, and
-                provide community interactions. We do not sell your data to third parties. By using GeoExplorer, you
-                agree
-                to the storage of basic account information such as username, email, preferences, and map activity.
-            </p>
-        </section>
+        </div>
     </main>
 
-    <footer class="footer">
-        <div class="wave-container" data-component="/components/bottom-waves.html"></div>
-
-        <div class="footer-links">
-            <a href="/index.html">Home</a>
-            <div class="footer-link-separator"></div>
-            <a href="#about">About</a>
-            <div class="footer-link-separator"></div>
-            <a href="#contact">Contact</a>
-            <div class="footer-link-separator"></div>
-            <a href="#privacy">Privacy Policy</a>
-        </div>
-        <p>© 2025 GeoExplorer. All rights reserved.</p>
-    </footer>
+    <div data-component="/components/site-footer.html"></div>
 </body>
 
 </html>

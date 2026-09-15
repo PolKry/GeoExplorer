@@ -72,23 +72,25 @@
     </svg>
   </div>
 
-  <h2 class="modes-title">Game Modes</h2>
   <section class="modes">
-    <div class="mode-card">
-      <h3>🌍 World Explorer</h3>
-      <p>Random global locations to test your knowledge.</p>
-    </div>
-    <div class="mode-card">
-      <h3>🧩 Custom Maps</h3>
-      <p>User-generated challenges with unique themes.</p>
-    </div>
-    <div class="mode-card">
-      <h3>⏱️ Timed Rush</h3>
-      <p>Race against the clock to guess the location.</p>
-    </div>
-    <div class="mode-card">
-      <h3>🧑‍🤝‍🧑 Multiplayer Showdown</h3>
-      <p>Compete head-to-head with other players.</p>
+    <h2 class="modes-title">Game Modes</h2>
+    <div class="mode-cards-container">
+      <div class="mode-card">
+        <h3>🌍 World Explorer</h3>
+        <p>Random global locations to test your knowledge.</p>
+      </div>
+      <div class="mode-card">
+        <h3>🧩 Custom Maps</h3>
+        <p>User-generated challenges with unique themes.</p>
+      </div>
+      <div class="mode-card">
+        <h3>⏱️ Timed Rush</h3>
+        <p>Race against the clock to guess the location.</p>
+      </div>
+      <div class="mode-card">
+        <h3>🧑‍🤝‍🧑 Multiplayer Showdown</h3>
+        <p>Compete head-to-head with other players.</p>
+      </div>
     </div>
   </section>
 
@@ -98,18 +100,7 @@
     <a href="/menu/leaderboard.html" class="leaderboard-button">View Full Leaderboard</a>
   </section>
 
-  <footer class="footer">
-    <div class="footer-links">
-      <a id="scrollTopBtn">Home</a>
-      <div class="footer-link-separator"></div>
-      <a href="/menu/info.html">About</a>
-      <div class="footer-link-separator"></div>
-      <a href="/menu/info.html#about">Contact</a>
-      <div class="footer-link-separator"></div>
-      <a href="/menu/info.html#privacy">Privacy Policy</a>
-    </div>
-    <p>© 2025 GeoExplorer. All rights reserved.</p>
-  </footer>
+  <div data-component="/components/site-footer.html"></div>
 
   <script type="module" src="/js/pages/home.js"></script>
 </body>

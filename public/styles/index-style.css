@@ -179,11 +179,11 @@ body {
 }
 
 .modes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
-    padding: 3rem 2rem;
-    padding-top: 5rem;
+    padding: 2rem 2rem 3rem;
     background: linear-gradient(to bottom, #1a1a1a 0%, #111 100%);
 }
 
@@ -200,12 +200,39 @@ body {
 }
 
 .modes-title {
+    width: 100%;
+    position: relative;
     text-align: center;
     font-size: 2rem;
-    margin-bottom: -2.7rem;
+    margin: 0 0 0.25rem;
+    padding-bottom: 0.85rem;
+}
+
+.modes-title::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent 0%, rgba(96, 165, 250, 0.9) 20%, rgba(255, 255, 255, 0.95) 50%, rgba(96, 165, 250, 0.9) 80%, transparent 100%);
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.35);
+}
+
+.mode-cards-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, min(100%, 320px)));
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem 2rem 3rem;
 }
 
 .mode-card {
+    flex: 1 1 240px;
+    max-width: 320px;
     background: linear-gradient(135deg, #222, #2a2a2a);
     padding: 1.5rem;
     border-radius: 12px;
