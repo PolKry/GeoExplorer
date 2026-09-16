@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await apiFetch('/api/mapCreationRoutes/validate-json', {
+            const response = await apiFetch('/api/map-creation-routes/validate-json', {
                 method: 'POST',
                 body: JSON.stringify(mapData),
             });
@@ -157,7 +157,7 @@ async function loadIcons() {
     optionsContainer.innerHTML = '';
 
     try {
-        const response = await apiFetch('/api/mapCreationRoutes/icons');
+        const response = await apiFetch('/api/map-creation-routes/icons');
         if (!response.ok) throw new Error('Failed to load icons list');
         const icons = await response.json();
 

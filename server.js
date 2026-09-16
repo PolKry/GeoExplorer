@@ -147,14 +147,13 @@ app.use('/', gamePageRoutes);
 
 app.use('/api/game', gameRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/mapCreationRoutes', mapCreationRoutes);
+app.use('/api/map-creation-routes', mapCreationRoutes);
 app.use('/api/maps', mapRoutes);
 app.use('/api/tags', tagRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/countries', countriesRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/party', partyRoutes);
-app.use('/api/random-sv', streetViewRoutes);
 
 // ERROR HANDLING
 app.use((req, res) => {
