@@ -597,12 +597,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = "/Resources/Images/BreakdownGray.png";
+        img.src = "/resources/images/BreakdownGray.png";
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = "/Resources/Images/BreakdownWhite.png";
+        img.src = "/resources/images/BreakdownWhite.png";
         map.classList.add('responsive');
     }
 

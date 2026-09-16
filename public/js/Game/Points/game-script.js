@@ -142,7 +142,7 @@ function initGuessMap() {
                 socket,
                 gameId: window.GAME_ID,
                 icon: {
-                    url: '/Resources/Images/GuessedLocation.png',
+                    url: '/resources/images/GuessedLocation.png',
                     scaledSize: new google.maps.Size(29, 30)
                 }
             });
@@ -401,7 +401,7 @@ function drawVisuals(actualLoc) {
         title: "Actual Location",
         cursor: 'pointer',
         icon: {
-            url: "/Resources/Images/ActualLocation.png",
+            url: "/resources/images/ActualLocation.png",
             scaledSize: new google.maps.Size(30, 30)
         },
     });
@@ -422,7 +422,7 @@ function drawVisuals(actualLoc) {
         title: "Your Location",
         cursor: 'pointer',
         icon: {
-            url: "/Resources/Images/GuessedLocation.png",
+            url: "/resources/images/GuessedLocation.png",
             scaledSize: new google.maps.Size(29, 30)
         }
     });
@@ -471,7 +471,7 @@ function loadMarkersFromHistory() {
             title: "Your guess",
             cursor: 'crosshair',
             icon: {
-                url: "/Resources/Images/GuessedLocation.png",
+                url: "/resources/images/GuessedLocation.png",
                 scaledSize: new google.maps.Size(29, 30)
             }
         });
@@ -482,7 +482,7 @@ function loadMarkersFromHistory() {
             title: "Actual Location",
             cursor: 'pointer',
             icon: {
-                url: "/Resources/Images/ActualLocation.png",
+                url: "/resources/images/ActualLocation.png",
                 scaledSize: new google.maps.Size(29, 30)
             }
         });
@@ -534,12 +534,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = "/Resources/Images/BreakdownGray.png";
+        img.src = "/resources/images/BreakdownGray.png";
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = "/Resources/Images/BreakdownWhite.png";
+        img.src = "/resources/images/BreakdownWhite.png";
         map.classList.add('responsive');
     }
 

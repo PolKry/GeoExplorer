@@ -41,19 +41,19 @@ function appendMapsTo(container, maps) {
     const isInFavorites = favMaps.includes(map.name);
     favoriteIcon.dataset.fav = isInFavorites;
     if (isInFavorites) {
-      favoriteIcon.src = "/Resources/Images/solidStar.png";
+      favoriteIcon.src = "/resources/images/solidStar.png";
     } else {
-      favoriteIcon.src = "/Resources/Images/hollowStar.png";
+      favoriteIcon.src = "/resources/images/hollowStar.png";
     }
 
     favoriteIcon.addEventListener("click", (event) => {
       event.stopPropagation();
 
       if (favoriteIcon.dataset.fav === "true") {
-        favoriteIcon.src = "/Resources/Images/hollowStar.png";
+        favoriteIcon.src = "/resources/images/hollowStar.png";
         favoriteIcon.dataset.fav = "false";
       } else {
-        favoriteIcon.src = "/Resources/Images/solidStar.png";
+        favoriteIcon.src = "/resources/images/solidStar.png";
         favoriteIcon.dataset.fav = "true";
       }
 

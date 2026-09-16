@@ -144,7 +144,7 @@ document.addEventListener('click', e => {
 });
 
 async function loadIcons() {
-    const iconsFolder = 'Resources/Images/Maps/Unofficial/';
+    const iconsFolder = 'resources/images/maps/unofficial/';
     const modal = document.getElementById('icon-selector-modal');
     let optionsContainer = modal.querySelector('.icon-options-container');
 
@@ -198,7 +198,7 @@ function initIconSelection() {
         iconOptions.forEach(icon => {
             icon.onclick = () => {
                 const iconName = icon.dataset.icon;
-                preview.innerHTML = `<img src="Resources/Images/Maps/Unofficial/${iconName}" alt="${iconName.replace('.png', '')} icon" style="width:24px; height:24px;">`;
+                preview.innerHTML = `<img src="resources/images/maps/unofficial/${iconName}" alt="${iconName.replace('.png', '')} icon" style="width:24px; height:24px;">`;
                 hiddenInput.value = iconName;
                 modal.classList.add('hidden');
                 openBtn.focus();

@@ -94,7 +94,7 @@ function buildVerificationEmail(username, verificationLink) {
       </head>
       <body style="font-family: Arial, sans-serif; background: #203a43; padding: 30px; margin: 0;">
         <div style="max-width: 500px; margin: auto; background: #1e1e1e; padding: 30px; border-radius: 12px; box-shadow: 0 0 15px rgba(0, 255, 174, 0.5); color: #fff; text-align: center;">
-          <img src="${process.env.BASE_URL}/Resources/Images/Icon.png" alt="GeoExplorer Logo" style="width: 60px; margin-bottom: 20px;">
+          <img src="${process.env.BASE_URL}/resources/images/Icon.png" alt="GeoExplorer Logo" style="width: 60px; margin-bottom: 20px;">
           <h2 style="color: #00ffae; margin-bottom: 10px;">Welcome, ${username}!</h2>
           <p style="font-size: 1.1em; margin-bottom: 20px;">Thanks for registering to <strong>GeoExplorer</strong>.</p>
           <p style="margin-bottom: 30px;">Explore the world and challenge your knowledge!</p>
@@ -126,7 +126,7 @@ function buildPasswordResetEmail(username, resetLink) {
       </head>
       <body style="font-family: Arial, sans-serif; background: #203a43; padding: 30px; margin: 0;">
         <div style="max-width: 500px; margin: auto; background: #1e1e1e; padding: 30px; border-radius: 12px; box-shadow: 0 0 15px rgba(0, 255, 174, 0.5); color: #fff; text-align: center;">
-          <img src="${process.env.BASE_URL}/Resources/Images/Icon.png" alt="GeoExplorer Logo" style="width: 60px; margin-bottom: 20px;">
+          <img src="${process.env.BASE_URL}/resources/images/Icon.png" alt="GeoExplorer Logo" style="width: 60px; margin-bottom: 20px;">
           <h2 style="color: #00ffae; margin-bottom: 10px;">Password reset</h2>
           <p style="font-size: 1.05em; margin-bottom: 18px;">Hi ${username},</p>
           <p style="margin-bottom: 28px;">We received a request to reset your GeoExplorer password.</p>

@@ -1,7 +1,7 @@
 [
   {
     "name": "World",
-    "image": "/Resources/Images/Maps/Official/World.png",
+    "image": "/resources/images/maps/official/World.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -20,7 +20,7 @@
   },
   {
     "name": "North America",
-    "image": "/Resources/Images/Maps/Official/NorthAmerica.png",
+    "image": "/resources/images/maps/official/NorthAmerica.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -38,7 +38,7 @@
   },
   {
     "name": "United States",
-    "image": "/Resources/Images/Maps/Official/UnitedStates.png",
+    "image": "/resources/images/maps/official/UnitedStates.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -57,7 +57,7 @@
   },
   {
     "name": "Canada",
-    "image": "/Resources/Images/Maps/Official/Canada.png",
+    "image": "/resources/images/maps/official/Canada.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -76,7 +76,7 @@
   },
   {
     "name": "Greenland",
-    "image": "/Resources/Images/Maps/Official/Greenland.png",
+    "image": "/resources/images/maps/official/Greenland.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -96,7 +96,7 @@
   },
   {
     "name": "Mexico",
-    "image": "/Resources/Images/Maps/Official/Mexico.png",
+    "image": "/resources/images/maps/official/Mexico.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -116,7 +116,7 @@
   },
   {
     "name": "Bermuda",
-    "image": "/Resources/Images/Maps/Official/Bermuda.png",
+    "image": "/resources/images/maps/official/Bermuda.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -134,7 +134,7 @@
   },
   {
     "name": "Puerto Rico",
-    "image": "/Resources/Images/Maps/Official/PuertoRico.png",
+    "image": "/resources/images/maps/official/PuertoRico.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -153,7 +153,7 @@
   },
   {
     "name": "Guam",
-    "image": "/Resources/Images/Maps/Official/Guam.png",
+    "image": "/resources/images/maps/official/Guam.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -171,7 +171,7 @@
   },
   {
     "name": "Northern Mariana Islands",
-    "image": "/Resources/Images/Maps/Official/NorthernMarianaIslands.png",
+    "image": "/resources/images/maps/official/NorthernMarianaIslands.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -191,7 +191,7 @@
   },
   {
     "name": "U.S. Virgin Islands",
-    "image": "/Resources/Images/Maps/Official/USVirginIslands.png",
+    "image": "/resources/images/maps/official/USVirginIslands.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -209,7 +209,7 @@
   },
   {
     "name": "American Samoa",
-    "image": "/Resources/Images/Maps/Official/AmericanSamoa.png",
+    "image": "/resources/images/maps/official/AmericanSamoa.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -228,7 +228,7 @@
   },
   {
     "name": "Panama",
-    "image": "/Resources/Images/Maps/Official/Panama.png",
+    "image": "/resources/images/maps/official/Panama.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -247,7 +247,7 @@
   },
   {
     "name": "Costa Rica",
-    "image": "/Resources/Images/Maps/Official/CostaRica.png",
+    "image": "/resources/images/maps/official/CostaRica.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -265,7 +265,7 @@
   },
   {
     "name": "Guatemala",
-    "image": "/Resources/Images/Maps/Official/Guatemala.png",
+    "image": "/resources/images/maps/official/Guatemala.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -284,7 +284,7 @@
   },
   {
     "name": "Dominican Republic",
-    "image": "/Resources/Images/Maps/Official/DominicanRepublic.png",
+    "image": "/resources/images/maps/official/DominicanRepublic.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -303,7 +303,7 @@
   },
   {
     "name": "South America",
-    "image": "/Resources/Images/Maps/Official/SouthAmerica.png",
+    "image": "/resources/images/maps/official/SouthAmerica.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -322,7 +322,7 @@
   },
   {
     "name": "Curaçao",
-    "image": "/Resources/Images/Maps/Official/Curacao.png",
+    "image": "/resources/images/maps/official/Curacao.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -341,7 +341,7 @@
   },
   {
     "name": "Brazil",
-    "image": "/Resources/Images/Maps/Official/Brazil.png",
+    "image": "/resources/images/maps/official/Brazil.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -360,7 +360,7 @@
   },
   {
     "name": "Argentina",
-    "image": "/Resources/Images/Maps/Official/Argentina.png",
+    "image": "/resources/images/maps/official/Argentina.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -379,7 +379,7 @@
   },
   {
     "name": "Uruguay",
-    "image": "/Resources/Images/Maps/Official/Uruguay.png",
+    "image": "/resources/images/maps/official/Uruguay.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -398,7 +398,7 @@
   },
   {
     "name": "Uruguay",
-    "image": "/Resources/Images/Maps/Official/Uruguay.png",
+    "image": "/resources/images/maps/official/Uruguay.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -417,7 +417,7 @@
   },
   {
     "name": "Paraguay",
-    "image": "/Resources/Images/Maps/Official/Paraguay.png",
+    "image": "/resources/images/maps/official/Paraguay.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Medium",
@@ -436,7 +436,7 @@
   },
   {
     "name": "Ecuador",
-    "image": "/Resources/Images/Maps/Official/Ecuador.png",
+    "image": "/resources/images/maps/official/Ecuador.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -455,7 +455,7 @@
   },
   {
     "name": "Peru",
-    "image": "/Resources/Images/Maps/Official/Peru.png",
+    "image": "/resources/images/maps/official/Peru.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -474,7 +474,7 @@
   },
   {
     "name": "Bolivia",
-    "image": "/Resources/Images/Maps/Official/Bolivia.png",
+    "image": "/resources/images/maps/official/Bolivia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -492,7 +492,7 @@
   },
   {
     "name": "Chile",
-    "image": "/Resources/Images/Maps/Official/Chile.png",
+    "image": "/resources/images/maps/official/Chile.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -511,7 +511,7 @@
   },
   {
     "name": "Colombia",
-    "image": "/Resources/Images/Maps/Official/Colombia.png",
+    "image": "/resources/images/maps/official/Colombia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -530,7 +530,7 @@
   },
   {
     "name": "Belgium",
-    "image": "/Resources/Images/Maps/Official/Belgium.png",
+    "image": "/resources/images/maps/official/Belgium.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -549,7 +549,7 @@
   },
   {
     "name": "Bulgaria",
-    "image": "/Resources/Images/Maps/Official/Bulgaria.png",
+    "image": "/resources/images/maps/official/Bulgaria.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -568,7 +568,7 @@
   },
   {
     "name": "Croatia",
-    "image": "/Resources/Images/Maps/Official/Croatia.png",
+    "image": "/resources/images/maps/official/Croatia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -587,7 +587,7 @@
   },
   {
     "name": "Greece",
-    "image": "/Resources/Images/Maps/Official/Greece.png",
+    "image": "/resources/images/maps/official/Greece.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -606,7 +606,7 @@
   },
   {
     "name": "Hungary",
-    "image": "/Resources/Images/Maps/Official/Hungary.png",
+    "image": "/resources/images/maps/official/Hungary.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -625,7 +625,7 @@
   },
   {
     "name": "Iceland",
-    "image": "/Resources/Images/Maps/Official/Iceland.png",
+    "image": "/resources/images/maps/official/Iceland.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -644,7 +644,7 @@
   },
   {
     "name": "Denmark",
-    "image": "/Resources/Images/Maps/Official/Denmark.png",
+    "image": "/resources/images/maps/official/Denmark.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -662,7 +662,7 @@
   },
   {
     "name": "Estonia",
-    "image": "/Resources/Images/Maps/Official/Estonia.png",
+    "image": "/resources/images/maps/official/Estonia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -681,7 +681,7 @@
   },
   {
     "name": "Ireland",
-    "image": "/Resources/Images/Maps/Official/Ireland.png",
+    "image": "/resources/images/maps/official/Ireland.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -700,7 +700,7 @@
   },
   {
     "name": "Europe",
-    "image": "/Resources/Images/Maps/Official/Europe.png",
+    "image": "/resources/images/maps/official/Europe.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -719,7 +719,7 @@
   },
   {
     "name": "Czech Republic",
-    "image": "/Resources/Images/Maps/Official/CzechRepublic.png",
+    "image": "/resources/images/maps/official/CzechRepublic.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -738,7 +738,7 @@
   },
   {
     "name": "Albania",
-    "image": "/Resources/Images/Maps/Official/Albania.png",
+    "image": "/resources/images/maps/official/Albania.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -757,7 +757,7 @@
   },
   {
     "name": "Andorra",
-    "image": "/Resources/Images/Maps/Official/Andorra.png",
+    "image": "/resources/images/maps/official/Andorra.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -776,7 +776,7 @@
   },
   {
     "name": "Austria",
-    "image": "/Resources/Images/Maps/Official/Austria.png",
+    "image": "/resources/images/maps/official/Austria.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -795,7 +795,7 @@
   },
   {
     "name": "Latvia",
-    "image": "/Resources/Images/Maps/Official/Latvia.png",
+    "image": "/resources/images/maps/official/Latvia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -814,7 +814,7 @@
   },
   {
     "name": "Liechtenstein",
-    "image": "/Resources/Images/Maps/Official/Liechtenstein.png",
+    "image": "/resources/images/maps/official/Liechtenstein.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -834,7 +834,7 @@
   },
   {
     "name": "Lithuania",
-    "image": "/Resources/Images/Maps/Official/Lithuania.png",
+    "image": "/resources/images/maps/official/Lithuania.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -853,7 +853,7 @@
   },
   {
     "name": "Luxembourg",
-    "image": "/Resources/Images/Maps/Official/Luxembourg.png",
+    "image": "/resources/images/maps/official/Luxembourg.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -872,7 +872,7 @@
   },
   {
     "name": "Malta",
-    "image": "/Resources/Images/Maps/Official/Malta.png",
+    "image": "/resources/images/maps/official/Malta.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -891,7 +891,7 @@
   },
   {
     "name": "San Marino",
-    "image": "/Resources/Images/Maps/Official/SanMarino.png",
+    "image": "/resources/images/maps/official/SanMarino.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -910,7 +910,7 @@
   },
   {
     "name": "Serbia",
-    "image": "/Resources/Images/Maps/Official/Serbia.png",
+    "image": "/resources/images/maps/official/Serbia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -928,7 +928,7 @@
   },
   {
     "name": "Slovakia",
-    "image": "/Resources/Images/Maps/Official/Slovakia.png",
+    "image": "/resources/images/maps/official/Slovakia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -947,7 +947,7 @@
   },
   {
     "name": "Monaco",
-    "image": "/Resources/Images/Maps/Official/Monaco.png",
+    "image": "/resources/images/maps/official/Monaco.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -967,7 +967,7 @@
   },
   {
     "name": "Montenegro",
-    "image": "/Resources/Images/Maps/Official/Montenegro.png",
+    "image": "/resources/images/maps/official/Montenegro.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -986,7 +986,7 @@
   },
   {
     "name": "Netherlands",
-    "image": "/Resources/Images/Maps/Official/Netherlands.png",
+    "image": "/resources/images/maps/official/Netherlands.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1005,7 +1005,7 @@
   },
   {
     "name": "North Macedonia",
-    "image": "/Resources/Images/Maps/Official/NorthMacedonia.png",
+    "image": "/resources/images/maps/official/NorthMacedonia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1024,7 +1024,7 @@
   },
   {
     "name": "Poland",
-    "image": "/Resources/Images/Maps/Official/Poland.png",
+    "image": "/resources/images/maps/official/Poland.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1043,7 +1043,7 @@
   },
   {
     "name": "Portugal",
-    "image": "/Resources/Images/Maps/Official/Portugal.png",
+    "image": "/resources/images/maps/official/Portugal.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1062,7 +1062,7 @@
   },
   {
     "name": "Romania",
-    "image": "/Resources/Images/Maps/Official/Romania.png",
+    "image": "/resources/images/maps/official/Romania.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1081,7 +1081,7 @@
   },
   {
     "name": "Slovenia",
-    "image": "/Resources/Images/Maps/Official/Slovenia.png",
+    "image": "/resources/images/maps/official/Slovenia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1099,7 +1099,7 @@
   },
   {
     "name": "Switzerland",
-    "image": "/Resources/Images/Maps/Official/Switzerland.png",
+    "image": "/resources/images/maps/official/Switzerland.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1117,7 +1117,7 @@
   },
   {
     "name": "Ukraine",
-    "image": "/Resources/Images/Maps/Official/Ukraine.png",
+    "image": "/resources/images/maps/official/Ukraine.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1136,7 +1136,7 @@
   },
   {
     "name": "Germany",
-    "image": "/Resources/Images/Maps/Official/Germany.png",
+    "image": "/resources/images/maps/official/Germany.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1154,7 +1154,7 @@
   },
   {
     "name": "France",
-    "image": "/Resources/Images/Maps/Official/France.png",
+    "image": "/resources/images/maps/official/France.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1173,7 +1173,7 @@
   },
   {
     "name": "United Kingdom",
-    "image": "/Resources/Images/Maps/Official/UnitedKingdom.png",
+    "image": "/resources/images/maps/official/UnitedKingdom.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1192,7 +1192,7 @@
   },
   {
     "name": "Italy",
-    "image": "/Resources/Images/Maps/Official/Italy.png",
+    "image": "/resources/images/maps/official/Italy.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1211,7 +1211,7 @@
   },
   {
     "name": "Spain",
-    "image": "/Resources/Images/Maps/Official/Spain.png",
+    "image": "/resources/images/maps/official/Spain.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1230,7 +1230,7 @@
   },
   {
     "name": "Norway",
-    "image": "/Resources/Images/Maps/Official/Norway.png",
+    "image": "/resources/images/maps/official/Norway.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1249,7 +1249,7 @@
   },
   {
     "name": "Sweden",
-    "image": "/Resources/Images/Maps/Official/Sweden.png",
+    "image": "/resources/images/maps/official/Sweden.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1268,7 +1268,7 @@
   },
   {
     "name": "Finland",
-    "image": "/Resources/Images/Maps/Official/Finland.png",
+    "image": "/resources/images/maps/official/Finland.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1286,7 +1286,7 @@
   },
   {
     "name": "Faroe Islands",
-    "image": "/Resources/Images/Maps/Official/FaroeIslands.png",
+    "image": "/resources/images/maps/official/FaroeIslands.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1304,7 +1304,7 @@
   },
   {
     "name": "Jersey",
-    "image": "/Resources/Images/Maps/Official/Jersey.png",
+    "image": "/resources/images/maps/official/Jersey.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1321,7 +1321,7 @@
   },
   {
     "name": "Isle of Man",
-    "image": "/Resources/Images/Maps/Official/IsleOfMan.png",
+    "image": "/resources/images/maps/official/IsleOfMan.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1339,7 +1339,7 @@
   },
   {
     "name": "Asia",
-    "image": "/Resources/Images/Maps/Official/Asia.png",
+    "image": "/resources/images/maps/official/Asia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1358,7 +1358,7 @@
   },
   {
     "name": "Russia",
-    "image": "/Resources/Images/Maps/Official/Russia.png",
+    "image": "/resources/images/maps/official/Russia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -1376,7 +1376,7 @@
   },
   {
     "name": "Kazakhstan",
-    "image": "/Resources/Images/Maps/Official/Kazakhstan.png",
+    "image": "/resources/images/maps/official/Kazakhstan.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -1396,7 +1396,7 @@
   },
   {
     "name": "Mongolia",
-    "image": "/Resources/Images/Maps/Official/Mongolia.png",
+    "image": "/resources/images/maps/official/Mongolia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -1416,7 +1416,7 @@
   },
   {
     "name": "Kyrgyzstan",
-    "image": "/Resources/Images/Maps/Official/Kyrgyzstan.png",
+    "image": "/resources/images/maps/official/Kyrgyzstan.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -1435,7 +1435,7 @@
   },
   {
     "name": "India",
-    "image": "/Resources/Images/Maps/Official/India.png",
+    "image": "/resources/images/maps/official/India.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -1454,7 +1454,7 @@
   },
   {
     "name": "Japan",
-    "image": "/Resources/Images/Maps/Official/Japan.png",
+    "image": "/resources/images/maps/official/Japan.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1473,7 +1473,7 @@
   },
   {
     "name": "South Korea",
-    "image": "/Resources/Images/Maps/Official/SouthKorea.png",
+    "image": "/resources/images/maps/official/SouthKorea.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1491,7 +1491,7 @@
   },
   {
     "name": "Taiwan",
-    "image": "/Resources/Images/Maps/Official/Taiwan.png",
+    "image": "/resources/images/maps/official/Taiwan.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1510,7 +1510,7 @@
   },
   {
     "name": "Thailand",
-    "image": "/Resources/Images/Maps/Official/Thailand.png",
+    "image": "/resources/images/maps/official/Thailand.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1529,7 +1529,7 @@
   },
   {
     "name": "Vietnam",
-    "image": "/Resources/Images/Maps/Official/Vietnam.png",
+    "image": "/resources/images/maps/official/Vietnam.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1548,7 +1548,7 @@
   },
   {
     "name": "Indonesia",
-    "image": "/Resources/Images/Maps/Official/Indonesia.png",
+    "image": "/resources/images/maps/official/Indonesia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1566,7 +1566,7 @@
   },
   {
     "name": "Philippines",
-    "image": "/Resources/Images/Maps/Official/Philippines.png",
+    "image": "/resources/images/maps/official/Philippines.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1585,7 +1585,7 @@
   },
   {
     "name": "Sri Lanka",
-    "image": "/Resources/Images/Maps/Official/SriLanka.png",
+    "image": "/resources/images/maps/official/SriLanka.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1604,7 +1604,7 @@
   },
   {
     "name": "Bhutan",
-    "image": "/Resources/Images/Maps/Official/Bhutan.png",
+    "image": "/resources/images/maps/official/Bhutan.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -1623,7 +1623,7 @@
   },
   {
     "name": "Singapore",
-    "image": "/Resources/Images/Maps/Official/Singapore.png",
+    "image": "/resources/images/maps/official/Singapore.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1642,7 +1642,7 @@
   },
   {
     "name": "Hong Kong",
-    "image": "/Resources/Images/Maps/Official/HongKong.png",
+    "image": "/resources/images/maps/official/HongKong.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1662,7 +1662,7 @@
   },
   {
     "name": "Macau",
-    "image": "/Resources/Images/Maps/Official/Macau.png",
+    "image": "/resources/images/maps/official/Macau.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1682,7 +1682,7 @@
   },
   {
     "name": "Malaysia",
-    "image": "/Resources/Images/Maps/Official/Malaysia.png",
+    "image": "/resources/images/maps/official/Malaysia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1701,7 +1701,7 @@
   },
   {
     "name": "Bangladesh",
-    "image": "/Resources/Images/Maps/Official/Bangladesh.png",
+    "image": "/resources/images/maps/official/Bangladesh.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -1720,7 +1720,7 @@
   },
   {
     "name": "United Arab Emirates",
-    "image": "/Resources/Images/Maps/Official/UAE.png",
+    "image": "/resources/images/maps/official/UAE.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1738,7 +1738,7 @@
   },
   {
     "name": "Oman",
-    "image": "/Resources/Images/Maps/Official/Oman.png",
+    "image": "/resources/images/maps/official/Oman.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1757,7 +1757,7 @@
   },
   {
     "name": "Qatar",
-    "image": "/Resources/Images/Maps/Official/Qatar.png",
+    "image": "/resources/images/maps/official/Qatar.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1776,7 +1776,7 @@
   },
   {
     "name": "Israel",
-    "image": "/Resources/Images/Maps/Official/Israel.png",
+    "image": "/resources/images/maps/official/Israel.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1796,7 +1796,7 @@
   },
   {
     "name": "Lebanon",
-    "image": "/Resources/Images/Maps/Official/Lebanon.png",
+    "image": "/resources/images/maps/official/Lebanon.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1815,7 +1815,7 @@
   },
   {
     "name": "Jordan",
-    "image": "/Resources/Images/Maps/Official/Jordan.png",
+    "image": "/resources/images/maps/official/Jordan.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1834,7 +1834,7 @@
   },
   {
     "name": "Africa",
-    "image": "/Resources/Images/Maps/Official/Africa.png",
+    "image": "/resources/images/maps/official/Africa.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1853,7 +1853,7 @@
   },
   {
     "name": "South Africa",
-    "image": "/Resources/Images/Maps/Official/SouthAfrica.png",
+    "image": "/resources/images/maps/official/SouthAfrica.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1872,7 +1872,7 @@
   },
   {
     "name": "Botswana",
-    "image": "/Resources/Images/Maps/Official/Botswana.png",
+    "image": "/resources/images/maps/official/Botswana.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1892,7 +1892,7 @@
   },
   {
     "name": "Namibia",
-    "image": "/Resources/Images/Maps/Official/Namibia.png",
+    "image": "/resources/images/maps/official/Namibia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1912,7 +1912,7 @@
   },
   {
     "name": "Lesotho",
-    "image": "/Resources/Images/Maps/Official/Lesotho.png",
+    "image": "/resources/images/maps/official/Lesotho.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1930,7 +1930,7 @@
   },
   {
     "name": "Kenya",
-    "image": "/Resources/Images/Maps/Official/Kenya.png",
+    "image": "/resources/images/maps/official/Kenya.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1948,7 +1948,7 @@
   },
   {
     "name": "Uganda",
-    "image": "/Resources/Images/Maps/Official/Uganda.png",
+    "image": "/resources/images/maps/official/Uganda.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -1966,7 +1966,7 @@
   },
   {
     "name": "Rwanda",
-    "image": "/Resources/Images/Maps/Official/Rwanda.png",
+    "image": "/resources/images/maps/official/Rwanda.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -1985,7 +1985,7 @@
   },
   {
     "name": "Ghana",
-    "image": "/Resources/Images/Maps/Official/Ghana.png",
+    "image": "/resources/images/maps/official/Ghana.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -2004,7 +2004,7 @@
   },
   {
     "name": "Nigeria",
-    "image": "/Resources/Images/Maps/Official/Nigeria.png",
+    "image": "/resources/images/maps/official/Nigeria.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Hard",
@@ -2022,7 +2022,7 @@
   },
   {
     "name": "Egypt",
-    "image": "/Resources/Images/Maps/Official/Egypt.png",
+    "image": "/resources/images/maps/official/Egypt.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -2042,7 +2042,7 @@
   },
   {
     "name": "Tunisia",
-    "image": "/Resources/Images/Maps/Official/Tunisia.png",
+    "image": "/resources/images/maps/official/Tunisia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -2061,7 +2061,7 @@
   },
   {
     "name": "Senegal",
-    "image": "/Resources/Images/Maps/Official/Senegal.png",
+    "image": "/resources/images/maps/official/Senegal.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Medium",
@@ -2081,7 +2081,7 @@
   },
   {
     "name": "Réunion",
-    "image": "/Resources/Images/Maps/Official/Reunion.png",
+    "image": "/resources/images/maps/official/Reunion.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -2099,7 +2099,7 @@
   },
   {
     "name": "São Tomé and Príncipe",
-    "image": "/Resources/Images/Maps/Official/SaoTomeAndPrincipe.png",
+    "image": "/resources/images/maps/official/SaoTomeAndPrincipe.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -2118,7 +2118,7 @@
   },
   {
     "name": "Oceania",
-    "image": "/Resources/Images/Maps/Official/Oceania.png",
+    "image": "/resources/images/maps/official/Oceania.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -2138,7 +2138,7 @@
   },
   {
     "name": "Australia",
-    "image": "/Resources/Images/Maps/Official/Australia.png",
+    "image": "/resources/images/maps/official/Australia.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -2157,7 +2157,7 @@
   },
   {
     "name": "New Zealand",
-    "image": "/Resources/Images/Maps/Official/NewZealand.png",
+    "image": "/resources/images/maps/official/NewZealand.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",
@@ -2176,7 +2176,7 @@
   },
   {
     "name": "Christmas Island",
-    "image": "/Resources/Images/Maps/Official/ChristmasIsland.png",
+    "image": "/resources/images/maps/official/ChristmasIsland.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Normal",
@@ -2194,7 +2194,7 @@
   },
   {
     "name": "Antarctica",
-    "image": "/Resources/Images/Maps/Official/Antarctica.png",
+    "image": "/resources/images/maps/official/Antarctica.png",
     "author": "GeoExplorer",
     "date": "2025-08-06",
     "difficulty": "Easy",

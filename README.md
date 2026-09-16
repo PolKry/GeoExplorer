@@ -152,6 +152,8 @@ GAME_UNFINISHED_MAX_LIFETIME_MIN=10
 # Other 3rd party keys
 # =========================
 REST_COUNTRIES_API_KEY=your_rest_api_key
+# Optional: only needed to refresh data/countries.geojson
+OSM_BOUNDARIES_API_KEY=your_osm_boundaries_api_key
 ```
 
 Start the server:
@@ -161,6 +163,12 @@ npm start
 ```
 
 The application will then be available locally.
+
+To clean location data and import maps and tags into MongoDB in one step:
+
+```bash
+npm run import:database
+```
 
 ---
 

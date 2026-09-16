@@ -87,7 +87,7 @@ async function createCommunityMap(authHeader, payload) {
     description,
     difficulty,
     author,
-    image: `/Resources/Images/Maps/Unofficial/CommunityMapIcon${getRandomInt(1, 22)}.png`,
+    image: `/resources/images/maps/unofficial/CommunityMapIcon${getRandomInt(1, 22)}.png`,
     date: new Date().toISOString().split('T')[0],
     type: 'Community',
     tags,

@@ -13,7 +13,7 @@ export function initLoadingScreen() {
 
     loadingScreen.innerHTML = `
         <div class="spinner"></div>
-        <img src="/Resources/Images/Icon.ico" alt="GeoExplorer">
+        <img src="/resources/images/Icon.ico" alt="GeoExplorer">
         <div class="loading-text">
             Loading<span class="dots"></span>
         </div>
