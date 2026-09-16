@@ -27,7 +27,7 @@ function initializeProfileMenu() {
   logoutBtn?.addEventListener("click", () => {
     logout();
 
-    window.location.reload();
+    window.location.href = "/login.html";
   });
 }
 

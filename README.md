@@ -124,6 +124,7 @@ BASE_URL=http://localhost:4444
 # GOOGLE API (Restricted in Console!)
 # =========================
 GOOGLE_API_KEY=your_google_maps_api_key
+GOOGLE_CLIENT_ID=your_google_oauth_web_client_id
 
 # =========================
 # DATABASE

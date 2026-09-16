@@ -14,6 +14,10 @@ function findUserByEmail(email, options = {}) {
   return query;
 }
 
+function findUserByUsername(username) {
+  return User.findOne({ username });
+}
+
 function findUserById(userId, options = {}) {
   const query = User.findById(userId);
   if (options.includePassword) query.select('+password');
@@ -64,6 +68,7 @@ async function createUserAccount({ email, username, password, createdAt, role, i
 module.exports = {
   startSession,
   findUserByEmail,
+  findUserByUsername,
   findUserById,
   findUsersByIds,
   deleteUserById,

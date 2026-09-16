@@ -201,6 +201,42 @@ input:-webkit-autofill:active {
     transform: translateY(0);
 }
 
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1.15rem 0 0.9rem;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: linear-gradient(90deg, transparent, rgba(159, 255, 220, 0.28));
+}
+
+.auth-divider::after {
+    background: linear-gradient(90deg, rgba(159, 255, 220, 0.28), transparent);
+}
+
+.google-login {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-height: 40px;
+    padding: 0.15rem 0;
+}
+
+.google-login > div {
+    max-width: 100%;
+}
+
 .footer-text {
     margin-top: 1rem;
     text-align: center;

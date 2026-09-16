@@ -9,6 +9,59 @@ import { loginUser } from "../../api/auth-api.js";
 import { showMessage } from "../../utils/toast.js";
 import { apiFetch } from "../../api/http.js";
 
+async function loginWithGoogleCredential(credential) {
+  const response = await apiFetch('/api/auth/google', {
+    method: 'POST',
+    body: JSON.stringify({ credential })
+  });
+  const data = await response.json();
+  if (!response.ok) throw new Error(data.message || 'Google login failed');
+
+  setToken(data.token);
+  setUsername(data.username);
+  await applyPendingProfile();
+  window.location.href = '/index.html';
+}
+
+async function setupGoogleLogin() {
+  const container = document.getElementById('google-login');
+  if (!container) return;
+
+  try {
+    const configResponse = await fetch('/api/auth/google-client-id');
+    if (!configResponse.ok) throw new Error('Google login configuration is unavailable.');
+    const { clientId } = await configResponse.json();
+    if (!clientId) throw new Error('Google login is not configured on the server.');
+
+    console.info(`Google login origin: ${window.location.origin}`);
+
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.onload = () => {
+      window.google.accounts.id.initialize({
+        client_id: clientId,
+        callback: async ({ credential }) => {
+          try {
+            await loginWithGoogleCredential(credential);
+          } catch (error) {
+            showMessage(error.message || 'Google login failed', 'error');
+          }
+        }
+      });
+      window.google.accounts.id.renderButton(container, {
+        theme: 'outline',
+        size: 'large',
+        width: 280,
+        text: 'continue_with'
+      });
+    };
+    script.onerror = () => showMessage('Unable to load Google login.', 'error');
+    document.head.appendChild(script);
+  } catch (error) {
+    showMessage(error.message || 'Google login is unavailable.', 'error');
+  }
+}
+
 async function applyPendingProfile() {
   const pendingProfile = getPendingProfile();
   if (!pendingProfile) return;
@@ -65,7 +118,7 @@ function setupLoginForm() {
 
     try {
       const json = await loginUser(data);
-      
+
       setToken(json.token);
       setUsername(json.username)
 
@@ -80,3 +133,4 @@ function setupLoginForm() {
 }
 
 window.addEventListener('DOMContentLoaded', setupLoginForm);
+window.addEventListener('DOMContentLoaded', setupGoogleLogin);

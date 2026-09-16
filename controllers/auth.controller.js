@@ -18,10 +18,24 @@ async function login(req, res) {
   }
 }
 
+async function loginWithGoogle(req, res) {
+  try {
+    res.json(await authService.loginWithGoogle(req.body.credential));
+  } catch (error) {
+    sendError(res, error, 'Google login failed');
+  }
+}
+
+function googleClientId(req, res) {
+  res.json({ clientId: process.env.GOOGLE_CLIENT_ID || null });
+}
+
 async function verifyEmail(req, res) {
   try {
     const result = await authService.verifyEmail(req.query.token);
-    if (result.alreadyVerified) return res.send('Email is already verified.');
+    if (result.alreadyVerified)
+      return res.send('Email is already verified.');
+
     return res.redirect('/menu/verify-success.html');
   } catch (error) {
     if (error.status) return res.status(error.status).send(error.message);
@@ -80,6 +94,8 @@ function validateToken(req, res) {
 module.exports = {
   register,
   login,
+  loginWithGoogle,
+  googleClientId,
   verifyEmail,
   requestPasswordReset,
   resetPassword,

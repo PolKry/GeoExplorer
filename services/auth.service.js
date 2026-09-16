@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const { OAuth2Client } = require('google-auth-library');
 
 const userRepository = require('../repositories/user.repository');
 const { sendEmail } = require('../utils/email-sender.utils');
@@ -27,6 +29,25 @@ function signVerificationToken(userId) {
 
 function createPasswordResetToken(userId) {
   return jwt.sign({ userId, purpose: 'password_reset' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+}
+
+function createAuthResponse(user) {
+  return {
+    token: jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' }),
+    username: user.username
+  };
+}
+
+async function createGoogleUsername(email) {
+  const localPart = email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '').slice(0, 8) || 'player';
+
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const suffix = crypto.randomBytes(3).toString('hex');
+    const username = `${localPart}_${suffix}`.slice(0, 14);
+    if (!(await userRepository.findUserByUsername(username))) return username;
+  }
+
+  throw new ConflictError('Unable to create a unique username');
 }
 
 function verifyPasswordResetToken(token) {
@@ -185,10 +206,55 @@ async function login({ email, password }) {
     throw new ForbiddenError('Verify your email first');
   }
 
-  return {
-    token: jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' }),
-    username: user.username
-  };
+  return createAuthResponse(user);
+}
+
+async function loginWithGoogle(credential) {
+  validateRequired(credential, 'Google credential is required');
+  validateRequired(process.env.GOOGLE_CLIENT_ID, 'Google login is not configured');
+
+  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  let payload;
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+    payload = ticket.getPayload();
+  } catch (error) {
+    throw new ValidationError('Invalid Google credential');
+  }
+
+  if (!payload?.email || !payload.email_verified) {
+    throw new ValidationError('Google account email is not verified');
+  }
+
+  let user = await userRepository.findUserByEmail(payload.email);
+  if (user) {
+    if (!user.isVerified) {
+      user.isVerified = true;
+      await user.save();
+    }
+    return createAuthResponse(user);
+  }
+
+  const username = await createGoogleUsername(payload.email);
+  const password = await bcrypt.hash(crypto.randomBytes(32).toString('hex'), 10);
+  user = await userRepository.createUserAccount({
+    email: payload.email,
+    username,
+    password,
+    createdAt: new Date(),
+    role: 'user',
+    isVerified: true,
+    profileData: {
+      firstName: payload.given_name || '',
+      lastName: payload.family_name || '',
+      bio: 'No bio yet. Add one to tell others more about yourself!'
+    }
+  });
+
+  return createAuthResponse(user);
 }
 
 async function verifyEmail(token) {
@@ -297,6 +363,7 @@ async function updateAccount(userId, { username, newPassword, currentPassword })
 module.exports = {
   register,
   login,
+  loginWithGoogle,
   verifyEmail,
   requestPasswordReset,
   resetPassword,

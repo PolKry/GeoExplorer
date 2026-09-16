@@ -64,40 +64,55 @@ app.use(
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",
-          'https://maps.googleapis.com',
+          "https://accounts.google.com",
+          "https://accounts.google.com/gsi/client",
+          "https://maps.googleapis.com",
+        ],
+
+        frameSrc: [
+          "'self'",
+          "https://accounts.google.com",
         ],
 
         connectSrc: [
           "'self'",
-          'ws:',
-          'https://maps.googleapis.com',
+          "ws:",
+          "wss:",
+          "https://accounts.google.com",
+          "https://accounts.google.com/gsi/",
+          "https://maps.googleapis.com",
         ],
 
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
-          'https://fonts.googleapis.com',
+          "https://fonts.googleapis.com",
+          "https://accounts.google.com",
         ],
 
         imgSrc: [
           "'self'",
-          'data:',
-          'blob:',
-          'https://maps.gstatic.com',
-          'https://maps.googleapis.com',
-          'https://fonts.gstatic.com',
-          'https://streetviewpixels-pa.googleapis.com',
-          'https://lh3.googleusercontent.com',
-          'https://cbk0.google.com',
-          'https://*.ggpht.com',
-          'https://flagcdn.com',
+          "data:",
+          "blob:",
+          "https://maps.gstatic.com",
+          "https://maps.googleapis.com",
+          "https://fonts.gstatic.com",
+          "https://streetviewpixels-pa.googleapis.com",
+          "https://lh3.googleusercontent.com",
+          "https://cbk0.google.com",
+          "https://*.ggpht.com",
+          "https://flagcdn.com",
         ],
 
         fontSrc: [
           "'self'",
-          'https://fonts.gstatic.com',
+          "https://fonts.gstatic.com",
         ],
       },
+    },
+
+    crossOriginOpenerPolicy: {
+      policy: "same-origin-allow-popups",
     },
   })
 );
