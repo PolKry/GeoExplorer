@@ -134,8 +134,6 @@ MONGO_URI=your_mongodb_connection_string
 # =========================
 # Auth
 # =========================
-GOOGLE_CLIENT_ID=your_google_client_id
-
 MIN_USERNAME_LENGHT=4
 MAX_USERNAME_LENGHT=14
 
