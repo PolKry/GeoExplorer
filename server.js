@@ -1,5 +1,6 @@
 require('dotenv').config({ path: './.env' });
 
+const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
@@ -133,6 +134,55 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+function resolveCaseInsensitivePath(basePath, segments) {
+  let currentPath = basePath;
+
+  for (const segment of segments) {
+    if (!fs.existsSync(currentPath)) {
+      return null;
+    }
+
+    const entries = fs.readdirSync(currentPath, { withFileTypes: true });
+    const match = entries.find(
+      (entry) => entry.name.toLowerCase() === segment.toLowerCase()
+    );
+
+    if (!match) {
+      return null;
+    }
+
+    currentPath = path.join(currentPath, match.name);
+  }
+
+  return currentPath;
+}
+
+function legacyAssetResolver(req, res, next) {
+  const requestPath = decodeURIComponent(req.path || '/');
+
+  if (!/^\/Resources\//i.test(requestPath)) {
+    return next();
+  }
+
+  const segments = requestPath.split('/').filter(Boolean);
+
+  if (!segments.length) {
+    return next();
+  }
+
+  const resolvedPath = resolveCaseInsensitivePath(PUBLIC_DIR, segments);
+
+  if (!resolvedPath || !fs.existsSync(resolvedPath) || !fs.statSync(resolvedPath).isFile()) {
+    return next();
+  }
+
+  const normalizedUrl = '/' + path.relative(PUBLIC_DIR, resolvedPath).split(path.sep).join('/');
+  req.url = normalizedUrl;
+
+  return express.static(PUBLIC_DIR)(req, res, next);
+}
+
+app.use(legacyAssetResolver);
 app.use(express.static(PUBLIC_DIR));
 
 // SOCKET.IO
