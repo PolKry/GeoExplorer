@@ -2,6 +2,7 @@ require('dotenv').config({ path: './.env' });
 
 const path = require('path');
 const http = require('http');
+const PUBLIC_DIR = path.join(process.cwd(), 'public');
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -132,7 +133,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(PUBLIC_DIR));
 
 // SOCKET.IO
 io.use(authSocketMiddleware);
@@ -156,7 +157,7 @@ app.use('/api/party', partyRoutes);
 
 // ERROR HANDLING
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  res.status(404).sendFile(path.join(PUBLIC_DIR, '404.html'));
 });
 
 // This must stay after all routes.
