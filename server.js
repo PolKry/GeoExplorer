@@ -37,7 +37,6 @@ const tagRoutes = require('./routes/tag.routes');
 const usersRoutes = require('./routes/users.routes');
 const leaderboardRoutes = require('./routes/leaderboard.routes');
 const partyRoutes = require('./routes/party.routes');
-const streetViewRoutes = require('./routes/street-view.routes');
 const gamePageRoutes = require('./routes/game-page.routes');
 const countriesRoutes = require('./routes/countries.routes');
 const { showStartupBanner, showStartupError, showStartupSection } = require('./utils/startup-console');
