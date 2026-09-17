@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:
@@ -45,21 +44,49 @@ jobs:
           tags: tag:github-actions
 
       - name: Test Tailscale connectivity
-        shell: bash
         run: |
           echo "=== Tailscale status ==="
           tailscale status
 
           echo
-          echo "=== Tailscale IP ==="
-          tailscale ip -4
-
-          echo
-          echo "=== Ping Pi ==="
+          echo "=== Ping Raspberry Pi ==="
           tailscale ping 100.117.234.78
 
           echo
           echo "=== TCP 22 ==="
-          timeout 10 bash -c '</dev/tcp/100.117.234.78/22' \
-            && echo "SSH port is reachable" \
-            || (echo "SSH port is NOT reachable" && exit 1)
+          timeout 10 bash -c '</dev/tcp/100.117.234.78/22'
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          echo "${{ secrets.PI_SSH_KEY }}" > ~/.ssh/geoexplorer
+          chmod 600 ~/.ssh/geoexplorer
+
+          echo "${{ secrets.PI_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to Raspberry Pi
+        run: |
+          ssh -i ~/.ssh/geoexplorer \
+            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
+            'cd /mnt/ssd/GeoExplorer && git fetch origin && git reset --hard origin/main'
+
+      - name: Install production dependencies
+        run: |
+          ssh -i ~/.ssh/geoexplorer \
+            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
+            'cd /mnt/ssd/GeoExplorer && npm ci --omit=dev'
+
+      - name: Restart GeoExplorer
+        run: |
+          ssh -i ~/.ssh/geoexplorer \
+            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
+            'sudo systemctl restart geoexplorer'
+
+      - name: Verify GeoExplorer
+        run: |
+          ssh -i ~/.ssh/geoexplorer \
+            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
+            'sudo systemctl is-active --quiet geoexplorer'
