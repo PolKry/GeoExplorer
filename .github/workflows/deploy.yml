@@ -67,6 +67,15 @@ jobs:
           echo "${{ secrets.PI_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
+      - name: Verify SSH key fingerprint
+        shell: bash
+        run: |
+          printf '%s\n' "${{ secrets.PI_SSH_KEY }}" > /tmp/geoexplorer_key
+          chmod 600 /tmp/geoexplorer_key
+
+          echo "GitHub secret key fingerprint:"
+          ssh-keygen -y -f /tmp/geoexplorer_key | ssh-keygen -lf -
+
       - name: Deploy to Raspberry Pi
         run: |
           ssh -i ~/.ssh/geoexplorer \
