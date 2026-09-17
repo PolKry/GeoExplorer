@@ -44,59 +44,22 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:github-actions
 
-      - name: Setup SSH
+      - name: Test Tailscale connectivity
         shell: bash
         run: |
-          mkdir -p ~/.ssh
+          echo "=== Tailscale status ==="
+          tailscale status
 
-          echo "${{ secrets.PI_SSH_KEY }}" > ~/.ssh/geoexplorer_actions
-          chmod 600 ~/.ssh/geoexplorer_actions
+          echo
+          echo "=== Tailscale IP ==="
+          tailscale ip -4
 
-          echo "${{ secrets.PI_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+          echo
+          echo "=== Ping Pi ==="
+          tailscale ping 100.117.234.78
 
-      - name: Test SSH connection
-        shell: bash
-        run: |
-          ssh \
-            -i ~/.ssh/geoexplorer_actions \
-            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
-            'echo "Connected to $(hostname)"'
-
-      - name: Deploy files to Raspberry Pi
-        shell: bash
-        run: |
-          tar \
-            --exclude='.git' \
-            --exclude='node_modules' \
-            --exclude='.env' \
-            -czf - . \
-          | ssh \
-              -i ~/.ssh/geoexplorer_actions \
-              "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
-              'mkdir -p /mnt/ssd/GeoExplorer && tar -xzf - -C /mnt/ssd/GeoExplorer'
-
-      - name: Install production dependencies
-        shell: bash
-        run: |
-          ssh \
-            -i ~/.ssh/geoexplorer_actions \
-            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
-            'cd /mnt/ssd/GeoExplorer &&
-             npm ci --omit=dev'
-
-      - name: Restart GeoExplorer
-        shell: bash
-        run: |
-          ssh \
-            -i ~/.ssh/geoexplorer_actions \
-            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
-            'sudo systemctl restart geoexplorer'
-
-      - name: Check GeoExplorer
-        shell: bash
-        run: |
-          ssh \
-            -i ~/.ssh/geoexplorer_actions \
-            "${{ secrets.PI_USER }}@${{ secrets.PI_HOST }}" \
-            'sudo systemctl is-active --quiet geoexplorer'
+          echo
+          echo "=== TCP 22 ==="
+          timeout 10 bash -c '</dev/tcp/100.117.234.78/22' \
+            && echo "SSH port is reachable" \
+            || (echo "SSH port is NOT reachable" && exit 1)
