@@ -145,7 +145,7 @@ async function searchOfficialMaps(query) {
     if (data.maps.length > 0) {
       appendMapsTo(officialMapListDiv, data.maps);
     } else {
-      officialMapListDiv.textContent = "No maps found.";
+      showEmptyState(officialMapListDiv, "No maps found.");
     }
   } catch (err) {
     console.error("Error searching official maps:", err);
@@ -170,7 +170,10 @@ async function searchCommunityMaps(query) {
     if (data.maps.length > 0) {
       appendMapsTo(communityMapListDiv, data.maps);
     } else {
-      communityMapListDiv.textContent = "No community maps found. Try creating one or check back later!";
+      showEmptyState(
+        communityMapListDiv,
+        "No community maps yet. Create one or check back later!"
+      );
     }
   } catch (err) {
     console.error("Error searching community maps:", err);
@@ -277,9 +280,7 @@ async function getFavMaps() {
 
   try {
     const res = await apiFetch(`/api/users/me`);
-
     if (!res.ok) throw new Error('Failed to fetch user profile info');
-
     const data = await res.json();
 
     favMaps = data.favoriteMaps;

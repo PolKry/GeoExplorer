@@ -94,6 +94,7 @@
 }
 
 .explore-panel-section {
+    position: relative;
     background: linear-gradient(145deg, var(--geo-panel), var(--geo-panel-alt));
     border: 1px solid var(--geo-border);
     padding: 3rem 2rem;
@@ -258,11 +259,11 @@
 }
 
 #create-your-map {
-    display: block;
     position: absolute;
-    margin: 0 auto;
+    top: 3rem;
+    right: 2rem;
+    margin: 0;
     padding: 1rem 1.5rem;
-    right: 150px;
     font-size: 1rem;
     border: none;
     border-radius: 10px;
@@ -270,7 +271,6 @@
     background-color: #00ffae;
     color: #000;
     font-weight: bold;
-
     transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
