@@ -1,4 +1,5 @@
-import { apiFetch } from "../../api/http.js";
+import { getMapsForPage, searchMaps } from "../../api/explore-page-api.js";
+import { setUserFavMaps, getUserFavMaps } from "../../api/user-api.js";
 import { getToken } from "../../utils/storage.js";
 
 let officialPage = 1;
@@ -15,7 +16,17 @@ const communitySearchInput = document.getElementById("map-search-community");
 const officialFavMapsToggle = document.getElementById("fav-maps-only-official-toggle");
 const communityFavMapsToggle = document.getElementById("fav-maps-only-community-toggle");
 
+const solidStartIcon = "/resources/images/solidStar.png";
+const hollowStarIcon = "/resources/images/hollowStar.png";
+
 let favMaps = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  getFavMaps();
+
+  loadOfficialMaps(officialPage);
+  loadCommunityMaps(communityPage);
+});
 
 function appendMapsTo(container, maps) {
   maps.forEach(map => {
@@ -41,19 +52,19 @@ function appendMapsTo(container, maps) {
     const isInFavorites = favMaps.includes(map.name);
     favoriteIcon.dataset.fav = isInFavorites;
     if (isInFavorites) {
-      favoriteIcon.src = "/resources/images/solidStar.png";
+      favoriteIcon.src = solidStartIcon;
     } else {
-      favoriteIcon.src = "/resources/images/hollowStar.png";
+      favoriteIcon.src = hollowStarIcon;
     }
 
     favoriteIcon.addEventListener("click", (event) => {
       event.stopPropagation();
 
       if (favoriteIcon.dataset.fav === "true") {
-        favoriteIcon.src = "/resources/images/hollowStar.png";
+        favoriteIcon.src = hollowStarIcon;
         favoriteIcon.dataset.fav = "false";
       } else {
-        favoriteIcon.src = "/resources/images/solidStar.png";
+        favoriteIcon.src = solidStartIcon;
         favoriteIcon.dataset.fav = "true";
       }
 
@@ -77,8 +88,7 @@ async function loadOfficialMaps(page) {
       showLoading(officialMapListDiv);
     }
 
-    const res = await apiFetch(`/api/maps?page=${page}`);
-    const data = await res.json();
+    const data = await getMapsForPage(page, "Official");
 
     if (page === 1) {
       clearMaps(officialMapListDiv);
@@ -105,13 +115,12 @@ async function loadCommunityMaps(page) {
       showLoading(communityMapListDiv);
     }
 
-    const res = await apiFetch(`/api/maps/community?page=${page}`);
-    const data = await res.json();
+    const mapsData = await getMapsForPage(page, "Community");
 
     if (page === 1) {
       clearMaps(communityMapListDiv);
 
-      if (data.maps.length === 0) {
+      if (mapsData.maps.length === 0) {
         showEmptyState(
           communityMapListDiv,
           "No community maps yet. Create one or check back later!"
@@ -121,9 +130,9 @@ async function loadCommunityMaps(page) {
       }
     }
 
-    appendMapsTo(communityMapListDiv, data.maps);
+    appendMapsTo(communityMapListDiv, mapsData.maps);
 
-    loadMoreCommunityBtn.style.display = data.hasMore ? "block" : "none";
+    loadMoreCommunityBtn.style.display = mapsData.hasMore ? "block" : "none";
 
   } catch (err) {
     console.error("Error loading community maps:", err);
@@ -137,10 +146,7 @@ async function searchOfficialMaps(query) {
   const onlyFavMaps = officialFavMapsToggle.checked;
 
   try {
-    const res = await apiFetch(
-      `/api/maps/search?query=${encodeURIComponent(query)}&type=${"Official"}&onlyFavMaps=${onlyFavMaps}`
-    );
-    const data = await res.json();
+    const data = await searchMaps(query, "Official", onlyFavMaps);
 
     if (data.maps.length > 0) {
       appendMapsTo(officialMapListDiv, data.maps);
@@ -162,10 +168,7 @@ async function searchCommunityMaps(query) {
   const onlyFavMaps = communityFavMapsToggle.checked;
 
   try {
-    const res = await apiFetch(
-      `/api/maps/search?query=${encodeURIComponent(query)}&type=${"Community"}&onlyFavMaps=${onlyFavMaps}`
-    );
-    const data = await res.json();
+    const data = await searchMaps(query, "Community", onlyFavMaps);
 
     if (data.maps.length > 0) {
       appendMapsTo(communityMapListDiv, data.maps);
@@ -179,13 +182,6 @@ async function searchCommunityMaps(query) {
     console.error("Error searching community maps:", err);
   }
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  getFavMaps();
-
-  loadOfficialMaps(officialPage);
-  loadCommunityMaps(communityPage);
-});
 
 officialFavMapsToggle.addEventListener('change', () => {
   const query = officialSearchInput.value.trim();
@@ -277,13 +273,8 @@ async function getFavMaps() {
     window.location.href = '/login.html';
     return;
   }
-
   try {
-    const res = await apiFetch(`/api/users/me`);
-    if (!res.ok) throw new Error('Failed to fetch user profile info');
-    const data = await res.json();
-
-    favMaps = data.favoriteMaps;
+    favMaps = await getUserFavMaps();
   } catch (err) {
     console.error("Error loading favorite maps:", err);
   }
@@ -300,17 +291,7 @@ async function addOrRemoveFavMap(mapName) {
   }
 
   try {
-    const res = await apiFetch(`/api/users/me`);
-    if (!res.ok) throw new Error('Failed to apiFetch user profile info');
-
-    const userProfile = await res.json();
-
-    const resUpdate = await apiFetch(`/api/users/${userProfile._id}/favorite-map`, {
-      method: 'PUT',
-      body: JSON.stringify({ name: mapName })
-    });
-
-    if (!resUpdate.ok) throw new Error('Failed to update favorites');
+    await setUserFavMaps(mapName);
 
     // Toggle locally
     if (favMaps.includes(mapName)) {

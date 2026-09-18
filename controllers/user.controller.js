@@ -9,6 +9,15 @@ async function me(req, res) {
   }
 }
 
+async function favoriteMaps(req, res) {
+  try {
+    console.log('Fetching favorite maps for user:', req.user.userId); // Debugging line
+    res.json(await userService.getFavoriteMaps(req.user.userId));
+  } catch (error) {
+    sendError(res, error);
+  }
+}
+
 async function highestScore(req, res) {
   try {
     res.json(await userService.getHighestScore(req.user.userId, req.query.name));
@@ -71,6 +80,7 @@ async function stats(req, res) {
 
 module.exports = {
   me,
+  favoriteMaps,
   highestScore,
   updateSettings,
   toggleFavoriteMap,

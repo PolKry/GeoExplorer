@@ -11,6 +11,14 @@ async function getMyProfile(userId) {
   return profile;
 }
 
+async function getFavoriteMaps(userId) {
+  const profile = await userProfileRepository.findByUserId(userId);
+  if (!profile) {
+    throw new NotFoundError('Profile not found');
+  }
+  return profile.favoriteMaps || [];
+}
+
 async function getHighestScore(userId, name) {
   const userStats = await userStatsRepository.findByUserId(userId);
   if (!userStats) {
@@ -110,6 +118,7 @@ async function getStats(userId) {
 
 module.exports = {
   getMyProfile,
+  getFavoriteMaps,
   getHighestScore,
   updateSettings,
   toggleFavoriteMap,

@@ -1,5 +1,5 @@
 import { fetchLeaderboard } from "../../api/leaderboard-api.js";
-import { fetchUserScore } from "../../api/user-api.js";
+import { addUserFavMaps } from "../../api/user-api.js";
 import { startPoints } from "../../api/game-starter-api.js";
 import { fetchMapData } from "../../api/map-api.js";
 import { renderMapLeaderboard } from "../../renderers/leaderboard-renderer.js";
@@ -103,7 +103,7 @@ async function loadUserScore() {
   const token = getToken();
   if (!token) return;
 
-  const data = await fetchUserScore(mapSrcName);
+  const data = await addUserFavMaps(mapSrcName);
   if (!data) {
     console.error("Failed to fetch user data");
     return;
