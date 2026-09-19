@@ -1,3 +1,4 @@
+import { PAGES } from "../constants/resources.js";
 import { getToken, logout } from "../utils/storage.js";
 
 function initializeProfileMenu() {
@@ -27,7 +28,7 @@ function initializeProfileMenu() {
   logoutBtn?.addEventListener("click", () => {
     logout();
 
-    window.location.href = "/login.html";
+    window.location.replace(PAGES.login);
   });
 }
 

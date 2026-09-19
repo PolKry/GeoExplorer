@@ -1,8 +1,6 @@
+import { ICONS, AUDIO, PAGES } from "../../constants/resources.js";
+import { playSound } from "../../utils/audio.js";
 const { startCountryGameRes } = require("../../api/game-api");
-
-// Audio
-let enabledSound = true;
-let effectVolume = 0.5;
 
 // Maps
 let mapName;
@@ -23,9 +21,6 @@ let endingMapReady = false;
 let historyCountries = [];
 let gameStartInProgress = false;
 let loadingScreenActive = false;
-
-const breakdownGrayIcon = "/resources/images/BreakdownGray.png";
-const breakdownWhiteIcon = "/resources/images/BreakdownWhite.png";
 
 const submitGuessButton = document.getElementById("guess-button");
 
@@ -338,7 +333,7 @@ function showRoundInfo({ correctCountry, correctCountryName, guessedCountry, isC
     setRoundEndScreenActive(true);
 
     // Play SFX
-    playSound("answersShow.mp3", effectVolume);
+    playSound(AUDIO.showAnswer);
 }
 
 function setEndingScreenActive(value) {
@@ -601,12 +596,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = breakdownGrayIcon;
+        img.src = ICONS.breakdownGrayIcon;
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = breakdownWhiteIcon;
+        img.src = ICONS.breakdownWhiteIcon;
         map.classList.add('responsive');
     }
 
@@ -622,7 +617,7 @@ function menuClick() {
     hasGuessed = false;
     gameData = null;
 
-    window.location.replace("/");
+    window.location.replace(PAGES.home);
 }
 
 document.getElementById('play-again-button').addEventListener('click', playAgainClick);
@@ -651,13 +646,4 @@ async function playAgainClick() {
 
     // Redirect immediately
     window.location.href = `/play/${data.gameId}`;
-}
-
-function playSound(src, volume = 1) {
-    if (!enabledSound)
-        return;
-
-    const audio = new Audio(audioPath + src);
-    audio.volume = volume;
-    audio.play();
 }

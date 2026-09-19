@@ -1,3 +1,5 @@
+import { PAGES } from "../../constants/resources";
+
 let startInProgress = false;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,11 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     pointsButton?.addEventListener('click', () => {
-        window.location.href = "/party/create.html";
+        window.location.href = PAGES.createParty;
     });
 
     ffaButton?.addEventListener('click', () => {
-        window.location.href = "/party/create.html";
+        window.location.href = PAGES.createParty;
     });
 });
 

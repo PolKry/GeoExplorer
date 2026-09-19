@@ -1,3 +1,4 @@
+import { ICONS, PAGES } from "../../constants/resources.js";
 import { getMapsForPage, searchMaps } from "../../api/explore-page-api.js";
 import { setFavMaps, getFavMaps } from "../../api/user-api.js";
 
@@ -15,9 +16,6 @@ const communitySearchInput = document.getElementById("map-search-community");
 const officialFavMapsToggle = document.getElementById("fav-maps-only-official-toggle");
 const communityFavMapsToggle = document.getElementById("fav-maps-only-community-toggle");
 
-const solidStartIcon = "/resources/images/solidStar.png";
-const hollowStarIcon = "/resources/images/hollowStar.png";
-
 let favMaps = [];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -33,7 +31,7 @@ function appendMapsTo(container, maps) {
     card.className = "map-card";
 
     card.addEventListener("click", () => {
-      window.location.href = `/menu/map.html?map=${encodeURIComponent(map.name)}`;
+      window.location.href = `${PAGES.map}?map=${encodeURIComponent(map.name)}`;
     });
 
     const img = document.createElement("img");
@@ -51,19 +49,19 @@ function appendMapsTo(container, maps) {
     const isInFavorites = favMaps.includes(map.name);
     favoriteIcon.dataset.fav = isInFavorites;
     if (isInFavorites) {
-      favoriteIcon.src = solidStartIcon;
+      favoriteIcon.src = ICONS.solidStarIcon;
     } else {
-      favoriteIcon.src = hollowStarIcon;
+      favoriteIcon.src = ICONS.hollowStarIcon;
     }
 
     favoriteIcon.addEventListener("click", (event) => {
       event.stopPropagation();
 
       if (favoriteIcon.dataset.fav === "true") {
-        favoriteIcon.src = hollowStarIcon;
+        favoriteIcon.src = ICONS.hollowStarIcon;
         favoriteIcon.dataset.fav = "false";
       } else {
-        favoriteIcon.src = solidStartIcon;
+        favoriteIcon.src = ICONS.solidStarIcon;
         favoriteIcon.dataset.fav = "true";
       }
 

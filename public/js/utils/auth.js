@@ -1,3 +1,4 @@
+import { PAGES } from "../constants/resources.js";
 import { logout } from "./storage.js";
 
 export function getUserIdFromToken(token) {
@@ -8,7 +9,7 @@ export function getUserIdFromToken(token) {
         if (payload.exp && payload.exp < now) {
             console.warn("Token expired");
             logout();
-            window.location.href = "/login.html";
+            window.location.replace(PAGES.login);
             return null;
         }
 

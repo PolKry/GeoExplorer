@@ -1,3 +1,5 @@
+import { PAGES } from "../constants/resources";
+
 async function apiFetch(url, options = {}) {
     const token = localStorage.getItem("token");
     const headers = {
@@ -11,7 +13,8 @@ async function apiFetch(url, options = {}) {
     if (res.status === 401) {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
-        window.location.href = "/login.html";
+
+        window.location.replace(PAGES.login);
         throw new Error("Unauthorized");
     }
 

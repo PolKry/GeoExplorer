@@ -1,4 +1,5 @@
 import { createMap, getTags } from "../../api/map-creation-api.js";
+import { PAGES } from "../../constants/resources.js";
 import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -104,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // form.reset();  // Idk why would I want to reset the form if the user is redirected to explore page
             showMessage(`Map "${data.name}" published successfully!`, 'success');
-            window.location.href = "/menu/explore.html";
+            window.location.href = PAGES.explore;
         } catch (err) {
             showMessage('Failed to publish map: ' + err.message, 'error');
             console.error(err);

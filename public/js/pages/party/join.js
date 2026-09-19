@@ -1,4 +1,5 @@
 import { joinPartyByCode } from "../../api/party-api.js";
+import { PAGES } from "../../constants/resources.js";
 import { getPartyCode, setPartyCode, getToken } from "../../utils/storage.js";
 import { showMessage } from "../../utils/toast.js";
 
@@ -81,7 +82,7 @@ function bindJoinForm(inputs) {
             const party = await joinPartyByCode(code);
             
             setPartyCode(party.code);
-            window.location.href = "/party/waiting-room.html";
+            window.location.href = PAGES.waitingRoom;
         } catch (err) {
             console.error("Error joining party:", err.message);
             showMessage("Failed to join party. Please check your code.", "error");

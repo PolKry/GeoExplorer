@@ -1,5 +1,6 @@
 import { deleteAccount, updateAccount } from "../../api/auth-api.js";
 import { getLocalUserData } from "../../api/user-api.js";
+import { PAGES } from "../../constants/resources.js";
 import { clearStorage, getToken, setUsername } from "../../utils/storage.js";
 import { showMessage } from "../../utils/toast.js";
 
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             alert("Account deleted. Logging out...");
             clearStorage();
 
-            window.location.href = "/login.html";
+            window.location.replace(PAGES.login);
         } catch (err) {
             showMessage(err.message || "Network error");
             confirmDeleteBtn.textContent = "Delete";

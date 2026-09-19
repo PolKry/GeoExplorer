@@ -1,3 +1,4 @@
+import { PAGES } from '../../constants/resources.js';
 import { showMessage } from '../../utils/toast.js';
 
 const form = document.getElementById('reset-password-form');
@@ -50,7 +51,7 @@ if (form) {
       showMessage('Password updated successfully. You can now log in.', 'success');
       form.reset();
       setTimeout(() => {
-        window.location.href = '/login.html';
+        window.location.replace(PAGES.login);
       }, 1800);
     } catch (error) {
       showMessage(error.message || 'Could not update the password.', 'error');

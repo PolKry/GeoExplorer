@@ -30,6 +30,7 @@ import {
     setPartyCode,
     setPartyHostId
 } from "../../utils/storage.js";
+import { PAGES } from "../../constants/resources.js";
 
 const socket = window.io("/party");
 
@@ -286,10 +287,10 @@ async function disbandCurrentParty() {
         disbandBtn.classList.add("disabled");
 
         await endParty();
-
         showToast("Party disbanded", "success");
         removePartyCode();
-        window.location.href = "/";
+
+        window.location.replace(PAGES.home);
     } catch (err) {
         console.error(err);
         showToast("Failed to disband party", "error");
@@ -303,7 +304,7 @@ async function disbandCurrentParty() {
 function rejoinGame(gameId) {
     if (!gameId) {
         showToast("No party code found. Please join the party again.", "error");
-        window.location.href = "/menu/game-modes.html";
+        window.location.replace(PAGES.home);
         return;
     }
 
@@ -361,7 +362,7 @@ socket.on("player-status-batch", ({ online }) => {
 socket.on("party-disbanded", () => {
     showToast("The host disbanded the party.", "error");
     setTimeout(() => {
-        window.location.href = "/";
+        window.location.replace(PAGES.home);
     }, 2000);
 });
 

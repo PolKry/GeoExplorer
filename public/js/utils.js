@@ -1,5 +1,3 @@
-const audioPath = '/resources/sounds/';
-
 function formatDistance(meters) {
     if (meters >= 1000) {
         return formatKm(meters);

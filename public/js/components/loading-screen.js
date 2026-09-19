@@ -1,3 +1,5 @@
+import { IMAGES } from "../constants/resources.js";
+
 let loadingScreen = null;
 
 export function initLoadingScreen() {
@@ -13,7 +15,7 @@ export function initLoadingScreen() {
 
     loadingScreen.innerHTML = `
         <div class="spinner"></div>
-        <img src="/resources/images/Icon.ico" alt="GeoExplorer">
+        <img src="${IMAGES.icon}" alt="GeoExplorer">
         <div class="loading-text">
             Loading<span class="dots"></span>
         </div>

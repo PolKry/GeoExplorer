@@ -1,3 +1,5 @@
+import { PAGES } from "../constants/resources";
+
 const STORAGE_KEYS = {
     TOKEN: "token",
     USERNAME: "username",
@@ -10,7 +12,7 @@ const STORAGE_KEYS = {
 export function getToken() {
     const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
     if (!token) {
-        window.location.href = '/login.html';
+        window.location.replace(PAGES.login);
         throw new Error("No token found. Redirecting to login.");
     }
 

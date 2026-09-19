@@ -7,6 +7,7 @@ import {
     updatePlayerStatusBatch,
 } from "../../renderers/party-renderer.js";
 import { getPartyCode, getToken, removePartyCode, setPartyCode, setPartyHostId } from "../../utils/storage.js";
+import { PAGES } from "../../constants/resources.js";
 
 const socket = window.io("/party");
 
@@ -57,7 +58,7 @@ function bindPageRestoreReload() {
 async function loadParty() {
     const partyCode = getPartyCode();
     if (!partyCode) {
-        window.location.href = "/";
+        window.location.replace(PAGES.home);
         return;
     }
 
@@ -68,7 +69,8 @@ async function loadParty() {
         if (!isCurrentUserInParty()) {
             removePartyCode();
             showToast("You are no longer part of this party.", "error");
-            window.location.href = "/menu/game-modes.html";
+
+            window.location.replace(PAGES.home);
             return;
         }
 
@@ -102,7 +104,7 @@ async function leaveCurrentParty() {
     try {
         await leaveParty();
         removePartyCode
-        window.location.href = "/";
+        window.location.replace(PAGES.home);
     } catch (err) {
         console.error(err);
         showToast(err.message || "Failed to leave the party", "error");
@@ -120,7 +122,7 @@ function getCurrentPlayer() {
 function rejoinGame(gameId) {
     if (!gameId) {
         showToast("No party code found. Please join the party again.", "error");
-        window.location.href = "/menu/game-modes.html";
+        window.location.replace(PAGES.home);
         return;
     }
 
@@ -184,7 +186,7 @@ socket.on("party-updated", party => {
 
 socket.on("player-kicked", () => {
     removePartyCode();
-    window.location.href = "/";
+    window.location.replace(PAGES.home);
 });
 
 socket.on("party-disbanded", () => {
@@ -192,7 +194,7 @@ socket.on("party-disbanded", () => {
     removePartyCode();
 
     setTimeout(() => {
-        window.location.href = "/menu/game-modes.html";
+        window.location.replace(PAGES.home);
     }, 2000);
 });
 

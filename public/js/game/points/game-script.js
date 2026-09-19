@@ -1,3 +1,4 @@
+import { AUDIO, IMAGES, PAGES } from "../../constants/resources.js";
 const { startPointsGameRes } = require("../../api/game-api");
 
 // Audio
@@ -19,9 +20,6 @@ let resultMap = null;
 let guessLocation;
 let historyCountries = [];
 let responsive;
-
-const breakdownGrayIcon = "/resources/images/BreakdownGray.png";
-const breakdownWhiteIcon = "/resources/images/BreakdownWhite.png";
 
 const submitGuessButton = document.getElementById("guess-button");
 
@@ -147,13 +145,13 @@ function initGuessMap() {
                 socket,
                 gameId: window.GAME_ID,
                 icon: {
-                    url: '/resources/images/GuessedLocation.png',
+                    url: IMAGES.guessedLocation,
                     scaledSize: new google.maps.Size(29, 30)
                 }
             });
-            playSound("markerPlacedLand.mp3", effectVolume);
-            const guessButton = document.getElementById('guess-button');
-            guessButton.disabled = false;
+
+            document.getElementById('guess-button').disabled = false;
+            playSound(AUDIO.markerPlacedLand);
         },
         onMapReady: () => initGeocoder(gameData)
     });
@@ -274,7 +272,7 @@ function showRoundInfo({ distance, points, location, allGuesses }) {
     setRoundEndScreenActive(true);
 
     // Play SFX
-    playSound("answersShow.mp3", effectVolume);
+    playSound(AUDIO.showAnswer);
 
     const bounds = new google.maps.LatLngBounds();
 
@@ -406,7 +404,7 @@ function drawVisuals(actualLoc) {
         title: "Actual Location",
         cursor: 'pointer',
         icon: {
-            url: "/resources/images/ActualLocation.png",
+            url: IMAGES.actualLocation,
             scaledSize: new google.maps.Size(30, 30)
         },
     });
@@ -427,7 +425,7 @@ function drawVisuals(actualLoc) {
         title: "Your Location",
         cursor: 'pointer',
         icon: {
-            url: "/resources/images/GuessedLocation.png",
+            url: IMAGES.guessedLocation,
             scaledSize: new google.maps.Size(29, 30)
         }
     });
@@ -476,7 +474,7 @@ function loadMarkersFromHistory() {
             title: "Your guess",
             cursor: 'crosshair',
             icon: {
-                url: "/resources/images/GuessedLocation.png",
+                url: IMAGES.guessedLocation,
                 scaledSize: new google.maps.Size(29, 30)
             }
         });
@@ -487,7 +485,7 @@ function loadMarkersFromHistory() {
             title: "Actual Location",
             cursor: 'pointer',
             icon: {
-                url: "/resources/images/ActualLocation.png",
+                url: IMAGES.actualLocation,
                 scaledSize: new google.maps.Size(29, 30)
             }
         });
@@ -560,7 +558,7 @@ function menuClick() {
     hasGuessed = false;
     gameData = null;
 
-    window.location.replace("/");
+    window.location.replace(PAGES.home);
 }
 
 document.getElementById('play-again-button').addEventListener('click', playAgainClick);
@@ -583,13 +581,4 @@ async function playAgainClick() {
 
     // Redirect immediately
     window.location.href = `/play/${data.gameId}`;
-}
-
-function playSound(src, volume = 1) {
-    if (!enabledSound)
-        return;
-
-    const audio = new Audio(audioPath + src);
-    audio.volume = volume;
-    audio.play();
 }

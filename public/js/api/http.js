@@ -1,3 +1,4 @@
+import { PAGES } from "../constants/resources.js";
 import {
     getToken,
     logout
@@ -16,7 +17,7 @@ export async function apiFetch(url, options = {}) {
     if (res.status === 401) {
         logout();
 
-        window.location.href = "/login.html";
+        window.location.replace(PAGES.login);
         throw new Error("Unauthorized");
     }
 

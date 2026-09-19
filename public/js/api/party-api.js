@@ -22,7 +22,7 @@ export async function startPartyGame(partyCode) {
 
 export async function joinPartyGame(partyCode) {
     // Redirect to game page
-    window.location.href = `/play/${onGoingGameId}`;
+    window.location.href = `/play/${partyCode}`;
 }
 
 export async function terminatePartyGame(partyCode) {

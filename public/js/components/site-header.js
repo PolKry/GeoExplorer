@@ -1,8 +1,9 @@
+import { PAGES } from "../constants/resources.js";
 import {
   getUsername
 } from "../utils/storage.js";
 
-const normalizePath = path => path === "/index.html" ? "/" : path.replace(/\/$/, "");
+const normalizePath = path => path === PAGES.login ? PAGES.home : path.replace(/\/$/, "");
 
 function initializeHeader() {
   const header = document.querySelector(".site-header");

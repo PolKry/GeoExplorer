@@ -1,3 +1,5 @@
+import { ICONS, PAGES, AUDIO } from "../../constants/resources.js";
+import { playSound } from "../../utils/audio.js";
 import {
     getToken,
     getPartyHostId,
@@ -26,9 +28,6 @@ let responsive;
 
 let playerColor = "#007BFF";
 
-const breakdownGrayIcon = "/resources/images/BreakdownGray.png";
-const breakdownWhiteIcon = "/resources/images/BreakdownWhite.png";
-
 const submitGuessButton = document.getElementById("guess-button");
 
 function getCurrentUserId() {
@@ -47,17 +46,20 @@ function redirectBackToParty() {
     const currentUserId = getCurrentUserId();
     const hostId = getPartyHostId();
 
+    // For host
     if (hostId && currentUserId && String(currentUserId) === String(hostId)) {
-        window.location.href = "/party/create.html";
+        window.location.replace(PAGES.createParty);
         return;
     }
 
+    // For party members
     if (getPartyCode()) {
-        window.location.href = "/party/waiting-room.html";
+        window.location.replace(PAGES.waitingRoom);
         return;
     }
 
-    window.location.href = "/";
+    // Fallback to home page
+    window.location.replace(PAGES.home);
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -147,9 +149,9 @@ function initGuessMap() {
                     strokeWeight: 2
                 }
             });
-            playSound("markerPlacedLand.mp3", effectVolume);
-            const guessButton = document.getElementById('guess-button');
-            guessButton.disabled = false;
+
+            document.getElementById('guess-button').disabled = false;
+            playSound(AUDIO.markerPlacedLand);
         },
         onMapReady: () => initGeocoder(gameData)
     });
@@ -262,7 +264,7 @@ function showRoundInfo({ distance, points, location, allGuesses, players, userId
     setRoundEndScreenActive(true);
 
     // Play SFX
-    playSound("answersShow.mp3", effectVolume);
+    playSound(AUDIO.showAnswer);
 
     const bounds = new google.maps.LatLngBounds();
 
@@ -496,7 +498,7 @@ function drawVisuals(actualLoc, allGuesses = {}, players = []) {
         title: "Actual Location",
         cursor: 'pointer',
         icon: {
-            url: "/resources/images/ActualLocation.png",
+            url: IMAGES.actualLocation,
             scaledSize: new google.maps.Size(30, 30)
         },
     });
@@ -570,7 +572,7 @@ function loadMarkersFromHistory() {
             title: "Your guess",
             cursor: 'crosshair',
             icon: {
-                url: "/resources/images/GuessedLocation.png",
+                url: IMAGES.guessedLocation,
                 scaledSize: new google.maps.Size(29, 30)
             }
         });
@@ -581,7 +583,7 @@ function loadMarkersFromHistory() {
             title: "Actual Location",
             cursor: 'pointer',
             icon: {
-                url: "/resources/images/ActualLocation.png",
+                url: IMAGES.actualLocation,
                 scaledSize: new google.maps.Size(29, 30)
             }
         });
@@ -657,13 +659,4 @@ async function backBtnClick() {
         return;
 
     redirectBackToParty();
-}
-
-function playSound(src, volume = 1) {
-    if (!enabledSound)
-        return;
-
-    const audio = new Audio(audioPath + src);
-    audio.volume = volume;
-    audio.play();
 }

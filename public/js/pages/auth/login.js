@@ -8,6 +8,7 @@ import {
 import { getGoogleClientId, loginUser, loginWithGoogle } from "../../api/auth-api.js";
 import { showMessage } from "../../utils/toast.js";
 import { getLocalUserData, setBio, setCountry } from "../../api/user-api.js";
+import { PAGES } from "../../constants/resources.js";
 
 async function loginWithGoogleCredential(credential) {
   const data = await loginWithGoogle(credential);
@@ -16,7 +17,7 @@ async function loginWithGoogleCredential(credential) {
   setUsername(data.username);
 
   await applyPendingProfile();
-  window.location.href = '/index.html';
+  window.location.replace(PAGES.login);
 }
 
 async function setupGoogleLogin() {
@@ -111,7 +112,7 @@ function setupLoginForm() {
       
       await applyPendingProfile();
       
-      window.location.href = '/index.html';
+      window.location.replace(PAGES.login);
       showMessage('Successful login!', 'success');
     } catch (err) {
       showMessage(err.message || "Network error. Please try again later.", "error");
