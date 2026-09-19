@@ -6,4 +6,4 @@ data/
 .env.*
 !.env.example
 *.log
-TODO
+/TODO
