@@ -1,5 +1,5 @@
-import { apiFetch } from "../../api/http.js";
-import { getSettings, setSettings } from "../../utils/storage.js";
+import { getSettings, setSettings } from "../../api/user-api.js";
+import { getSettings as getLocalSettings, setSettings as setLocalSettings } from "../../utils/storage.js";
 import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const openDeleteBtn = document.getElementById("open-delete-btn");
     const closeDeleteBtn = document.getElementById("delete-close-btn");
     const cancelDeleteBtn = document.getElementById("delete-cancel-btn");
-    const confirmDeleteBtn = document.getElementById("delete-confirm-btn");
+    const settingsForm = document.getElementById("settings-form");
 
     if (!deleteModal || !openDeleteBtn) return;
     // OPEN MODAL
@@ -95,13 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
         closeDeleteModal();
     });
 
-    AssignValues();
+    assignValues();
 
-    // Form submit → send to backend
-    confirmDeleteBtn?.addEventListener("click", async () => {
+    // Form submit
+    settingsForm?.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
         const payload = {
-            mapStyle: form.querySelector('input[type="hidden"]').value,
+            mapStyle: settingsForm.querySelector('input[type="hidden"]').value,
             musicVolume: musicSlider.value,
             sfxVolume: sfxSlider.value,
             soundEnabled: soundToggle.checked,
@@ -109,25 +110,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const profileRes = await apiFetch(`/api/users/me`);
-
-            if (!profileRes.ok) throw new Error('Failed to apiFetch user profile info');
-
-            const profileData = await profileRes.json();
             const settings = JSON.stringify(payload);
-            setSettings(settings);
+            await setSettings(payload);
+            setLocalSettings(settings);
 
-            const res = await apiFetch(`/api/users/${profileData._id}/settings`, {
-                method: 'PUT',
-                body: settings
-            });
-
-            if (!res.ok) {
-                throw new Error(`Server error: ${res.status}`);
-            }
-
-            const data = await res.json();
-            console.log('Settings saved:', data);
+            console.log('Settings saved:', settings);
             showMessage('Settings saved successfully!', 'success');
         } catch (err) {
             console.error("Failed to save settings:", err);
@@ -136,25 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-async function AssignValues() {
-    const saved = getSettings();
+async function assignValues() {
+    const saved = getLocalSettings();
     if (saved) {
         const settings = JSON.parse(saved);
         applySettings(settings);
     }
 
     try {
-        const res = await apiFetch(`/api/users/me`);
-        const data = await res.json();
-
-        if (!res.ok) {
-            showMessage(data.message || 'Failed to fetch user profile info', 'error');
-            return;
-        }
-
-        if (data.settings) {
-            applySettings(data.settings);
-            setSettings(JSON.stringify(data.settings)); // sync back
+        const settings = await getSettings();
+        if (settings) {
+            applySettings(settings);
+            setSettings(JSON.stringify(settings)); // Idk id nessary, but just in case
         }
     } catch (err) {
         showMessage("Error loading settings.", "error");
@@ -213,24 +193,10 @@ async function resetSettings() {
     };
 
     applySettings(defaults);
-
-    setSettings(JSON.stringify(defaults));
-
-    // Send to backend
     try {
-        const profileRes = await apiFetch(`/api/users/me`);
-        if (!profileRes.ok) throw new Error('Failed to apiFetch user profile info');
+        await setSettings(defaults);
+        setLocalSettings(JSON.stringify(defaults));
 
-        const profileData = await profileRes.json();
-
-        const res = await apiFetch(`/api/users/${profileData._id}/settings`, {
-            method: 'PUT',
-            body: JSON.stringify(defaults)
-        });
-
-        if (!res.ok) throw new Error(`Server error: ${res.status}`);
-
-        const data = await res.json();
         console.log("Settings reset:", data);
         showMessage("Settings have been reset to defaults!", "success");
     } catch (err) {

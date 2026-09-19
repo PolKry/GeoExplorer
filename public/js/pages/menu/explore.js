@@ -1,6 +1,5 @@
 import { getMapsForPage, searchMaps } from "../../api/explore-page-api.js";
-import { setUserFavMaps, getUserFavMaps } from "../../api/user-api.js";
-import { getToken } from "../../utils/storage.js";
+import { setFavMaps, getFavMaps } from "../../api/user-api.js";
 
 let officialPage = 1;
 let communityPage = 1;
@@ -22,7 +21,7 @@ const hollowStarIcon = "/resources/images/hollowStar.png";
 let favMaps = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-  getFavMaps();
+  cacheFavMaps();
 
   loadOfficialMaps(officialPage);
   loadCommunityMaps(communityPage);
@@ -266,32 +265,19 @@ communitySearchInput.addEventListener("keydown", (event) => {
   }
 });
 
-async function getFavMaps() {
-  const token = getToken();
-  if (!token) {
-    alert('You must be logged in to view this page.');
-    window.location.href = '/login.html';
-    return;
-  }
+async function cacheFavMaps() {
   try {
-    favMaps = await getUserFavMaps();
+    favMaps = await getFavMaps();
   } catch (err) {
     console.error("Error loading favorite maps:", err);
   }
 }
 
 async function addOrRemoveFavMap(mapName) {
-  if (!mapName) return;
-
-  const token = getToken();
-  if (!token) {
-    alert('You must be logged in to view this page.');
-    window.location.href = '/login.html';
-    return;
-  }
+  if (!mapName) throw new Error("Map name is required to add or remove from favorites.");
 
   try {
-    await setUserFavMaps(mapName);
+    await setFavMaps(mapName);
 
     // Toggle locally
     if (favMaps.includes(mapName)) {

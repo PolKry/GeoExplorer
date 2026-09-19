@@ -1,198 +1,257 @@
-import { apiFetch } from "../../api/http.js";
-import { getToken } from "../../utils/storage.js";
+import {
+    getDashboard,
+    getCountries,
+    setBio,
+    setCountry
+} from "../../api/user-api.js";
 
-const avatarElement = document.querySelector('.profile-avatar');
+import { showMessage } from "../../utils/toast.js";
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const token = getToken();
-    if (!token) return;
+document.addEventListener("DOMContentLoaded", init);
 
+async function init() {
     try {
-        // apiFetch user, stats, and countries in parallel
-        const [resUser, resProfile, resStats, resCountries] = await Promise.all([
-            apiFetch('/api/auth/me'),
-            apiFetch('/api/users/me'),
-            apiFetch('/api/users/stats'),
-            apiFetch('/api/countries')
+        const [dashboard, countries] = await Promise.all([
+            getDashboard(),
+            getCountries()
         ]);
 
-        if (!resUser.ok) throw new Error('Failed to apiFetch user info');
-        if (!resProfile.ok) throw new Error('Failed to apiFetch user info');
+        renderProfile(dashboard);
+        renderStats(dashboard.stats);
 
-        const user = await resUser.json();
-        const userProfile = await resProfile.json();
-        const countries = resCountries.ok ? await resCountries.json() : [];
-
-        // --- User Info ---
-        document.querySelector('#nickname').textContent = user.username;
-        document.querySelector('#bio-text').textContent = userProfile.bio;
-
-        const countrySpan = document.getElementById('country-text');
-        const countryFlag = document.getElementById('country-flag');
-
-        if (userProfile.country && userProfile.country.code) {
-            countrySpan.innerHTML = `
-            <img id="country-flag" src="https://flagcdn.com/w20/${userProfile.country.code.toLowerCase()}.png" class="flag-icon">
-            ${userProfile.country.name}
-            `;
-        } else {
-            countrySpan.textContent = 'Not set';
-            countryFlag.src = '';
-        }
-
-        const date = new Date(user.createdAt);
-        const formattedDate = date.toLocaleString('en-US', {
-            year: 'numeric', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit', second: '2-digit',
-            hour12: false
-        });
-        document.querySelector('#creation-date').textContent = formattedDate;
-
-        // Avatar (optional, uncomment if you have profile images API)
-        // avatarElement.src = `/api/uploadProfileImage/${user._id}/profile-pic`;
-
-        // Stats
-        if (resStats.ok) {
-            const stats = await resStats.json();
-            document.querySelector('.stat-card:nth-child(1) p').textContent = stats.gamesPlayed ?? 0;
-            document.querySelector('.stat-card:nth-child(2) p').textContent = stats.averageScore ?? 0;
-            document.querySelector('.stat-card:nth-child(3) p').textContent = stats.maxScore ?? 0;
-            document.querySelector('.stat-card:nth-child(4) p').textContent = stats.longestStreak ?? 0;
-            document.querySelector('.stat-card:nth-child(5) p').textContent = (stats.accuracy ?? 0) + '%';
-
-            const level = stats.level;
-            const xp = stats.xp;
-            const xpNeeded = stats.xpToNextLevel;
-            const percent = Math.min((xp / xpNeeded) * 100, 100).toFixed(1);
-            const xpNeededFromCurrent = xpNeeded - xp;
-
-            document.querySelector('.level-label').textContent = `Level ${level}`;
-            document.querySelector('.level-fill').style.width = `${percent}%`;
-            document.querySelector('.level-progress').textContent = `${xpNeededFromCurrent.toLocaleString()} Points to Level ${level + 1}`;
-        }
-
-        // Editable Bio
-        makeBioEditable(userProfile, token);
-
-        // Editable Country
-        if (countries && countries.length > 0) {
-            makeCountryEditable(userProfile, token, countries);
-        }
-
-    } catch (err) {
-        console.error('Network error:', err);
-        alert('Network error');
+        setupBioEditor();
+        setupCountryEditor(countries);
+    } catch (error) {
+        console.error("Failed to load profile:", error);
+        showMessage("Failed to load profile");
     }
-});
+}
 
-function makeBioEditable(profile, token) {
-    const bioBtn = document.querySelector(".edit-btn[data-target='bio-text']");
-    let span = document.getElementById('bio-text');
 
-    // Remove previous listeners by cloning
-    bioBtn.replaceWith(bioBtn.cloneNode(true));
-    const newBioBtn = document.querySelector(".edit-btn[data-target='bio-text']");
+// Profile
+function renderProfile({ user, profile }) {
+    document.querySelector("#nickname").textContent = user.username;
+    document.querySelector("#bio-text").textContent = profile.bio || "Not set";
+    document.querySelector("#creation-date").textContent =
+        formatDate(user.createdAt);
 
-    newBioBtn.addEventListener('click', () => {
-        const currentValue = span.innerText.trim();
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = currentValue;
-        input.className = 'edit-input';
+    renderCountry(profile.country);
+}
+
+function renderCountry(country) {
+    const container = document.querySelector("#country-text");
+
+    container.replaceChildren();
+
+    if (!country?.code) {
+        container.textContent = "Not set";
+        return;
+    }
+
+    const flag = document.createElement("img");
+    flag.src = getFlagUrl(country.code);
+    flag.className = "flag-icon";
+    flag.alt = `${country.name} flag`;
+
+    container.append(flag, document.createTextNode(` ${country.name}`));
+}
+
+function formatDate(date) {
+    return new Date(date)
+        .toLocaleString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+        })
+        .replace(",", " at");
+}
+
+function getFlagUrl(code) {
+    return `https://flagcdn.com/w20/${code.toLowerCase()}.png`;
+}
+
+
+// Stats
+function renderStats(stats) {
+    const values = [
+        stats.gamesPlayed,
+        stats.averageScore,
+        stats.maxScore,
+        stats.longestStreak,
+        `${stats.accuracy ?? 0}%`
+    ];
+
+    document
+        .querySelectorAll(".stat-card p")
+        .forEach((element, index) => {
+            element.textContent = values[index] ?? 0;
+        });
+
+    const level = stats.level ?? 0;
+    const xp = stats.xp ?? 0;
+    const xpNeeded = stats.xpToNextLevel ?? 0;
+
+    const progress = xpNeeded
+        ? Math.min((xp / xpNeeded) * 100, 100)
+        : 0;
+
+    const remainingXp = Math.max(xpNeeded - xp, 0);
+
+    document.querySelector(".level-label").textContent =
+        `Level ${level}`;
+
+    document.querySelector(".level-fill").style.width =
+        `${progress.toFixed(1)}%`;
+
+    document.querySelector(".level-progress").textContent =
+        `${remainingXp.toLocaleString()} Points to Level ${level + 1}`;
+}
+
+
+// Bio editor
+function setupBioEditor() {
+    const button = document.querySelector(
+        ".edit-btn[data-target='bio-text']"
+    );
+
+    button.addEventListener("click", () => {
+        const span = document.querySelector("#bio-text");
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "edit-input";
+        input.value = span.textContent.trim();
+
         span.replaceWith(input);
         input.focus();
+        input.select();
 
-        input.addEventListener('blur', async () => {
-            span = document.createElement('span');
-            span.id = 'bio-text';
-            span.className = 'meta-value';
-            span.innerText = input.value;
-            input.replaceWith(span);
-
-            // Re-enable editing again
-            makeBioEditable(profile, token);
-
-            try {
-                const res = await apiFetch(`/api/users/${profile._id}/bio`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ bio: input.value })
-                });
-                if (!res.ok) throw new Error('Failed to update bio');
-            } catch (err) {
-                console.error(err);
-                alert('Failed to update bio');
-            }
-        });
+        input.addEventListener("blur", () => saveBio(input));
     });
 }
 
-function makeCountryEditable(profile, token, countries) {
-    const countryBtn = document.querySelector(".edit-btn[data-target='country-text']");
+async function saveBio(input) {
+    const value = input.value.trim();
 
-    // Remove previous listeners
-    countryBtn.replaceWith(countryBtn.cloneNode(true));
-    const newCountryBtn = document.querySelector(".edit-btn[data-target='country-text']");
+    const span = createBioElement(value);
+    input.replaceWith(span);
 
-    newCountryBtn.addEventListener('click', () => {
-        const span = document.getElementById('country-text');
-        const currentValue = span.innerText.trim();
+    try {
+        await setBio(value);
+        showMessage("Bio updated successfully");
+    } catch (error) {
+        console.error("Failed to update bio:", error);
+        showMessage("Failed to update bio");
+    }
+}
 
-        const select = document.createElement('select');
-        select.className = 'edit-select';
+function createBioElement(value) {
+    const span = document.createElement("span");
 
-        countries.forEach(c => {
-            if (!c || !c.name) return;
-            const option = document.createElement('option');
-            option.value = c.cca2 ?? c.code ?? c.name;
-            option.textContent = c.name.common ?? c.name;
-            if ((c.name.common ?? c.name) === currentValue) option.selected = true;
+    span.id = "bio-text";
+    span.className = "meta-value";
+    span.textContent = value;
+
+    return span;
+}
+
+
+// Country editor
+function setupCountryEditor(countries) {
+    const button = document.querySelector(
+        ".edit-btn[data-target='country-text']"
+    );
+
+    button.addEventListener("click", () => {
+        startCountryEditing(countries);
+    });
+}
+
+function startCountryEditing(countries) {
+    const span = document.querySelector("#country-text");
+    const currentCountry = span.textContent.trim();
+
+    const select = createCountrySelect(countries, currentCountry);
+
+    span.replaceWith(select);
+    select.focus();
+
+    select.addEventListener("change", async () => {
+        await saveCountry(select);
+    });
+
+    select.addEventListener("blur", () => {
+        restoreCountry(select);
+    });
+}
+
+function createCountrySelect(countries, currentCountry) {
+    const select = document.createElement("select");
+    select.className = "edit-select";
+
+    countries
+        .filter(country => country?.name)
+        .forEach(country => {
+            const name = country.name.common ?? country.name;
+            const code = country.cca2 ?? country.code;
+
+            const option = document.createElement("option");
+
+            option.value = code;
+            option.textContent = name;
+            option.selected = name === currentCountry;
+
             select.appendChild(option);
         });
 
-        span.replaceWith(select);
-        select.focus();
+    return select;
+}
 
-        let replaced = false;
+async function saveCountry(select) {
+    const option = select.selectedOptions[0];
 
-        const replaceWithSpan = (selectedOption) => {
-            if (replaced || !select.isConnected) return;
-            replaced = true;
+    if (!option) return;
 
-            const newSpan = document.createElement('span');
-            newSpan.id = 'country-text';
-            newSpan.className = 'meta-value';
-            newSpan.innerHTML = `
-        <img src="https://flagcdn.com/w20/${selectedOption.value.toLowerCase()}.png" class="flag-icon">
-        ${selectedOption.textContent}
-    `;
-            select.replaceWith(newSpan);
-            makeCountryEditable(profile, token, countries);
-        };
+    restoreCountry(select);
 
-        select.addEventListener('change', async () => {
-            const selectedOption = select.options[select.selectedIndex];
-            if (!selectedOption) return;
-
-            replaceWithSpan(selectedOption);
-
-            try {
-                const res = await apiFetch(`/api/users/${profile._id}/country`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ name: selectedOption.textContent, code: selectedOption.value })
-                });
-                if (!res.ok) throw new Error('Failed to update country');
-            } catch (err) {
-                console.error(err);
-                alert('Failed to update country');
-            }
+    try {
+        await setCountry({
+            name: option.textContent,
+            code: option.value
         });
 
-        select.addEventListener('blur', () => {
-            const selectedOption = select.options[select.selectedIndex];
-            if (!selectedOption) return;
+        showMessage("Country updated successfully");
+    } catch (error) {
+        console.error("Failed to update country:", error);
+        showMessage("Failed to update country");
+    }
+}
 
-            // Only replace if select still exists
-            replaceWithSpan(selectedOption);
-        });
-    });
+function restoreCountry(select) {
+    if (!select.isConnected) return;
+
+    const option = select.selectedOptions[0];
+
+    if (!option) return;
+
+    const span = document.createElement("span");
+
+    span.id = "country-text";
+    span.className = "meta-value";
+
+    const flag = document.createElement("img");
+    flag.src = getFlagUrl(option.value);
+    flag.className = "flag-icon";
+    flag.alt = `${option.textContent} flag`;
+
+    span.append(
+        flag,
+        document.createTextNode(` ${option.textContent}`)
+    );
+
+    select.replaceWith(span);
 }

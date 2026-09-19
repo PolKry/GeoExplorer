@@ -1,6 +1,7 @@
-import { deleteAccount } from "../../api/auth-api.js";
-import { apiFetch } from "../../api/http.js";
+import { deleteAccount, updateAccount } from "../../api/auth-api.js";
+import { getLocalUserData } from "../../api/user-api.js";
 import { clearStorage, getToken, setUsername } from "../../utils/storage.js";
+import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const accountForm = document.getElementById("account-form");
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     cancelDeleteBtn?.addEventListener("click", closeDeleteModal);
 
     // Submit Form
-    accountForm.addEventListener("submit", updateAccount);
+    accountForm.addEventListener("submit", updateAccountSubmit);
 
     // Click outside modal
     deleteModal.addEventListener("click", (e) => {
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             window.location.href = "/login.html";
         } catch (err) {
-            alert(err.message || "Network error");
+            showMessage(err.message || "Network error");
             confirmDeleteBtn.textContent = "Delete";
             confirmDeleteBtn.disabled = false;
         }
@@ -68,14 +69,13 @@ async function assignValues() {
     const token = getToken();
     if (!token) return;
 
-    const userRes = await apiFetch('/api/auth/me');
-    const userData = await userRes.json();
+    const userData = await getLocalUserData();
 
     document.getElementById("username").value = userData.username;
     document.getElementById("email").value = userData.email;
 }
 
-async function updateAccount(event) {
+async function updateAccountSubmit(event) {
     event.preventDefault();
 
     const username = document.getElementById("username").value;
@@ -86,28 +86,12 @@ async function updateAccount(event) {
     if (!token) return;
 
     try {
-        const userRes = await apiFetch("/api/auth/update-account", {
-            method: "PUT",
-            body: JSON.stringify({
-                username,
-                newPassword: newPassword,
-                currentPassword
-            })
-        });
-
-        const userData = await userRes.json();
-
-        if (!userRes.ok) {
-            throw new Error(userData.message || "Failed to update account");
-        }
-
-        alert("Account updated successfully.");
-
-        if (userData.username) {
+        const userData = await updateAccount({ username, newPassword, currentPassword });
+        if (userData.username)
             setUsername(userData.username);
-        }
 
+        showMessage("Account updated successfully.");
     } catch (err) {
-        alert(err.message || "Failed to update account");
+        showMessage(err.message || "Failed to update account");
     }
 }

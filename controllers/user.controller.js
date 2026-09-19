@@ -9,6 +9,14 @@ async function me(req, res) {
   }
 }
 
+async function dashboard(req, res) {
+  try {
+    res.json(await userService.getDashboard(req.user.userId));
+  } catch (error) {
+    sendError(res, error);
+  }
+}
+
 async function favoriteMaps(req, res) {
   try {
     console.log('Fetching favorite maps for user:', req.user.userId); // Debugging line
@@ -26,9 +34,18 @@ async function highestScore(req, res) {
   }
 }
 
+async function getSettings(req, res) {
+  try {
+    const settings = await userService.getSettings(req.user.userId);
+    res.json(settings);
+  } catch (error) {
+    sendError(res, error, 'Server error fetching settings');
+  }
+}
+
 async function updateSettings(req, res) {
   try {
-    const settings = await userService.updateSettings(req.params.userId, req.body);
+    const settings = await userService.updateSettings(req.user.userId, req.body);
     res.json({ message: 'Settings updated', settings });
   } catch (error) {
     sendError(res, error, 'Server error updating settings');
@@ -80,8 +97,10 @@ async function stats(req, res) {
 
 module.exports = {
   me,
+  dashboard,
   favoriteMaps,
   highestScore,
+  getSettings,
   updateSettings,
   toggleFavoriteMap,
   updateCountry,

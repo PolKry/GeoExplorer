@@ -1,9 +1,8 @@
 import { fetchLeaderboard } from "../../api/leaderboard-api.js";
-import { addUserFavMaps } from "../../api/user-api.js";
+import { getHighestScore } from "../../api/user-api.js";
 import { startPoints } from "../../api/game-starter-api.js";
 import { fetchMapData } from "../../api/map-api.js";
 import { renderMapLeaderboard } from "../../renderers/leaderboard-renderer.js";
-import { getToken } from "../../utils/storage.js";
 import { formatTimeInSec, formatTimeInMS } from "../../utils/time.js";
 import { renderMapSection, renderTags, renderCountryPreview, renderUserScore } from "../../renderers/map-renderer.js";
 import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
@@ -98,17 +97,14 @@ async function loadLeaderboard() {
 }
 
 async function loadUserScore() {
-  if (!codes) return;
+  if (!codes) throw new Error("Map codes are required to load user score.");
 
-  const token = getToken();
-  if (!token) return;
-
-  const data = await addUserFavMaps(mapSrcName);
+  const data = await getHighestScore(mapSrcName);
   if (!data) {
     console.error("Failed to fetch user data");
     return;
   }
-
+    
   // Render the user's score (data.highestScore is the users top score for this map)
   renderUserScore(data.highestScore);
 }

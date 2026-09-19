@@ -8,7 +8,13 @@ const STORAGE_KEYS = {
 };
 
 export function getToken() {
-    return localStorage.getItem(STORAGE_KEYS.TOKEN);
+    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+    if (!token) {
+        window.location.href = '/login.html';
+        throw new Error("No token found. Redirecting to login.");
+    }
+
+    return token;
 }
 
 export function setToken(token) {

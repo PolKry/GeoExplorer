@@ -26,6 +26,9 @@ let responsive;
 
 let playerColor = "#007BFF";
 
+const breakdownGrayIcon = "/resources/images/BreakdownGray.png";
+const breakdownWhiteIcon = "/resources/images/BreakdownWhite.png";
+
 const submitGuessButton = document.getElementById("guess-button");
 
 function getCurrentUserId() {
@@ -630,12 +633,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = "/resources/images/BreakdownGray.png";
+        img.src = breakdownGrayIcon;
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = "/resources/images/BreakdownWhite.png";
+        img.src = breakdownWhiteIcon;
         map.classList.add('responsive');
     }
 

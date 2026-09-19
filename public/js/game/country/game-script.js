@@ -1,3 +1,5 @@
+const { startCountryGameRes } = require("../../api/game-api");
+
 // Audio
 let enabledSound = true;
 let effectVolume = 0.5;
@@ -21,6 +23,9 @@ let endingMapReady = false;
 let historyCountries = [];
 let gameStartInProgress = false;
 let loadingScreenActive = false;
+
+const breakdownGrayIcon = "/resources/images/BreakdownGray.png";
+const breakdownWhiteIcon = "/resources/images/BreakdownWhite.png";
 
 const submitGuessButton = document.getElementById("guess-button");
 
@@ -270,14 +275,13 @@ function proceed() {
         if (!newRound || newRound.error) {
             return;
         }
-        console.log(newRound);
+        
         resetGame();
-
         initGameData(newRound);
         initStreetView(newRound.roundPanoId);
         initGuessMap();
-
         setGameState(newRound.state);
+
         hasGuessed = false;
     });
 }
@@ -597,12 +601,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = "/resources/images/BreakdownGray.png";
+        img.src = breakdownGrayIcon;
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = "/resources/images/BreakdownWhite.png";
+        img.src = breakdownWhiteIcon;
         map.classList.add('responsive');
     }
 
@@ -635,12 +639,9 @@ async function playAgainClick() {
     setEndingScreenActive(false);
     setLoadingScreenActive(true);
 
-    const res = await apiFetch("/api/game/country-mode/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-    });
-
+    const res = await startCountryGameRes(gameData.map.srcName, roundLength);
     const data = await res.json();
+
     if (!res.ok || !data.gameId) {
         console.error("Failed to start game", data);
         setLoadingScreenActive(false);

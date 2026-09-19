@@ -5,20 +5,16 @@ import {
   removePendingProfile
 } from "../../utils/storage.js";
 
-import { loginUser } from "../../api/auth-api.js";
+import { getGoogleClientId, loginUser, loginWithGoogle } from "../../api/auth-api.js";
 import { showMessage } from "../../utils/toast.js";
-import { apiFetch } from "../../api/http.js";
+import { getLocalUserData, setBio, setCountry } from "../../api/user-api.js";
 
 async function loginWithGoogleCredential(credential) {
-  const response = await apiFetch('/api/auth/google', {
-    method: 'POST',
-    body: JSON.stringify({ credential })
-  });
-  const data = await response.json();
-  if (!response.ok) throw new Error(data.message || 'Google login failed');
+  const data = await loginWithGoogle(credential);
 
   setToken(data.token);
   setUsername(data.username);
+
   await applyPendingProfile();
   window.location.href = '/index.html';
 }
@@ -28,11 +24,11 @@ async function setupGoogleLogin() {
   if (!container) return;
 
   try {
-    const configResponse = await fetch('/api/auth/google-client-id');
-    if (!configResponse.ok) throw new Error('Google login configuration is unavailable.');
-    const { clientId } = await configResponse.json();
+
+    const clientId = await getGoogleClientId();
     if (!clientId) throw new Error('Google login is not configured on the server.');
 
+    console.log('CLIENT ID:', clientId);
     console.info(`Google login origin: ${window.location.origin}`);
 
     const script = document.createElement('script');
@@ -48,6 +44,7 @@ async function setupGoogleLogin() {
           }
         }
       });
+
       window.google.accounts.id.renderButton(container, {
         theme: 'outline',
         size: 'large',
@@ -55,6 +52,7 @@ async function setupGoogleLogin() {
         text: 'continue_with'
       });
     };
+
     script.onerror = () => showMessage('Unable to load Google login.', 'error');
     document.head.appendChild(script);
   } catch (error) {
@@ -67,24 +65,13 @@ async function applyPendingProfile() {
   if (!pendingProfile) return;
 
   try {
-    const meResponse = await apiFetch('/api/auth/me');
-    if (!meResponse.ok) throw new Error('Unable to load user profile');
-
-    const me = await meResponse.json();
-    const userId = me._id;
-
+    const userData = await getLocalUserData();
     if (pendingProfile.country?.name && pendingProfile.country?.code) {
-      await apiFetch(`/api/users/${userId}/country`, {
-        method: 'PUT',
-        body: JSON.stringify(pendingProfile.country)
-      });
+      await setCountry(pendingProfile.country, userData._id);
     }
 
     if (pendingProfile.bio) {
-      await apiFetch(`/api/users/${userId}/bio`, {
-        method: 'PUT',
-        body: JSON.stringify({ bio: pendingProfile.bio })
-      });
+      await setBio(pendingProfile.bio, userData._id);
     }
   } catch (error) {
     console.error('Failed to apply pending profile:', error);
@@ -96,34 +83,34 @@ async function applyPendingProfile() {
 function setupLoginForm() {
   const form = document.getElementById('basic-form');
   if (!form) return;
-
+  
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-
+    
     let valid = true;
-
+    
     const email = form.email.value.trim();
     const password = form['password-input'].value.trim();
-
+    
     if (!password || password.length < 8) {
       valid = false;
       showMessage('Password is required and must be at least 8 characters.', 'error');
       return;
     }
-
+    
     const data = {
       email: email,
       password: password,
     };
-
+    
     try {
       const json = await loginUser(data);
-
+      
       setToken(json.token);
       setUsername(json.username)
-
+      
       await applyPendingProfile();
-
+      
       window.location.href = '/index.html';
       showMessage('Successful login!', 'success');
     } catch (err) {

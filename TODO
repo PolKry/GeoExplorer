@@ -1,1 +1,12 @@
-Add the frontend data to github add
+Move all api from frontend page scripts to their own api file. (should be done)
+Add all resource paths as constants
+Remove all redirects after getting a user token. This is because the getToken function already has that build in.
+Add audio manager
+Make the whole website use the loading screen component
+When a community map is created show the toast and make it not disappear when switchiong sites. (idk if that already works)
+Mabey rename all api functions from get... to fetch...
+Change the word mabey to maybe
+Implement social links
+Implement avatar
+Centralize toast styles
+Mabey more horizontal card in settings (like next to each other)

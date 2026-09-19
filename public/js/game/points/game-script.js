@@ -1,3 +1,5 @@
+const { startPointsGameRes } = require("../../api/game-api");
+
 // Audio
 let enabledSound = true;
 let effectVolume = 0.5;
@@ -17,6 +19,9 @@ let resultMap = null;
 let guessLocation;
 let historyCountries = [];
 let responsive;
+
+const breakdownGrayIcon = "/resources/images/BreakdownGray.png";
+const breakdownWhiteIcon = "/resources/images/BreakdownWhite.png";
 
 const submitGuessButton = document.getElementById("guess-button");
 
@@ -534,12 +539,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = "/resources/images/BreakdownGray.png";
+        img.src = breakdownGrayIcon;
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = "/resources/images/BreakdownWhite.png";
+        img.src = breakdownWhiteIcon;
         map.classList.add('responsive');
     }
 
@@ -567,16 +572,7 @@ async function playAgainClick() {
     if (gameData.state !== "game_ended")
         return;
 
-    const res = await apiFetch("/api/game/points-mode/start", {
-        method: "POST",
-        body: JSON.stringify({
-            mode: "points",
-            gameplayMode: gameData.gameplayMode,
-            mapCode: gameData.map.srcName,
-            roundTime
-        })
-    });
-
+    const res = await startPointsGameRes(gameData.map.srcName, gameData.gameplayMode, roundTime);
     const data = await res.json();
 
     if (!res.ok || !data.gameId) {

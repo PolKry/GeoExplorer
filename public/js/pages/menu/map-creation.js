@@ -1,4 +1,5 @@
-import { apiFetch } from "../../api/http.js";
+import { createMap, getTags } from "../../api/map-creation-api.js";
+import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     loadTags();
@@ -54,17 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const jsonText = document.getElementById('map-json').value.trim();
 
         if (name.length === 0 || name.length > 30) {
-            alert('Name must be between 1 and 30 characters.');
+            showMessage('Name must be between 1 and 30 characters.', 'error');
             return;
         }
 
         if (description.length > 100) {
-            alert('Description must be 100 characters max.');
+            showMessage('Description must be 100 characters max.', 'error');
             return;
         }
 
         if (jsonText.length > 10_000_000) {
-            alert('JSON is too long (max 10,000,000 characters).');
+            showMessage('JSON is too long (max 10,000,000 characters).', 'error');
             return;
         }
 
@@ -72,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             parsed = JSON.parse(jsonText);
         } catch (err) {
-            alert('Invalid JSON: ' + err.message);
+            showMessage('Invalid JSON: ' + err.message, 'error');
             return;
         }
 
@@ -83,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 : null;
 
         if (!Array.isArray(locations) || locations.length === 0) {
-            alert('The JSON must contain a non-empty array of locations.');
+            showMessage('The JSON must contain a non-empty array of locations.', 'error');
             return;
         }
 
@@ -99,22 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
-            const response = await apiFetch('/api/map-creation-routes/validate-json', {
-                method: 'POST',
-                body: JSON.stringify(mapData),
-            });
+            const data = await createMap(mapData);
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(errorText);
-            }
-
-            const result = await response.json();
-            alert(`Map "${result.name}" published successfully!`);
-            form.reset();
-            window.open("/menu/explore.html", '_self');
+            // form.reset();  // Idk why would I want to reset the form if the user is redirected to explore page
+            showMessage(`Map "${data.name}" published successfully!`, 'success');
+            window.location.href = "/menu/explore.html";
         } catch (err) {
-            alert('Failed to publish map: ' + err.message);
+            showMessage('Failed to publish map: ' + err.message, 'error');
             console.error(err);
         }
     });
@@ -143,112 +135,109 @@ document.addEventListener('click', e => {
     }
 });
 
-async function loadIcons() {
-    const iconsFolder = 'resources/images/maps/unofficial/';
-    const modal = document.getElementById('icon-selector-modal');
-    let optionsContainer = modal.querySelector('.icon-options-container');
+// async function loadIcons() {
+//     const iconsFolder = 'resources/images/maps/unofficial/';
+//     const modal = document.getElementById('icon-selector-modal');
+//     let optionsContainer = modal.querySelector('.icon-options-container');
 
-    if (!optionsContainer) {
-        optionsContainer = document.createElement('div');
-        optionsContainer.classList.add('icon-options-container');
-        modal.appendChild(optionsContainer);
-    }
+//     if (!optionsContainer) {
+//         optionsContainer = document.createElement('div');
+//         optionsContainer.classList.add('icon-options-container');
+//         modal.appendChild(optionsContainer);
+//     }
 
-    optionsContainer.innerHTML = '';
+//     optionsContainer.innerHTML = '';
 
-    try {
-        const response = await apiFetch('/api/map-creation-routes/icons');
-        if (!response.ok) throw new Error('Failed to load icons list');
-        const icons = await response.json();
+//     try {
+//         const response = await apiFetch('/api/map-creation-routes/icons');
+//         if (!response.ok) throw new Error('Failed to load icons list');
+//         const icons = await response.json();
 
-        icons.forEach(iconName => {
-            const span = document.createElement('span');
-            span.classList.add('icon-option');
-            span.setAttribute('tabindex', '0');
-            span.setAttribute('role', 'button');
-            span.setAttribute('aria-label', iconName.replace('.png', '') + ' icon');
-            span.dataset.icon = iconName;
+//         icons.forEach(iconName => {
+//             const span = document.createElement('span');
+//             span.classList.add('icon-option');
+//             span.setAttribute('tabindex', '0');
+//             span.setAttribute('role', 'button');
+//             span.setAttribute('aria-label', iconName.replace('.png', '') + ' icon');
+//             span.dataset.icon = iconName;
 
-            const img = document.createElement('img');
-            img.src = iconsFolder + iconName;
-            img.alt = iconName.replace('.png', '') + ' icon';
-            img.style.width = '24px';
-            img.style.height = '24px';
+//             const img = document.createElement('img');
+//             img.src = iconsFolder + iconName;
+//             img.alt = iconName.replace('.png', '') + ' icon';
+//             img.style.width = '24px';
+//             img.style.height = '24px';
 
-            span.appendChild(img);
-            optionsContainer.appendChild(span);
-        });
-    } catch (err) {
-        console.error(err);
-    }
-}
+//             span.appendChild(img);
+//             optionsContainer.appendChild(span);
+//         });
+//     } catch (err) {
+//         console.error(err);
+//         showMessage('Failed to load icons.', 'error');
+//     }
+// }
 
-function initIconSelection() {
-    const openBtn = document.getElementById('open-icon-selector');
-    const modal = document.getElementById('icon-selector-modal');
-    const closeBtn = modal.querySelector('.close-modal');
-    const preview = document.getElementById('selected-icon-preview');
-    const hiddenInput = document.getElementById('map-icon');
+// function initIconSelection() {
+//     const openBtn = document.getElementById('open-icon-selector');
+//     const modal = document.getElementById('icon-selector-modal');
+//     const closeBtn = modal.querySelector('.close-modal');
+//     const preview = document.getElementById('selected-icon-preview');
+//     const hiddenInput = document.getElementById('map-icon');
 
-    openBtn.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        const iconOptions = modal.querySelectorAll('.icon-option');
-        if (iconOptions.length > 0) iconOptions[0].focus();
+//     openBtn.addEventListener('click', () => {
+//         modal.classList.remove('hidden');
+//         const iconOptions = modal.querySelectorAll('.icon-option');
+//         if (iconOptions.length > 0) iconOptions[0].focus();
 
-        iconOptions.forEach(icon => {
-            icon.onclick = () => {
-                const iconName = icon.dataset.icon;
-                preview.innerHTML = `<img src="resources/images/maps/unofficial/${iconName}" alt="${iconName.replace('.png', '')} icon" style="width:24px; height:24px;">`;
-                hiddenInput.value = iconName;
-                modal.classList.add('hidden');
-                openBtn.focus();
-            };
+//         iconOptions.forEach(icon => {
+//             icon.onclick = () => {
+//                 const iconName = icon.dataset.icon;
+//                 preview.innerHTML = `<img src="resources/images/maps/unofficial/${iconName}" alt="${iconName.replace('.png', '')} icon" style="width:24px; height:24px;">`;
+//                 hiddenInput.value = iconName;
+//                 modal.classList.add('hidden');
+//                 openBtn.focus();
+//             };
 
-            icon.onkeydown = e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    icon.click();
-                }
-            };
-        });
-    });
+//             icon.onkeydown = e => {
+//                 if (e.key === 'Enter' || e.key === ' ') {
+//                     e.preventDefault();
+//                     icon.click();
+//                 }
+//             };
+//         });
+//     });
 
-    closeBtn.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        openBtn.focus();
-    });
+//     closeBtn.addEventListener('click', () => {
+//         modal.classList.add('hidden');
+//         openBtn.focus();
+//     });
 
-    modal.addEventListener('click', e => {
-        if (e.target === modal) {
-            modal.classList.add('hidden');
-            openBtn.focus();
-        }
-    });
+//     modal.addEventListener('click', e => {
+//         if (e.target === modal) {
+//             modal.classList.add('hidden');
+//             openBtn.focus();
+//         }
+//     });
 
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-            modal.classList.add('hidden');
-            openBtn.focus();
-        }
-    });
-}
+//     document.addEventListener('keydown', e => {
+//         if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+//             modal.classList.add('hidden');
+//             openBtn.focus();
+//         }
+//     });
+// }
 
 async function loadTags() {
     try {
-        const res = await apiFetch('/api/tags/all');
-        if (!res.ok) throw new Error('Failed to apiFetch tags');
-        const tags = await res.json();
-
         const availableContainer = document.getElementById('available-tags');
         const selectedContainer = document.getElementById('selected-tags');
         const selectedSection = selectedContainer.closest('.tag-section');
         const hiddenInput = document.getElementById('map-tags');
-
-        // Vyčistit obě sekce
+        
+        // Clear both sections
         availableContainer.innerHTML = '';
         selectedContainer.innerHTML = '';
         selectedSection.classList.remove('selected');
-
+        
         function createTagChip(tag) {
             const chip = document.createElement('span');
             chip.className = 'tag-chip';
@@ -260,18 +249,18 @@ async function loadTags() {
             }
             return chip;
         }
-
+        
         function updateHiddenInput() {
             const selectedNames = Array.from(selectedContainer.children).map(c => c.dataset.name);
             hiddenInput.value = JSON.stringify(selectedNames);
-
+            
             if (selectedNames.length > 0) {
                 selectedSection.classList.add('selected');
             } else {
                 selectedSection.classList.remove('selected');
             }
         }
-
+        
         function addToAvailable(tag) {
             const chip = createTagChip(tag);
             chip.onclick = () => {
@@ -281,7 +270,7 @@ async function loadTags() {
             };
             availableContainer.appendChild(chip);
         }
-
+        
         function addToSelected(tag) {
             const chip = createTagChip(tag);
             chip.classList.add('selected');
@@ -292,11 +281,13 @@ async function loadTags() {
             };
             selectedContainer.appendChild(chip);
         }
-
+        const tags = await getTags();
+        
         tags.forEach(tag => addToAvailable(tag));
         updateHiddenInput();
 
     } catch (err) {
         console.error(err);
+        showMessage('Failed to load tags.', 'error');
     }
 }

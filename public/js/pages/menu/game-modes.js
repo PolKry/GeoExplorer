@@ -1,5 +1,3 @@
-import { apiFetch } from "../../api/http.js";
-
 let startInProgress = false;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -35,12 +33,9 @@ async function startPointsMode() {
     modeButton.disabled = true;
     setLoadingScreenActive(true);
 
-    const res = await apiFetch("/api/game/country-mode/start", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-    });
-
+    const res = await startCountryGameRes(gameData.map.srcName, roundLength);
     const data = await res.json();
+
     if (!res.ok || !data.gameId) {
         console.error("Failed to start game", data);
         startInProgress = false;
