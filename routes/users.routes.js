@@ -6,6 +6,7 @@ const auth = require('../middleware/auth.middleware');
 const router = express.Router();
 
 router.get('/me', auth, userController.me);
+router.get('/me/account', auth, userController.account);
 router.get('/me/dashboard', auth, userController.dashboard);
 router.get('/me/favorite-maps', auth, userController.favoriteMaps);
 router.get('/me/highest-score', auth, userController.highestScore);

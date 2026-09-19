@@ -45,7 +45,6 @@ password.addEventListener('input', () => {
     strengthText.textContent = text;
     strengthText.style.color = colors[strength - 1] || "#ccc";
 });
-
 document.querySelectorAll('.basic-form input').forEach(input => {
     const feedback = input.nextElementSibling;
     // Store the original text
@@ -68,28 +67,3 @@ document.querySelectorAll('.basic-form input').forEach(input => {
     });
 });
 
-function showMessage(message, type = 'success') {
-    const msgBox = document.getElementById('update-message');
-    if (msgBox) {
-        msgBox.style.display = 'none';
-        msgBox.textContent = '';
-    }
-
-    const toast = document.createElement('div');
-    toast.className = 'toast ' + type;
-    toast.textContent = message;
-    toast.setAttribute('role', 'status');
-
-    if (window.innerWidth < 600) {
-        toast.style.left = '50%';
-        toast.style.right = 'auto';
-        toast.style.transform = 'translateX(-50%) translateY(20px)';
-    }
-
-    document.body.appendChild(toast);
-    setTimeout(() => toast.classList.add('visible'), 10);
-    setTimeout(() => {
-        toast.classList.remove('visible');
-        setTimeout(() => toast.remove(), 300);
-    }, 2800);
-}

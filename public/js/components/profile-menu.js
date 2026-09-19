@@ -5,6 +5,7 @@ function initializeProfileMenu() {
   const profileWrapper = document.getElementById("profile-wrapper");
   if (!profileWrapper || profileWrapper.dataset.initialized) return;
   profileWrapper.dataset.initialized = "true";
+  
   const token = getToken();
 
   const loginButton = document.getElementById("login-button");

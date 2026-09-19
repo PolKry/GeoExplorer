@@ -1,4 +1,4 @@
-import { ICONS, PAGES } from "../../constants/resources.js";
+import { IMAGES, PAGES } from "../../constants/resources.js";
 import { getMapsForPage, searchMaps } from "../../api/explore-page-api.js";
 import { setFavMaps, getFavMaps } from "../../api/user-api.js";
 
@@ -49,19 +49,19 @@ function appendMapsTo(container, maps) {
     const isInFavorites = favMaps.includes(map.name);
     favoriteIcon.dataset.fav = isInFavorites;
     if (isInFavorites) {
-      favoriteIcon.src = ICONS.solidStarIcon;
+      favoriteIcon.src = IMAGES.solidStar;
     } else {
-      favoriteIcon.src = ICONS.hollowStarIcon;
+      favoriteIcon.src = IMAGES.hollowStar;
     }
 
     favoriteIcon.addEventListener("click", (event) => {
       event.stopPropagation();
 
       if (favoriteIcon.dataset.fav === "true") {
-        favoriteIcon.src = ICONS.hollowStarIcon;
+        favoriteIcon.src = IMAGES.hollowStar;
         favoriteIcon.dataset.fav = "false";
       } else {
-        favoriteIcon.src = ICONS.solidStarIcon;
+        favoriteIcon.src = IMAGES.solidStar;
         favoriteIcon.dataset.fav = "true";
       }
 

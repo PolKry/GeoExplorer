@@ -6,6 +6,7 @@ import { renderMapLeaderboard } from "../../renderers/leaderboard-renderer.js";
 import { formatTimeInSec, formatTimeInMS } from "../../utils/time.js";
 import { renderMapSection, renderTags, renderCountryPreview, renderUserScore } from "../../renderers/map-renderer.js";
 import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
+import { showMessage } from "../../utils/toast.js";
 
 let movingModeValue = null;
 let mapName;
@@ -141,7 +142,7 @@ async function startPointsMode() {
   const roundLength = Number(document.getElementById("timeRange").value) || 120;
 
   if (!movingModeValue) {
-    alert("Please select a game mode.");
+    showMessage("Please select a game mode.");
     return;
   }
 

@@ -15,9 +15,9 @@ async function loginWithGoogleCredential(credential) {
 
   setToken(data.token);
   setUsername(data.username);
-
   await applyPendingProfile();
-  window.location.replace(PAGES.login);
+
+  window.location.href = PAGES.home;
 }
 
 async function setupGoogleLogin() {
@@ -84,35 +84,35 @@ async function applyPendingProfile() {
 function setupLoginForm() {
   const form = document.getElementById('basic-form');
   if (!form) return;
-  
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     let valid = true;
-    
+
     const email = form.email.value.trim();
     const password = form['password-input'].value.trim();
-    
+
     if (!password || password.length < 8) {
       valid = false;
       showMessage('Password is required and must be at least 8 characters.', 'error');
       return;
     }
-    
+
     const data = {
       email: email,
       password: password,
     };
-    
+
     try {
       const json = await loginUser(data);
-      
+
       setToken(json.token);
       setUsername(json.username)
-      
+
       await applyPendingProfile();
-      
-      window.location.replace(PAGES.login);
+
+      window.location.href = PAGES.home;
       showMessage('Successful login!', 'success');
     } catch (err) {
       showMessage(err.message || "Network error. Please try again later.", "error");

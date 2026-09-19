@@ -20,7 +20,6 @@ const renderHandlers = {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const token = getToken();
-    if (!token) return;
 
     currentUserId = getUserIdFromToken(token);
     if (!currentUserId) return;

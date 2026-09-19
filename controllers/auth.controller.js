@@ -79,11 +79,24 @@ async function deleteAccount(req, res) {
 
 async function updateAccount(req, res) {
   try {
-    const result = await authService.updateAccount(req.user.userId, req.body);
-    if (!result.changed) return res.json({ message: 'No changes detected' });
-    return res.json({ message: 'Account updated successfully', user: result.user });
+    const result = await authService.updateAccount(
+      req.user.userId,
+      req.body
+    );
+
+    if (!result.changed) {
+      return res.json({
+        changed: false,
+        message: "No changes detected"
+      });
+    }
+
+    return res.json({
+      changed: true,
+      user: result.user
+    });
   } catch (error) {
-    sendError(res, error, 'Failed to update account');
+    sendError(res, error, "Failed to update account");
   }
 }
 

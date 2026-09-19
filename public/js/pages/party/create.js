@@ -46,7 +46,6 @@ const renderHandlers = {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const token = getToken();
-    if (!token) return;
 
     bindUnloadHandler(token);
     bindCopyPartyCode();
@@ -203,7 +202,7 @@ async function loadParty() {
 
 async function startGame() {
     const partyCode = getPartyCode();
-    if (!partyCode) return alert("No party Id found");
+    if (!partyCode) return showToast("No party Id found", "error");
 
     setLoadingScreenActive(true);
 
@@ -218,7 +217,7 @@ async function startGame() {
 
 async function saveSettings() {
     const partyCode = getPartyCode();
-    if (!partyCode) return alert("No party Id found");
+    if (!partyCode) return showToast("No party Id found", "error");
 
     try {
         currentParty = await savePartySettings(partyCode, readSettingsForm());
@@ -235,7 +234,7 @@ async function saveSettings() {
 
 async function swapTeam(userId) {
     const partyCode = getPartyCode();
-    if (!partyCode) return alert("No party Id found");
+    if (!partyCode) return showToast("No party Id found", "error");
 
     if (currentParty.mode !== "teams") {
         showToast("Team swapping is only available in team mode.", "error");
@@ -249,7 +248,7 @@ async function swapTeam(userId) {
 
 async function terminateGame() {
     const partyCode = getPartyCode();
-    if (!partyCode) return alert("No party Id found");
+    if (!partyCode) return showToast("No party Id found", "error");
 
     currentParty = await terminatePartyGame(partyCode);
     window.currentParty = currentParty;
@@ -258,7 +257,7 @@ async function terminateGame() {
 
 async function kickOfflinePlayers() {
     const partyCode = getPartyCode();
-    if (!partyCode) return alert("No party Id found");
+    if (!partyCode) return showToast("No party Id found", "error");
 
     currentParty = await kickOfflinePartyPlayers(partyCode);
     window.currentParty = currentParty;
@@ -267,7 +266,7 @@ async function kickOfflinePlayers() {
 
 async function kickPlayer(userId) {
     const partyCode = getPartyCode();
-    if (!partyCode) return alert("No party Id found");
+    if (!partyCode) return showToast("No party Id found", "error");
 
     const hostId = typeof currentParty.host === "string" ? currentParty.host : currentParty.host._id;
     if (hostId === userId) {

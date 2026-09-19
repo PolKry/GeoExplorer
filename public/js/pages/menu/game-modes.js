@@ -1,4 +1,4 @@
-import { PAGES } from "../../constants/resources";
+import { PAGES } from "../../constants/resources.js";
 
 let startInProgress = false;
 

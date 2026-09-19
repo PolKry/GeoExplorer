@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/styles/account-style.css" />
     <link rel="stylesheet" href="/styles/menu-style.css" />
+    <link rel="stylesheet" href="/styles/toast.css" />
     <script type="module" src="/js/utils/auth-check.js"></script>
     <script src="/js/components/loader.js"></script>
     <link rel="icon" href="/resources/images/icon.ico" type="image/x-icon" />
@@ -54,7 +55,7 @@
                         autocomplete="off" minlength="8" maxlength="20" pattern="\S+" />
                     <small id="password-strength-text" class="password-strength-text"></small>
 
-                    <button type="submit" class="saveBtn" aria-label="Save account changes">
+                    <button type="submit" class="saveBtn" id="update-account-btn" aria-label="Save account changes">
                         Update Account
                     </button>
                 </form>

@@ -32,7 +32,6 @@ const submitGuessButton = document.getElementById("guess-button");
 
 function getCurrentUserId() {
     const token = getToken();
-    if (!token) return null;
 
     try {
         return JSON.parse(atob(token.split('.')[1])).userId;

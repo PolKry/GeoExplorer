@@ -197,11 +197,11 @@ async function resetSettings() {
         await setSettings(defaults);
         setLocalSettings(JSON.stringify(defaults));
 
-        console.log("Settings reset:", data);
-        showMessage("Settings have been reset to defaults!", "success");
+        console.log("Settings reset:", defaults);
+        showMessage("Settings have been reset to defaults", "info");
     } catch (err) {
         console.error("Failed to reset settings:", err);
-        showMessage("Could not reset settings.", "error");
+        showMessage("Could not reset settings", "error");
     }
 }
 

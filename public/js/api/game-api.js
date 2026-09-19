@@ -10,7 +10,7 @@ export async function startCountryGameRes(mapSrcName, roundLength) {
     }
 }
 
-// TODO: Mabey add points param
+// TODO: Maybe add points param
 export async function startPointsGameRes(mapSrcName, movingModeValue, roundLength) {
     try {
         const res = await apiFetch(`/api/game/points/start?name=${encodeURIComponent(mapSrcName)}&movingMode=${encodeURIComponent(movingModeValue)}&roundLength=${roundLength}`, {

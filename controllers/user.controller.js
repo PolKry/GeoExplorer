@@ -9,6 +9,14 @@ async function me(req, res) {
   }
 }
 
+async function account(req, res) {
+  try {
+    res.json(await userService.getAccount(req.user.userId));
+  } catch (error) {
+    sendError(res, error);
+  }
+}
+
 async function dashboard(req, res) {
   try {
     res.json(await userService.getDashboard(req.user.userId));
@@ -97,6 +105,7 @@ async function stats(req, res) {
 
 module.exports = {
   me,
+  account,
   dashboard,
   favoriteMaps,
   highestScore,

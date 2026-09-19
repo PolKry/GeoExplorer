@@ -13,6 +13,18 @@ async function getMyProfile(userId) {
   return profile;
 }
 
+async function getAccount(userId) {
+  const user = await userRepository.findUserById(userId);
+  if (!user) {
+    throw new NotFoundError("User not found");
+  }
+
+  return {
+    username: user.username,
+    email: user.email
+  };
+}
+
 async function getDashboard(userId) {
   const user = await userRepository.findUserById(userId, { excludePassword: true });
   if (!user) {
@@ -171,6 +183,7 @@ async function getStats(userId) {
 
 module.exports = {
   getMyProfile,
+  getAccount,
   getDashboard,
   getFavoriteMaps,
   getHighestScore,

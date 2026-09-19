@@ -4,10 +4,22 @@ export async function getLocalUserData() {
     try {
         const res = await apiFetch('/api/users/me');
         if (!res.ok) throw new Error('Failed to fetch user profile info');
-        
+
         return await res.json();
     } catch (err) {
         console.error("Error fetching local user info:", err);
+        return null;
+    }
+}
+
+export async function getAccountData() {
+    try {
+        const res = await apiFetch('/api/users/me/account');
+        if (!res.ok) throw new Error('Failed to fetch user account info');
+
+        return await res.json();
+    } catch (err) {
+        console.error("Error fetching local user account info:", err);
         return null;
     }
 }
@@ -16,7 +28,7 @@ export async function getHighestScore(mapSrcName) {
     try {
         const res = await apiFetch(`/api/users/me/highest-score?name=${encodeURIComponent(mapSrcName)}`);
         if (!res.ok) throw new Error("Highest score data fetch failed");
-        
+
         return await res.json();
     } catch (err) {
         console.error("Error fetching highest score data:", err);
@@ -28,7 +40,7 @@ export async function getFavMaps() {
     try {
         const res = await apiFetch('/api/users/me/favorite-maps');
         if (!res.ok) throw new Error('Failed to fetch favorite maps');
-        
+
         return await res.json();
     } catch (err) {
         console.error("Error fetching favorite maps:", err);
@@ -103,7 +115,7 @@ export async function getCountries() {
     try {
         const res = await apiFetch('/api/countries');
         if (!res.ok) throw new Error('Failed to fetch countries data');
-        
+
         return await res.json();
     } catch (err) {
         console.error("Error fetching countries data:", err);

@@ -1224,41 +1224,6 @@ nav#nav-menu {
     letter-spacing: 0.035em;
 }
 
-.toast {
-    position: fixed;
-    left: 50%;
-    bottom: 1.4rem;
-    transform: translateX(-50%) translateY(20px);
-    max-width: min(90vw, 420px);
-    background: rgba(10, 18, 22, 0.94);
-    color: #00ffae;
-    padding: 0.8rem 1rem;
-    border-radius: 12px;
-    border: 1px solid rgba(0, 255, 174, 0.32);
-    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.28), 0 0 18px rgba(0, 255, 174, 0.14);
-    font-size: 0.92rem;
-    line-height: 1.4;
-    opacity: 0;
-    z-index: 1000;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.toast.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.toast.success {
-    color: #00ffae;
-    border-color: rgba(0, 255, 174, 0.38);
-}
-
-.toast.error {
-    color: #ff6d7d;
-    border-color: rgba(255, 109, 125, 0.38);
-}
-
 @media (max-width: 1060px) {
     .site-header {
         padding: 0 1.5rem;

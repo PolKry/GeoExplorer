@@ -691,45 +691,6 @@ body {
     color: #ff6b6b;
 }
 
-/* === Toasts === */
-.toast {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: rgba(15, 25, 35, 0.9);
-    color: #00ffae;
-    padding: 0.9rem 1.4rem;
-    border-radius: 1rem;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.03rem;
-    font-weight: 500;
-    box-shadow: 0 0 20px rgba(0, 255, 174, 0.3);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(0, 255, 174, 0.3);
-    opacity: 0;
-    user-select: none;
-    transform: translateY(20px);
-    z-index: 9999;
-
-    transition: all 0.35s ease;
-}
-
-.toast.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.toast.success {
-    border-left: 4px solid #00ffae;
-    color: #00ffae;
-}
-
-.toast.error {
-    border-left: 4px solid #ff4c4c;
-    color: #ff4c4c;
-}
-
 .status-dot {
     width: 10px;
     height: 10px;

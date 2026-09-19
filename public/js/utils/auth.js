@@ -9,8 +9,9 @@ export function getUserIdFromToken(token) {
         if (payload.exp && payload.exp < now) {
             console.warn("Token expired");
             logout();
+            
             window.location.replace(PAGES.login);
-            return null;
+            throw new Error("No token found. Redirecting to login.");
         }
 
         return payload.userId;

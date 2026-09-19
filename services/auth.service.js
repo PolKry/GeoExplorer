@@ -71,9 +71,9 @@ function normalizeRegistrationProfile({ firstName, lastName, country, bio } = {}
   const cleanBio = (bio || '').trim();
   const normalizedCountry = country && (country.name || country.code)
     ? {
-        name: (country.name || '').trim(),
-        code: (country.code || '').trim()
-      }
+      name: (country.name || '').trim(),
+      code: (country.code || '').trim()
+    }
     : { name: '', code: '' };
 
   return {
@@ -356,8 +356,7 @@ async function updateAccount(userId, { username, newPassword, currentPassword })
 
   await user.save();
 
-  if (!profileChanged) return { changed: false };
-  return { changed: true, user: { username: user.username } };
+  return { changed: profileChanged, user: { username: user.username } };
 }
 
 module.exports = {
