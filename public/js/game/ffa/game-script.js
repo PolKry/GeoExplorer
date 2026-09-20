@@ -1,3 +1,4 @@
+import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
 import { ICONS, PAGES, AUDIO } from "../../constants/resources.js";
 import { playSound } from "../../utils/audio.js";
 import {
@@ -5,10 +6,6 @@ import {
     getPartyHostId,
     getPartyCode
 } from "../../utils/storage.js";
-
-// Audio
-let enabledSound = true;
-let effectVolume = 0.5;
 
 // Maps
 let mapName;
@@ -92,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function loadGame(gameId) {
-    setLoadingScreenActive(true);
+    showLoadingScreen();
     setTimerActive(false);
 
     if (!gameData)
@@ -200,7 +197,7 @@ function proceed() {
 
     if (hostId && currentUserId && String(currentUserId) === String(hostId)) {
         setRoundEndScreenActive(false);
-        setLoadingScreenActive(true);
+        showLoadingScreen();
 
         socket.emit('game:end-round', { gameId: GAME_ID });
     }
@@ -215,7 +212,7 @@ async function endGame(info) {
 
     initEndingMap();
     setEndingScreenActive(true);
-    setLoadingScreenActive(false);
+    hideLoadingScreen();
 
     loadMarkersFromHistory();
 
@@ -347,25 +344,6 @@ function setTimerActive(value) {
         timerPanel.style.visibility = 'visible';
     } else {
         timerPanel.style.visibility = 'hidden';
-    }
-}
-
-function setLoadingScreenActive(value) {
-    const screen = document.getElementById('loading-screen');
-
-    if (value) {
-        screen.style.transition = 'none';
-        screen.style.opacity = '1';
-        screen.style.display = 'flex';
-        screen.style.pointerEvents = 'auto';
-    } else {
-        screen.style.transition = 'opacity 0.6s ease';
-        screen.style.opacity = '0';
-        screen.style.pointerEvents = 'none';
-
-        setTimeout(() => {
-            screen.style.display = 'none';
-        }, 600);
     }
 }
 
@@ -652,7 +630,7 @@ document.getElementById('back-button')?.addEventListener('click', backBtnClick);
 async function backBtnClick() {
     resetGame();
 
-    setLoadingScreenActive(true);
+    showLoadingScreen();
 
     if (gameData.state !== "game_ended")
         return;

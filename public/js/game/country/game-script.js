@@ -1,5 +1,6 @@
 import { ICONS, AUDIO, PAGES } from "../../constants/resources.js";
 import { playSound } from "../../utils/audio.js";
+import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
 const { startCountryGameRes } = require("../../api/game-api");
 
 // Maps
@@ -57,13 +58,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function loadGame(gameId) {
-    setLoadingScreenActive(true);
+    showLoadingScreen();
     setTimerActive(false);
 
     socket.emit('game:get-status', { gameId }, (data) => {
         if (!data) {
             console.error("No game status received");
-            setLoadingScreenActive(false);
+            hideLoadingScreen();
             return;
         }
 
@@ -76,7 +77,7 @@ function loadGame(gameId) {
         }
 
         if (["all_guessed", "game_ended"].includes(gameData.state)) {
-            setLoadingScreenActive(false);
+            hideLoadingScreen();
         }
     });
 
@@ -92,7 +93,7 @@ async function initializeRound(data) {
         await window.GameShared.whenMapsReady();
     } catch (error) {
         console.error(error);
-        setLoadingScreenActive(false);
+        hideLoadingScreen();
         return;
     }
 
@@ -102,7 +103,7 @@ async function initializeRound(data) {
     initResultMap();
     initEndingMap();
 
-    setLoadingScreenActive(false);
+    hideLoadingScreen();
     setTimerActive(data.isTimerStarted);
     submitGuessButton.disabled = false;
 }
@@ -155,7 +156,7 @@ function initStreetView(roundPanoId) {
     panorama.addListener("status_changed", () => {
         if (panorama.getStatus() !== "OK") return;
 
-        setLoadingScreenActive(false);
+        hideLoadingScreen();
     });
 }
 
@@ -261,7 +262,7 @@ proceedButton.addEventListener("click", proceed);
 
 function proceed() {
     setRoundEndScreenActive(false);
-    setLoadingScreenActive(true);
+    showLoadingScreen();
 
     const resultText = document.getElementById('info-text');
     resultText.style.visibility = "hidden";
@@ -293,7 +294,7 @@ async function endGame(info) {
     }
 
     setEndingScreenActive(true);
-    setLoadingScreenActive(false);
+    hideLoadingScreen();
 
     const streakInfo = document.getElementById("total-streak-text");
     streakInfo.innerHTML = `
@@ -390,26 +391,6 @@ function setTimerActive(value) {
         timerPanel.style.visibility = 'visible';
     } else {
         timerPanel.style.visibility = 'hidden';
-    }
-}
-
-function setLoadingScreenActive(value) {
-    const screen = document.getElementById('loading-screen');
-    loadingScreenActive = value;
-
-    if (value) {
-        screen.style.transition = 'none';
-        screen.style.opacity = '1';
-        screen.style.display = 'flex';
-        screen.style.pointerEvents = 'auto';
-    } else {
-        screen.style.transition = 'opacity 0.6s ease';
-        screen.style.opacity = '0';
-        screen.style.pointerEvents = 'none';
-
-        setTimeout(() => {
-            screen.style.display = 'none';
-        }, 600);
     }
 }
 
@@ -632,14 +613,14 @@ async function playAgainClick() {
     // The final screen is above the loading layer. Hide it first so the
     // loading state is visible while the new game is being created.
     setEndingScreenActive(false);
-    setLoadingScreenActive(true);
+    showLoadingScreen();
 
     const res = await startCountryGameRes(gameData.map.srcName, roundLength);
     const data = await res.json();
 
     if (!res.ok || !data.gameId) {
         console.error("Failed to start game", data);
-        setLoadingScreenActive(false);
+        hideLoadingScreen();
         gameStartInProgress = false;
         return;
     }

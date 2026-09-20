@@ -1,3 +1,5 @@
+import { hideLoadingScreen, isLoadingScreenActive } from "../../components/loading-screen.js";
+
 import {
     getToken
 } from "../../utils/storage.js";
@@ -100,7 +102,7 @@ import {
 
         panoramaInstance.addListener("status_changed", () => {
             if (panoramaInstance.getStatus() !== "OK") return;
-            setLoadingScreenActive(false);
+            hideLoadingScreen();
 
             if (gameData.gameplayMode === "nmpz") {
                 lockedPov = panoramaInstance.getPov();
@@ -232,10 +234,8 @@ import {
         blocker.style.display = blocked ? "block" : "none";
     };
 
-    shared.isLoadingScreenActive = function isLoadingScreenActive() {
-        const screen = document.getElementById("loading-screen");
-        return screen?.style.pointerEvents === "auto";
-    };
+    shared.isLoadingScreenActive = isLoadingScreenActive();
+    
 
     shared.submitGuess = function submitGuess({ socket, gameId, guessLocation, guessMarker, hasGuessed, panorama, setHasGuessed }) {
         if (!guessMarker || hasGuessed || !guessLocation) return;

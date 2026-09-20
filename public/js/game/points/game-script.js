@@ -1,9 +1,6 @@
+import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
 import { AUDIO, IMAGES, PAGES } from "../../constants/resources.js";
 const { startPointsGameRes } = require("../../api/game-api");
-
-// Audio
-let enabledSound = true;
-let effectVolume = 0.5;
 
 // Maps
 let mapName;
@@ -54,7 +51,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function loadGame(gameId) {
-    setLoadingScreenActive(true);
+    showLoadingScreen();
     setTimerActive(false);
 
     socket.emit('game:get-status', { gameId }, async (data) => {
@@ -73,23 +70,23 @@ function loadGame(gameId) {
             initStreetView(gameData.roundPanoId);
             initGuessMap();
 
-            setLoadingScreenActive(false);
+            hideLoadingScreen();
             setTimerActive(gameData.isTimerStarted);
             return;
         }
 
         if (gameData.state === "waiting") {
-            setLoadingScreenActive(true);
+            showLoadingScreen();
             return;
         }
 
         if (gameData.state === "all_guessed") {
-            setLoadingScreenActive(false);
+            hideLoadingScreen();
             return;
         }
 
         if (gameData.state === "game_ended") {
-            setLoadingScreenActive(false);
+            hideLoadingScreen();
             return;
         }
 
@@ -106,7 +103,7 @@ function loadGame(gameId) {
         initStreetView(gameData.roundPanoId);
         initGuessMap();
 
-        setLoadingScreenActive(false);
+        hideLoadingScreen();
         setTimerActive(gameData.isTimerStarted);
     });
 }
@@ -192,7 +189,7 @@ proceedButton.addEventListener("click", proceed);
 
 function proceed() {
     setRoundEndScreenActive(false);
-    setLoadingScreenActive(true);
+    showLoadingScreen();
 
     const distanceText = document.getElementById('info-text');
     distanceText.style.visibility = "hidden";
@@ -222,7 +219,7 @@ async function endGame(info) {
 
     initEndingMap();
     setEndingScreenActive(true);
-    setLoadingScreenActive(false);
+    hideLoadingScreen();
 
     loadMarkersFromHistory();
 
@@ -340,25 +337,6 @@ function setTimerActive(value) {
         timerPanel.style.visibility = 'visible';
     } else {
         timerPanel.style.visibility = 'hidden';
-    }
-}
-
-function setLoadingScreenActive(value) {
-    const screen = document.getElementById('loading-screen');
-
-    if (value) {
-        screen.style.transition = 'none';
-        screen.style.opacity = '1';
-        screen.style.display = 'flex';
-        screen.style.pointerEvents = 'auto';
-    } else {
-        screen.style.transition = 'opacity 0.6s ease';
-        screen.style.opacity = '0';
-        screen.style.pointerEvents = 'none';
-
-        setTimeout(() => {
-            screen.style.display = 'none';
-        }, 600);
     }
 }
 
@@ -565,7 +543,7 @@ document.getElementById('play-again-button').addEventListener('click', playAgain
 async function playAgainClick() {
     resetGame();
 
-    setLoadingScreenActive(true);
+    showLoadingScreen();
 
     if (gameData.state !== "game_ended")
         return;
@@ -575,7 +553,7 @@ async function playAgainClick() {
 
     if (!res.ok || !data.gameId) {
         console.error("Failed to start game", data);
-        setLoadingScreenActive(false);
+        hideLoadingScreen();
         return;
     }
 

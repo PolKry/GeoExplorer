@@ -14,7 +14,6 @@ import { getUserIdFromToken } from "../../utils/auth.js";
 import {
     bindCustomDropdowns,
     readSettingsForm,
-    setLoadingScreenActive,
     bindCopyPartyCode
 } from "../../utils/party-ui.js";
 import { showToast } from "../../utils/toast.js";
@@ -31,6 +30,7 @@ import {
     setPartyHostId
 } from "../../utils/storage.js";
 import { PAGES } from "../../constants/resources.js";
+import { hideLoadingScreen, showLoadingScreen } from "../../components/loading-screen.js";
 
 const socket = window.io("/party");
 
@@ -204,14 +204,14 @@ async function startGame() {
     const partyCode = getPartyCode();
     if (!partyCode) return showToast("No party Id found", "error");
 
-    setLoadingScreenActive(true);
+    showLoadingScreen();
 
     try {
         await startPartyGame(partyCode);
     } catch (err) {
-        console.error("Failed to start game", err);
+        hideLoadingScreen();
         showToast("Failed to start a game.", "error");
-        setLoadingScreenActive(false);
+        console.error("Failed to start game", err);
     }
 }
 

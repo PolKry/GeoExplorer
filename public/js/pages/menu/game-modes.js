@@ -1,3 +1,4 @@
+import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
 import { PAGES } from "../../constants/resources.js";
 
 let startInProgress = false;
@@ -24,7 +25,7 @@ window.addEventListener("pageshow", () => {
     startInProgress = false;
     const modeButton = document.getElementById("country-mode-button");
     if (modeButton) modeButton.disabled = false;
-    setLoadingScreenActive(false);
+    hideLoadingScreen();
 });
 
 async function startPointsMode() {
@@ -33,7 +34,7 @@ async function startPointsMode() {
     startInProgress = true;
     const modeButton = document.getElementById("country-mode-button");
     modeButton.disabled = true;
-    setLoadingScreenActive(true);
+    showLoadingScreen();
 
     const res = await startCountryGameRes(gameData.map.srcName, roundLength);
     const data = await res.json();
@@ -42,31 +43,10 @@ async function startPointsMode() {
         console.error("Failed to start game", data);
         startInProgress = false;
         modeButton.disabled = false;
-        setLoadingScreenActive(false);
+        hideLoadingScreen();
         return;
     }
 
     // Redirect immediately
     window.location.href = `/play/${data.gameId}`;
-}
-
-function setLoadingScreenActive(value) {
-    const screen = document.getElementById('loading-screen');
-
-    if (value) {
-        // Disable transition to show it instantly
-        screen.style.transition = 'none';
-        screen.style.opacity = '1';
-        screen.style.display = 'flex';
-        document.body.classList.add("loading");
-    } else {
-        // Enable transition and fade out
-        screen.style.transition = 'opacity 0.6s ease';
-        screen.style.opacity = '0';
-        document.body.classList.remove("loading");
-
-        setTimeout(() => {
-            screen.style.display = 'none';
-        }, 600);
-    }
 }

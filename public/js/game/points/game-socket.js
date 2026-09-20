@@ -1,3 +1,5 @@
+import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
+
 const socket = window.GameShared.createSocket();
 window.GameShared.bindTimerEvents(socket);
 
@@ -14,7 +16,7 @@ socket.on("game:round-start", async (data) => {
     setGameState(data.state);
     hasGuessed = false;
     setRoundEndScreenActive(false);
-    setLoadingScreenActive(false);
+    hideLoadingScreen();
 });
 
 socket.on("game:guessing-over", (data) => {

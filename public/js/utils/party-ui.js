@@ -1,25 +1,5 @@
+import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
 import { showToast } from "./toast.js";
-
-export function setLoadingScreenActive(value) {
-    const screen = document.getElementById("loading-screen");
-    if (!screen) return;
-
-    if (value) {
-        screen.style.transition = "none";
-        screen.style.opacity = "1";
-        screen.style.display = "flex";
-        screen.style.pointerEvents = "auto";
-        return;
-    }
-
-    screen.style.transition = "opacity 0.6s ease";
-    screen.style.opacity = "0";
-    screen.style.pointerEvents = "none";
-
-    setTimeout(() => {
-        screen.style.display = "none";
-    }, 600);
-}
 
 export function bindCustomDropdowns() {
     document.querySelectorAll(".custom-dropdown").forEach(dropdown => {

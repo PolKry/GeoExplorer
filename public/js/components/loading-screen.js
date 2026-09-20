@@ -55,3 +55,7 @@ export function hideLoadingScreen() {
         loadingScreen.style.display = "none";
     }, 600);
 }
+
+export function isLoadingScreenActive() {
+    return document.boidy.classList.contains("loading");
+}
