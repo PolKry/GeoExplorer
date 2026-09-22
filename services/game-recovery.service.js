@@ -6,6 +6,8 @@ const gameSessionRepository = require("../repositories/game-session.repository")
 const partyRepository = require("../repositories/party.repository");
 
 const { startRoundTimer } = require("../handlers/timer.handler");
+const { timerEnded } = require("./game.service");
+const GameState = require("../game/GameState");
 
 /*
     Recover all active parties
@@ -38,7 +40,7 @@ async function recoverActiveGames() {
 
         GameManager.add(gameDoc.gameId, engine);
 
-        if (engine.getState() === "in_game") {
+        if (engine.getState() === GameState.IN_ROUND) {
             // Respect party setting: if party requires waiting for first guess and
             // the saved session has no round.startedAt, do not start the timer yet.
             let shouldStart = true;
@@ -51,8 +53,16 @@ async function recoverActiveGames() {
                 }
             }
 
-            if (shouldStart) {
-                startRoundTimer(gameDoc.gameId, gameDoc.settings.roundTime);
+            if (shouldStart && engine.round?.timerEndsAt) {
+                // The saved deadline prevents a restart from giving players a
+                // brand-new round timer. An already elapsed deadline advances
+                // the phase through the normal, idempotent timeout path.
+                startRoundTimer(
+                    gameDoc.gameId,
+                    gameDoc.settings.roundTime,
+                    timerEnded,
+                    engine.round.timerEndsAt
+                );
             }
         }
 

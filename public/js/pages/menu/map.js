@@ -1,5 +1,5 @@
 import { fetchLeaderboard } from "../../api/leaderboard-api.js";
-import { getHighestScore } from "../../api/user-api.js";
+import { fetchHighestScore } from "../../api/user-api.js";
 import { startPoints } from "../../api/game-starter-api.js";
 import { fetchMapData } from "../../api/map-api.js";
 import { renderMapLeaderboard } from "../../renderers/leaderboard-renderer.js";
@@ -100,7 +100,7 @@ async function loadLeaderboard() {
 async function loadUserScore() {
   if (!codes) throw new Error("Map codes are required to load user score.");
 
-  const data = await getHighestScore(mapSrcName);
+  const data = await fetchHighestScore(mapSrcName);
   if (!data) {
     console.error("Failed to fetch user data");
     return;

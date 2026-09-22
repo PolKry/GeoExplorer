@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="Icon" href="/resources/images/icon.ico" type="image/x-icon" />
     <title>GeoExplorer - Game</title>
-    <script src="/js/api/legacy-http.js"></script>
     <script src="/js/utils.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 
@@ -95,9 +94,7 @@
 
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyXXmz8cCxGH8P60ThWl0MbUyUOi3P_RQ&loading=async"></script>
-<script src="/js/game/shared/game-base.js" defer></script>
-<script src="/js/game/init-game.js" defer></script>
-<script src="/js/game/ffa/game-socket.js" defer></script>
-<script src="/js/game/ffa/game-script.js" defer></script>
+<script type="module" src="/js/game/shared/game-base.js"></script>
+<script type="module" src="/js/game/ffa/game-script.js"></script>
 
 </html>

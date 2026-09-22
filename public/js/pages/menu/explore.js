@@ -1,6 +1,6 @@
 import { IMAGES, PAGES } from "../../constants/resources.js";
-import { getMapsForPage, searchMaps } from "../../api/explore-page-api.js";
-import { setFavMaps, getFavMaps } from "../../api/user-api.js";
+import { fetchMapsForPage, searchMaps } from "../../api/explore-page-api.js";
+import { setFavMaps, fetchFavMaps } from "../../api/user-api.js";
 
 let officialPage = 1;
 let communityPage = 1;
@@ -85,7 +85,7 @@ async function loadOfficialMaps(page) {
       showLoading(officialMapListDiv);
     }
 
-    const data = await getMapsForPage(page, "Official");
+    const data = await fetchMapsForPage(page, "Official");
 
     if (page === 1) {
       clearMaps(officialMapListDiv);
@@ -112,7 +112,7 @@ async function loadCommunityMaps(page) {
       showLoading(communityMapListDiv);
     }
 
-    const mapsData = await getMapsForPage(page, "Community");
+    const mapsData = await fetchMapsForPage(page, "Community");
 
     if (page === 1) {
       clearMaps(communityMapListDiv);
@@ -265,7 +265,7 @@ communitySearchInput.addEventListener("keydown", (event) => {
 
 async function cacheFavMaps() {
   try {
-    favMaps = await getFavMaps();
+    favMaps = await fetchFavMaps();
   } catch (err) {
     console.error("Error loading favorite maps:", err);
   }

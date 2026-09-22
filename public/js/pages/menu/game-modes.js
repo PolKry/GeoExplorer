@@ -1,5 +1,6 @@
 import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
 import { PAGES } from "../../constants/resources.js";
+import { startCountry } from "../../api/game-starter-api.js";
 
 let startInProgress = false;
 
@@ -9,15 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const ffaButton = document.getElementById("ffa-mode-button");
 
     countryButton?.addEventListener('click', () => {
-        startPointsMode();
+        startCountryMode();
     });
 
     pointsButton?.addEventListener('click', () => {
-        window.location.href = PAGES.createParty;
+        window.location.href = PAGES.partyDashboard;
     });
 
     ffaButton?.addEventListener('click', () => {
-        window.location.href = PAGES.createParty;
+        window.location.href = PAGES.partyDashboard;
     });
 });
 
@@ -28,7 +29,7 @@ window.addEventListener("pageshow", () => {
     hideLoadingScreen();
 });
 
-async function startPointsMode() {
+async function startCountryMode() {
     if (startInProgress) return;
 
     startInProgress = true;
@@ -36,13 +37,14 @@ async function startPointsMode() {
     modeButton.disabled = true;
     showLoadingScreen();
 
-    const res = await startCountryGameRes(gameData.map.srcName, roundLength);
-    const data = await res.json();
+    const data = await startCountry();
 
-    if (!res.ok || !data.gameId) {
+    if (!data?.gameId) {
         console.error("Failed to start game", data);
+
         startInProgress = false;
         modeButton.disabled = false;
+
         hideLoadingScreen();
         return;
     }

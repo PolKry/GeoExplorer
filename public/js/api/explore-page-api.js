@@ -1,6 +1,6 @@
 import { apiFetch } from "./http.js";
 
-export async function getMapsForPage(page, type) {
+export async function fetchMapsForPage(page, type) {
     try {
         const res = await apiFetch(`/api/maps?page=${page}&type=${type}`);
         return await res.json();

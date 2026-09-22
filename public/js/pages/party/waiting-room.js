@@ -1,4 +1,4 @@
-import { getPartyByCode, leaveParty } from "../../api/party-api.js";
+import { fetchPartyByCode, leaveParty } from "../../api/party-api.js";
 import { getUserIdFromToken } from "../../utils/auth.js";
 import { showToast } from "../../utils/toast.js";
 import {
@@ -62,7 +62,7 @@ async function loadParty() {
     }
 
     try {
-        currentParty = await getPartyByCode(partyCode);
+        currentParty = await fetchPartyByCode(partyCode);
         window.currentParty = currentParty;
 
         if (!isCurrentUserInParty()) {
@@ -86,7 +86,8 @@ async function loadParty() {
         renderCurrentParty();
     } catch (err) {
         console.error(err);
-        showToast("Error loading party", "error");
+        removePartyCode();
+        window.location.replace(PAGES.gameModes);
     }
 }
 

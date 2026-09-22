@@ -1,4 +1,4 @@
-import { getSettings, setSettings } from "../../api/user-api.js";
+import { fetchSettings, setSettings } from "../../api/user-api.js";
 import { getSettings as getLocalSettings, setSettings as setLocalSettings } from "../../utils/storage.js";
 import { showMessage } from "../../utils/toast.js";
 
@@ -131,7 +131,7 @@ async function assignValues() {
     }
 
     try {
-        const settings = await getSettings();
+        const settings = await fetchSettings();
         if (settings) {
             applySettings(settings);
             setSettings(JSON.stringify(settings)); // Idk id nessary, but just in case

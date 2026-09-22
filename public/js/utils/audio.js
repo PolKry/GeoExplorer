@@ -1,11 +1,11 @@
-import { getSettings } from "./storage";
+import { getSettings } from "./storage.js";
 
 const audioCache = new Map();
 
 export function playSound(src) {
     let audio = audioCache.get(src);
-    const { enabledSound, effectVolume } = getSettings();
-    if (!enabledSound) {
+    const { soundEnabled, sfxVolume } = getSettings();
+    if (!soundEnabled) {
         return;
     }
 
@@ -15,7 +15,7 @@ export function playSound(src) {
     }
 
     audio.currentTime = 0;
-    audio.volume = effectVolume;
+    audio.volume = Math.max(0, Math.min(100, Number(sfxVolume))) / 100;
     audio.play().catch(() => {
         console.warn(`Failed to play audio: ${src}`);
     });

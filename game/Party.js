@@ -2,7 +2,6 @@ const PartyModel = require("../models/party.model");
 const MapModel = require("../models/map.model");
 const { NotFoundError, ValidationError } = require("../utils/app-error.utils");
 const { getPlayerColor: getColor } = require("../utils/player-color.utils");
-const { stopRoundTimer } = require('../handlers/timer.handler');
 const crypto = require("crypto");
 
 class Party {

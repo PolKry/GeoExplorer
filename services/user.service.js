@@ -127,7 +127,7 @@ async function updateCountry(userId, country) {
     throw new ValidationError('Country name and code are required');
   }
 
-  const user = await userProfileRepository.findById(userId);
+  const user = await userProfileRepository.findByUserId(userId);
   if (!user) {
     throw new NotFoundError("User's profile not found");
   }
@@ -142,7 +142,7 @@ async function updateBio(userId, bio) {
     throw new ValidationError('Bio is required');
   }
 
-  const user = await userProfileRepository.findById(userId);
+  const user = await userProfileRepository.findByUserId(userId);
   if (!user) {
     throw new NotFoundError("User's profile not found");
   }

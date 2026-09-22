@@ -1,4 +1,4 @@
-import { createMap, getTags } from "../../api/map-creation-api.js";
+import { createMap, fetchTags } from "../../api/map-creation-api.js";
 import { PAGES } from "../../constants/resources.js";
 import { showMessage } from "../../utils/toast.js";
 
@@ -282,7 +282,7 @@ async function loadTags() {
             };
             selectedContainer.appendChild(chip);
         }
-        const tags = await getTags();
+        const tags = await fetchTags();
         
         tags.forEach(tag => addToAvailable(tag));
         updateHiddenInput();

@@ -12,7 +12,7 @@ const userStatsRepository = require("../repositories/user-stats.repository");
 const userActionRepository = require("../repositories/user-action.repository");
 
 const { getXpForLevel } = require("../utils/user-experience.utils");
-const { startRoundTimer, resumeRoundTimer, stopRoundTimer } = require("../handlers/timer.handler");
+const { startRoundTimer, stopRoundTimer } = require("../handlers/timer.handler");
 const { normalizeRoundTime } = require("../utils/game.utils");
 const { getIO } = require("../socket");
 const { getGameClass } = require("../game/getGameClass");
@@ -200,6 +200,14 @@ async function generateThisAndNextRound(gameData, gameInstance) {
     }
 
     await engine.startGame();
+
+    // Start timer immediately unless party settings require waiting for first guess.
+    let shouldStart = true;
+    if (session.partyId) {
+        const party = await PartyManager.getById(session.partyId);
+        if (party && party.settings && party.settings.waitForFirstGuess) shouldStart = false;
+    }
+    if (shouldStart) startTimerForRound(gameId, engine);
     await persistSession(gameId, engine);
 
     const io = getIO("/game");
@@ -212,44 +220,65 @@ async function generateThisAndNextRound(gameData, gameInstance) {
         io.to(String(p.id)).emit("game:round-start", payload);
     }
 
-    // Start timer immediately unless party settings require waiting for first guess
-    let shouldStart = true;
-    if (session.partyId) {
-        const party = await PartyManager.getById(session.partyId);
-        if (party && party.settings && party.settings.waitForFirstGuess) {
-            shouldStart = false;
-        }
-    }
-
-    if (shouldStart) {
-        startRoundTimer(
-            gameId,
-            engine.mode.roundTime,
-            timerEnded
-        );
-    }
-
     console.log("Game started:", gameId);
 }
 
 // Gets the status payload of a game with the passed gameId including some info about the sender
 function withTimerState(payload, engine) {
+    const deadline = engine.round?.timerEndsAt ? new Date(engine.round.timerEndsAt).getTime() : null;
     return {
         ...payload,
-        isTimerStarted: Boolean(engine.round?.startedAt)
+        // Five seconds represents an untimed round. Do not show an empty
+        // timer shell when no server timer exists.
+        isTimerStarted: Number.isFinite(engine.mode.roundTime) && Boolean(deadline),
+        timer: deadline ? {
+            deadline,
+            remaining: Math.max(0, Math.ceil((deadline - Date.now()) / 1000)),
+            serverNow: Date.now()
+        } : null
     };
+}
+
+function startTimerForRound(gameId, engine) {
+    if (!engine.round || !Number.isFinite(engine.mode.roundTime)) return;
+    const pausedRemaining = engine.round.timerPausedRemaining;
+    const duration = Number.isFinite(pausedRemaining) ? pausedRemaining : engine.mode.roundTime;
+    engine.round.timerPausedRemaining = null;
+    engine.round.timerEndsAt = new Date(Date.now() + duration * 1000);
+    startRoundTimer(gameId, duration, timerEnded, engine.round.timerEndsAt);
 }
 
 async function getStatus(gameId, userId) {
     const engine = GameManager.get(gameId);
     if (!engine) throw new ValidationError("Game not active");
 
-    const payload = withTimerState(
-        engine.mode.getGameStatusPayload(engine, userId),
-        engine
-    );
+    let payload;
+    if (engine.getState() === GameState.GUESSING_OVER || engine.getState() === GameState.ROUND_ENDED) {
+        payload = engine.mode.getGuessEndPayload(engine, userId);
+    } else if (engine.getState() === GameState.GAME_ENDED || engine.getState() === GameState.FINISHED) {
+        payload = engine.mode.getGameEndPayload(engine, userId);
+    } else {
+        payload = engine.mode.getGameStatusPayload(engine, userId);
+    }
 
-    return payload;
+    const markerPosition = engine.lastMarkerPositions.get(String(userId)) || null;
+    const submittedGuess = engine.round?.guesses?.get(String(userId)) || null;
+    payload = withTimerState({
+        ...payload,
+        // This is a complete render snapshot. Consumers must select a screen
+        // from state rather than assuming a reconnect starts a fresh round.
+        view: engine.getState(),
+        markerPosition,
+        submittedGuess
+    }, engine);
+
+    return {
+        ...payload,
+        // A late connection can miss game:round-start, so include the
+        // immutable settings necessary to reconstruct the current round.
+        map: { srcName: engine.mode.mapCode, name: engine.mode.mapCode },
+        roundTime: engine.mode.roundTime
+    };
 }
 
 /*
@@ -267,7 +296,7 @@ async function submitGuess(gameId, userId, guess) {
         if (party && party.settings && party.settings.waitForFirstGuess) {
             if (!engine.round || !engine.round.startedAt) {
                 if (engine.round) engine.round.startedAt = Date.now();
-                startRoundTimer(gameId, engine.mode.roundTime, timerEnded);
+        startTimerForRound(gameId, engine);
             }
         }
     }
@@ -276,10 +305,11 @@ async function submitGuess(gameId, userId, guess) {
 
     if (engine.didAllPlayersGuess()) {
         stopRoundTimer(gameId);
+        if (engine.round) engine.round.timerEndsAt = null;
 
         engine.endGuessing();
         await sendGuessEndPayload(gameId, engine);
-    } else {
+    } else if (typeof engine.mode.getOnGuessPayload === "function") {
         await sendOnGuessPayload(gameId, engine, userId);
     }
 
@@ -309,7 +339,6 @@ async function endRound(gameId, hostId) {
 
     // If the game is not finished, it will generate the next round and start the timer
     await engine.nextRound();
-    await persistSession(gameId, engine);
 
     // Start timer immediately unless party settings require waiting for first guess
     let shouldStartNext = true;
@@ -321,12 +350,9 @@ async function endRound(gameId, hostId) {
     }
 
     if (shouldStartNext) {
-        startRoundTimer(
-            gameId,
-            engine.mode.roundTime,
-            timerEnded
-        );
+        startTimerForRound(gameId, engine);
     }
+    await persistSession(gameId, engine);
 
     // Send the round start payload to all players
     for (const p of engine.players) {
@@ -361,6 +387,7 @@ async function timerEnded(gameId) {
         engine.lastMarkerPositions.delete(userId);
     }
 
+    if (engine.round) engine.round.timerEndsAt = null;
     engine.endGuessing();
 
     await persistSession(gameId, engine);
@@ -445,16 +472,33 @@ async function setPlayerConnected(userId, gameId, connected = true) {
     if (stillConnected.length === 0) {
         console.log("Game empty, marking as idle. gameId: " + gameId);
 
-        stopRoundTimer(gameId);
-
-        engine.lastActiveAt = Date.now();
-        engine.setIdle(true);
+        // Only an active guessing phase can be paused. Previously this
+        // overwrote `all_guessed`/reveal with `idle`; reconnecting then
+        // incorrectly restored an in-round screen and Space could not advance.
+        if (engine.getState() === GameState.IN_ROUND) {
+            if (engine.round?.timerEndsAt) {
+                engine.round.timerPausedRemaining = Math.max(0, Math.ceil(
+                    (new Date(engine.round.timerEndsAt).getTime() - Date.now()) / 1000
+                ));
+                engine.round.timerEndsAt = null;
+            }
+            stopRoundTimer(gameId);
+            engine.lastActiveAt = Date.now();
+            engine.setIdle(true);
+        }
 
         await persistSession(gameId, engine);
         return;
     } else {
         engine.lastActiveAt = null;
-        engine.setIdle(false);
+
+        // Resume only a phase we deliberately paused above. Do not transform
+        // reveal, transition, or final phases while a player reconnects.
+        if (engine.getState() === GameState.IDLE) engine.setIdle(false);
+
+        if (connected && engine.round?.timerPausedRemaining != null) {
+            startTimerForRound(gameId, engine);
+        }
 
         await persistSession(gameId, engine);
     }
@@ -558,32 +602,19 @@ async function handlePlayerConnection(gameId, userId, socket) {
     if (engine.getPlayer(String(userId)) && !engine.getPlayer(String(userId)).connected) {
         await attachPlayerToGame(userId, gameId);
         await setPlayerConnected(userId, gameId, true);
-        reconnectPlayer(userId, gameId);
+        await reconnectPlayer(userId, gameId, socket);
     }
 }
 
-async function reconnectPlayer(userId, gameId) {
+async function reconnectPlayer(userId, gameId, socket) {
     const engine = GameManager.get(gameId);
     const player = engine.getPlayer(String(userId));
-    const map = await mapRepository.findDocumentById(engine.mode.mapId);
-
     if (!engine || !player) return;
     if (!engine.getPlayer(String(userId))) return;
-    if (!map) return
 
-    const io = getIO("/game");
-    const payload = withTimerState(
-        engine.mode.getRoundStartPayload(engine, String(userId), map),
-        engine
-    );
-    io.to(String(userId)).emit("game:round-start", payload);
-
-    resumeRoundTimer(
-        gameId,
-        timerEnded
-    );
-
-    console.log("Game started:", gameId);
+    // game:get-status is the ordered authoritative snapshot. Do not emit a
+    // synthetic round-start here: it would overwrite a reveal/end screen.
+    socket?.emit("game:state-ready", { gameId });
 }
 
 async function attachPlayerToGame(userId, newGameId) {

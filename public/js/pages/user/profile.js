@@ -1,19 +1,17 @@
 import {
-    getDashboard,
-    getCountries,
+    fetchDashboard,
     setBio,
     setCountry
 } from "../../api/user-api.js";
-
+import { fetchCountries } from "../../api/countries-api.js";
 import { showMessage } from "../../utils/toast.js";
 
 document.addEventListener("DOMContentLoaded", init);
-
 async function init() {
     try {
         const [dashboard, countries] = await Promise.all([
-            getDashboard(),
-            getCountries()
+            fetchDashboard(),
+            fetchCountries()
         ]);
 
         renderProfile(dashboard);
@@ -26,7 +24,6 @@ async function init() {
         showMessage("Failed to load profile");
     }
 }
-
 
 // Profile
 function renderProfile({ user, profile }) {
@@ -180,12 +177,17 @@ function startCountryEditing(countries) {
     span.replaceWith(select);
     select.focus();
 
+    let saved = false;
+
     select.addEventListener("change", async () => {
+        saved = true;
         await saveCountry(select);
     });
 
     select.addEventListener("blur", () => {
-        restoreCountry(select);
+        if (!saved && select.isConnected) {
+            restoreCountry(select);
+        }
     });
 }
 
@@ -213,15 +215,17 @@ function createCountrySelect(countries, currentCountry) {
 
 async function saveCountry(select) {
     const option = select.selectedOptions[0];
-
     if (!option) return;
+
+    const name = option.textContent;
+    const code = option.value;
 
     restoreCountry(select);
 
     try {
         await setCountry({
-            name: option.textContent,
-            code: option.value
+            name,
+            code
         });
 
         showMessage("Country updated successfully");
@@ -232,7 +236,7 @@ async function saveCountry(select) {
 }
 
 function restoreCountry(select) {
-    if (!select.isConnected) return;
+    if (!select.isConnected || !select.parentNode) return;
 
     const option = select.selectedOptions[0];
 

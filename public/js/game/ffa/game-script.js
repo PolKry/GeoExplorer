@@ -1,5 +1,5 @@
 import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
-import { ICONS, PAGES, AUDIO } from "../../constants/resources.js";
+import { IMAGES, PAGES, AUDIO } from "../../constants/resources.js";
 import { playSound } from "../../utils/audio.js";
 import {
     getToken,
@@ -8,7 +8,6 @@ import {
 } from "../../utils/storage.js";
 
 // Maps
-let mapName;
 let guessMarker;
 let map;
 let endingMap;
@@ -44,7 +43,7 @@ function redirectBackToParty() {
 
     // For host
     if (hostId && currentUserId && String(currentUserId) === String(hostId)) {
-        window.location.replace(PAGES.createParty);
+        window.location.replace(PAGES.partyDashboard);
         return;
     }
 
@@ -88,26 +87,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-function loadGame(gameId) {
-    showLoadingScreen();
-    setTimerActive(false);
-
-    if (!gameData)
-        return;
-
-    socket.emit('game:get-status', { gameId }, (data) => {
-        console.log("Loaded game data:", data);
-        gameData = data;
-
-        initGameData(data);
-    });
-}
-
 function initGameData(data) {
     const roundInfo = document.getElementById('round-info');
     const mapInfo = document.getElementById('map-info');
 
-    playerColor = data.players.find(p => String(p.id) === String(data.userId)).color;
+    const currentPlayer = data.players?.find(p => String(p.id) === String(data.userId));
+    // Do not prevent a reconnecting player from loading the round while a
+    // stale presence update is catching up.
+    playerColor = currentPlayer?.color || playerColor;
     console.log("Player color:", playerColor);
 
     if (data.map)
@@ -151,6 +138,27 @@ function initGuessMap() {
         },
         onMapReady: () => initGeocoder(gameData)
     });
+}
+
+function restoreGuess(data) {
+    const guess = data.submittedGuess?.guess || data.markerPosition;
+    if (!guess) return;
+    guessLocation = guess;
+    guessMarker = window.GameShared.placeGuessMarker({
+        map,
+        previousMarker: guessMarker,
+        location: guess,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: playerColor,
+            fillOpacity: 1,
+            strokeColor: "#ffffff",
+            strokeWeight: 2
+        }
+    });
+    hasGuessed = Boolean(data.submittedGuess);
+    submitGuessButton.disabled = hasGuessed;
 }
 
 function initGeocoder(gameData) {
@@ -227,23 +235,35 @@ function setGameState(newState) {
 function resetGame() {
     guessLocation = null;
     hasGuessed = false;
+    submitGuessButton.disabled = true;
+    const distanceText = document.getElementById('info-text');
+    if (distanceText) {
+        distanceText.textContent = "";
+        distanceText.style.visibility = "hidden";
+    }
 
     // Resets markers
-    if (actualLocationMarker)
+    if (actualLocationMarker) {
         actualLocationMarker.setMap(null);
-    if (usersLocationMarker)
+        actualLocationMarker = null;
+    }
+    if (usersLocationMarker) {
         usersLocationMarker.setMap(null);
+        usersLocationMarker = null;
+    }
 
-    if (guessMarker)
+    if (guessMarker) {
         guessMarker.setMap(null);
+        guessMarker = null;
+    }
 }
 
 // Shows the round info
-function showRoundInfo({ distance, points, location, allGuesses, players, userId, hostId }) {
+function showRoundInfo({ distance, points, location, allGuesses, players, userId, hostId, silent = false }) {
     const distanceText = document.getElementById('info-text');
     const pointsText = document.getElementById('points-text');
 
-    if (distance)
+    if (distance != null)
         distanceText.textContent = `You are ${formatDistance(distance)} away!`;
 
     animateScore(points || 0, pointsText, " Points");
@@ -260,7 +280,7 @@ function showRoundInfo({ distance, points, location, allGuesses, players, userId
     setRoundEndScreenActive(true);
 
     // Play SFX
-    playSound(AUDIO.showAnswer);
+    if (!silent) playSound(AUDIO.showAnswer);
 
     const bounds = new google.maps.LatLngBounds();
 
@@ -612,12 +632,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = breakdownGrayIcon;
+        img.src = IMAGES.breakdownGray;
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = breakdownWhiteIcon;
+        img.src = IMAGES.breakdownWhite;
         map.classList.add('responsive');
     }
 
@@ -637,3 +657,87 @@ async function backBtnClick() {
 
     redirectBackToParty();
 }
+
+const { socket } = window.GameShared.createGameSession({
+    async onStatus(data) {
+        if (!data) {
+            console.error("No game status received");
+            hideLoadingScreen();
+            return;
+        }
+
+        gameData = { ...gameData, ...data };
+        initGameData(gameData);
+        if (data.state === "in_round") {
+            await window.GameShared.whenMapsReady();
+            initStreetView(data.roundPanoId);
+            initGuessMap();
+            restoreGuess(data);
+            setTimerActive(data.isTimerStarted);
+            hideLoadingScreen();
+        } else if (data.state === "all_guessed" || data.state === "round_ended") {
+            const localGuess = data.round?.guesses?.[data.userId];
+            setGameState(data.state);
+            showRoundInfo({
+                distance: localGuess?.distance,
+                points: localGuess?.points,
+                location: data.location,
+                allGuesses: data.round?.guesses,
+                players: data.players,
+                userId: data.userId,
+                hostId: data.hostId,
+                silent: true
+            });
+            hideLoadingScreen();
+        } else if (data.state === "game_ended" || data.state === "finished") {
+            await endGame(data);
+        } else if (data.state !== "waiting") {
+            hideLoadingScreen();
+        }
+    },
+    async onRoundStart(data) {
+        await window.GameShared.whenMapsReady();
+        showLoadingScreen();
+        gameData = { ...gameData, ...data };
+        resetGame();
+        initGameData(data);
+        initStreetView(data.roundPanoId);
+        initGuessMap();
+        restoreGuess(data);
+        setGameState(data.state);
+        hasGuessed = false;
+        setTimerActive(data.isTimerStarted);
+        setRoundEndScreenActive(false);
+        hideLoadingScreen();
+    },
+    onGuessingOver(data) {
+        const localGuess = data.round?.guesses?.[data.userId];
+        setGameState(data.state);
+        if (localGuess) {
+            guessLocation = localGuess.guess;
+            addMarkerToHistory(guessLocation, data.location);
+            showRoundInfo({
+                distance: localGuess.distance,
+                points: localGuess.points,
+                location: data.location,
+                allGuesses: data.round.guesses,
+                players: data.players,
+                userId: data.userId,
+                hostId: data.hostId
+            });
+            return;
+        }
+
+        showRoundInfo({
+            location: data.location,
+            allGuesses: data.round?.guesses,
+            players: data.players,
+            userId: data.userId,
+            hostId: data.hostId
+        });
+    },
+    onGameEnd: endGame,
+    onTerminated: redirectBackToParty,
+    onGuess: ({ player }) => showGuessedPlayer(player),
+    setTimerActive
+});

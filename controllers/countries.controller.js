@@ -9,9 +9,9 @@ function index(req, res) {
   }
 }
 
-function preview(req, res) {
+async function preview(req, res) {
   try {
-    res.json(countriesService.getPreviewCountries());
+    res.json(await countriesService.getPreviewCountries());
   } catch (error) {
     sendError(res, error);
   }

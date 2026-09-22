@@ -27,7 +27,6 @@ async function dashboard(req, res) {
 
 async function favoriteMaps(req, res) {
   try {
-    console.log('Fetching favorite maps for user:', req.user.userId); // Debugging line
     res.json(await userService.getFavoriteMaps(req.user.userId));
   } catch (error) {
     sendError(res, error);
@@ -71,7 +70,7 @@ async function toggleFavoriteMap(req, res) {
 
 async function updateCountry(req, res) {
   try {
-    const country = await userService.updateCountry(req.params.userId, req.body);
+    const country = await userService.updateCountry(req.user.userId, req.body);
     res.json({ message: 'Country updated', country });
   } catch (error) {
     sendError(res, error, 'Server error updating country');
@@ -80,7 +79,7 @@ async function updateCountry(req, res) {
 
 async function updateBio(req, res) {
   try {
-    const bio = await userService.updateBio(req.params.userId, req.body.bio);
+    const bio = await userService.updateBio(req.user.userId, req.body.bio);
     res.json({ message: 'Bio updated', bio });
   } catch (error) {
     sendError(res, error, 'Server error updating BIO');

@@ -67,6 +67,10 @@ function registerGameEvents() {
 
             for (const gameId of socket.data.games) {
                 try {
+                    // A reload can establish its replacement socket before the
+                    // old one disconnects. Do not mark that player offline
+                    // while another socket is still in their private room.
+                    if (io.in(userId).size > 0) continue;
                     await gameService.setPlayerConnected(userId, gameId, false);
                     console.log("Marked offline:", gameId, userId);
                 } catch (err) {

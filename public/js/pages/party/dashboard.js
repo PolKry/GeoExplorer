@@ -1,9 +1,12 @@
 //menu/create.js
 import {
     endParty,
-    getAllMaps,
+    fetchAllMaps,
     kickOfflinePartyPlayers,
     kickPartyPlayer,
+    fetchPartyByCode,
+    joinPartyById,
+    leaveParty,
     loadOrCreateParty,
     savePartySettings,
     startPartyGame,
@@ -33,19 +36,17 @@ import { PAGES } from "../../constants/resources.js";
 import { hideLoadingScreen, showLoadingScreen } from "../../components/loading-screen.js";
 
 const socket = window.io("/party");
-
 const disbandBtn = document.getElementById("disband-confirm-btn");
 
 let currentParty;
+let currentUserId;
+let isHost = false;
 
-const renderHandlers = {
-    onKickPlayer: kickPlayer,
-    onSwapTeam: swapTeam,
-    onRejoinGame: rejoinGame,
-};
+let renderHandlers = { onRejoinGame: rejoinGame };
 
 document.addEventListener("DOMContentLoaded", async () => {
     const token = getToken();
+    currentUserId = getUserIdFromToken(token);
 
     bindUnloadHandler(token);
     bindCopyPartyCode();
@@ -53,6 +54,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     bindModeSettingsControl();
     bindHostControls();
     bindDisbandControls();
+    bindLeaveControl();
+    bindCopyInviteLink();
 
     await populateMapDropdown();
     await loadParty();
@@ -85,10 +88,10 @@ function bindHostControls() {
     document.getElementById("terminate-game-btn").addEventListener("click", terminateGame);
 
     document.getElementById("open-settings-btn").addEventListener("click", () => {
-        document.getElementById("settings-modal-overlay").style.display = "flex";
+        openModal("settings-modal-overlay");
     });
     document.getElementById("close-settings-btn").addEventListener("click", () => {
-        document.getElementById("settings-modal-overlay").style.display = "none";
+        closeModal("settings-modal-overlay");
     });
     document.getElementById("save-settings-btn").addEventListener("click", saveSettings);
 }
@@ -96,15 +99,42 @@ function bindHostControls() {
 function bindDisbandControls() {
     const overlay = document.getElementById("disband-modal-overlay");
     const closeOverlay = () => {
-        overlay.style.display = "none";
+        closeModal(overlay.id);
     };
 
     document.getElementById("disband-btn").addEventListener("click", () => {
-        overlay.style.display = "flex";
+        openModal(overlay.id);
     });
     document.getElementById("disband-close-btn").addEventListener("click", closeOverlay);
     document.getElementById("disband-cancel-btn").addEventListener("click", closeOverlay);
     disbandBtn.addEventListener("click", disbandCurrentParty);
+}
+
+function openModal(id) {
+    document.getElementById(id).style.display = "flex";
+    document.documentElement.classList.add("modal-open");
+    document.body.classList.add("modal-open");
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+    document.documentElement.classList.remove("modal-open");
+    document.body.classList.remove("modal-open");
+}
+
+function bindLeaveControl() {
+    document.getElementById("leave-btn").addEventListener("click", leaveCurrentParty);
+}
+
+function bindCopyInviteLink() {
+    document.getElementById("copy-party-link-btn").addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            showToast("Invite link copied", "success");
+        } catch {
+            showToast("Failed to copy invite link", "error");
+        }
+    });
 }
 
 async function populateMapDropdown() {
@@ -114,7 +144,7 @@ async function populateMapDropdown() {
     const search = mapDropdown.querySelector(".dropdown-search");
 
     try {
-        const { officialMaps, communityMaps } = await getAllMaps();
+        const { officialMaps, communityMaps } = await fetchAllMaps();
         const maps = [
             ...officialMaps.map(map => ({ ...map, type: "Official" })),
             ...communityMaps.map(map => ({ ...map, type: "Community" })),
@@ -180,15 +210,36 @@ function hidePlayersLoading() {
 
 async function loadParty() {
     try {
-        currentParty = await loadOrCreateParty();
+        const partyId = getPartyIdFromUrl();
+        if (partyId) {
+            await joinPartyById(partyId);
+            currentParty = await fetchPartyByCode(partyId);
+        } else {
+            currentParty = await loadOrCreateParty();
+            window.history.replaceState({}, "", `/party/${encodeURIComponent(currentParty.code)}`);
+        }
 
         window.currentParty = currentParty;
         setPartyCode(currentParty.code);
         setPartyHostId(String(currentParty.host));
+        isHost = normalizeId(currentParty.host) === normalizeId(currentUserId);
+
+        // A shared /party/:code invitation first reaches this route. After
+        // joining, send non-hosts to their read-only lobby before controls
+        // are rendered or become interactable.
+        if (!isHost) {
+            window.location.replace(PAGES.waitingRoom);
+            return;
+        }
+
+        renderHandlers = isHost
+            ? { onKickPlayer: kickPlayer, onSwapTeam: swapTeam, onRejoinGame: rejoinGame }
+            : { onRejoinGame: rejoinGame };
+        updateRoleControls();
 
         socket.emit("join-party", {
             partyCode: currentParty.code,
-            userId: currentParty.host,
+            userId: currentUserId,
         });
 
         renderCurrentParty();
@@ -196,13 +247,45 @@ async function loadParty() {
 
     } catch (err) {
         console.error(err);
-        showToast("Failed to load or create party", "error");
+        removePartyCode();
+        window.location.replace(PAGES.gameModes);
     }
 }
 
+function getPartyIdFromUrl() {
+    const match = window.location.pathname.match(/^\/party\/([^/]+)$/);
+    if (!match || match[1] === "dashboard") return null;
+    return decodeURIComponent(match[1]);
+}
+
+function updateRoleControls() {
+    document.querySelectorAll("[data-host-control]").forEach(element => {
+        element.style.display = isHost ? "" : "none";
+    });
+    document.getElementById("leave-btn").style.display = isHost ? "none" : "inline-block";
+    updateStartGameControl();
+}
+
+function updateStartGameControl() {
+    const startButton = document.getElementById("start-game-btn");
+    if (!startButton) return;
+
+    const needsAnotherPlayer = !currentParty || currentParty.players.length < 2;
+
+    startButton.disabled = false;
+    startButton.classList.toggle("start-game-blocked", needsAnotherPlayer);
+    startButton.setAttribute("aria-disabled", String(needsAnotherPlayer));
+    startButton.title = needsAnotherPlayer ? "At least two players are required" : "";
+}
+
 async function startGame() {
+    console.log("At least two players are required to start a party game.");
     const partyCode = getPartyCode();
     if (!partyCode) return showToast("No party Id found", "error");
+    if (currentParty?.players.length < 2) {
+        showToast("At least two players are required to start a party game.", "error");
+        return;
+    }
 
     showLoadingScreen();
 
@@ -224,7 +307,7 @@ async function saveSettings() {
         console.log(currentParty);
         window.currentParty = currentParty;
         renderCurrentParty();
-        document.getElementById("settings-modal-overlay").style.display = "none";
+        closeModal("settings-modal-overlay");
         showToast("Settings saved!", "success");
     } catch (err) {
         console.error(err);
@@ -300,6 +383,16 @@ async function disbandCurrentParty() {
     }
 }
 
+async function leaveCurrentParty() {
+    try {
+        await leaveParty();
+        removePartyCode();
+        window.location.replace(PAGES.home);
+    } catch (err) {
+        showToast(err.message || "Failed to leave the party", "error");
+    }
+}
+
 function rejoinGame(gameId) {
     if (!gameId) {
         showToast("No party code found. Please join the party again.", "error");
@@ -312,6 +405,7 @@ function rejoinGame(gameId) {
 
 function renderCurrentParty() {
     renderParty(currentParty, renderHandlers);
+    updateStartGameControl();
 }
 
 function normalizeId(id) {

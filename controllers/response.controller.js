@@ -18,6 +18,8 @@ function sendError(res, error, fallbackMessage = 'Server error') {
     appError = normalizeError(error);
   } catch (normalizeErr) {
     console.error('Error during error normalization:', normalizeErr);
+    console.error(normalizeErr.stack);
+
     return res.status(500).json({
       message: fallbackMessage || 'Server error',
       error: fallbackMessage || 'Server error',
@@ -25,14 +27,20 @@ function sendError(res, error, fallbackMessage = 'Server error') {
     });
   }
 
-  // Use fallback message only for 500 errors
   if (appError.status === 500 && fallbackMessage) {
     appError.message = fallbackMessage;
   }
 
-  console.error(`[${appError.code}] ${appError.status}: ${appError.message}`);
+  // Detailed server-side logging
+  console.error('\n========== API ERROR ==========');
+  console.error(`Method:  ${res.req?.method}`);
+  console.error(`URL:     ${res.req?.originalUrl || res.req?.url}`);
+  console.error(`Code:    ${appError.code}`);
+  console.error(`Status:  ${appError.status}`);
+  console.error(`Message: ${appError.message}`);
+  console.error(`Stack:\n${error?.stack || appError?.stack || 'No stack trace'}`);
+  console.error('================================\n');
 
-  // Maintain backward compatibility with frontend
   return res.status(appError.status).json({
     message: appError.message,
     error: appError.message,

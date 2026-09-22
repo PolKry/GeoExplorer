@@ -1,4 +1,3 @@
-import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
 import { showToast } from "./toast.js";
 
 export function bindCustomDropdowns() {

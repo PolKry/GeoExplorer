@@ -1,10 +1,11 @@
 import { apiFetch, apiFetchJson } from "./http.js";
 
 export function loadOrCreateParty() {
+    // TODO: ???
     return apiFetchJson("/api/party/create", { method: "GET" });
 }
 
-export async function getPartyByCode(partyCode) {
+export async function fetchPartyByCode(partyCode) {
     const { party } = await apiFetchJson(`/api/party/${partyCode}`);
     return party;
 }
@@ -111,7 +112,8 @@ export async function savePartySettings(partyCode, settings) {
     return data;
 }
 
-export async function getAllMaps() {
+// TODO: Make better map choosing
+export async function fetchAllMaps() {
     const res = await apiFetch("/api/maps/all");
 
     const data = await res.json();
@@ -129,11 +131,15 @@ export async function joinPartyByCode(code) {
         body: JSON.stringify({ code }),
     });
 
-    const data = await res.json();
-
     if (!res.ok) {
         throw new Error("Failed to join");
     }
 
-    return data;
+    return res.json();
+}
+
+export async function joinPartyById(partyId) {
+    return apiFetchJson(`/api/party/${encodeURIComponent(partyId)}/join`, {
+        method: "POST",
+    });
 }

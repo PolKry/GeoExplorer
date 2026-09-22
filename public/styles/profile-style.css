@@ -136,6 +136,7 @@
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: 999px;
     background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.35) 50%, transparent 75%);
     background-size: 220% 100%;
     animation: xp-shine 2.8s ease-in-out infinite;

@@ -5,9 +5,9 @@ import {
   removePendingProfile
 } from "../../utils/storage.js";
 
-import { getGoogleClientId, loginUser, loginWithGoogle } from "../../api/auth-api.js";
+import { fetchGoogleClientId, loginUser, loginWithGoogle } from "../../api/auth-api.js";
 import { showMessage } from "../../utils/toast.js";
-import { getLocalUserData, setBio, setCountry } from "../../api/user-api.js";
+import { fetchLocalUserData, setBio, setCountry } from "../../api/user-api.js";
 import { PAGES } from "../../constants/resources.js";
 
 async function loginWithGoogleCredential(credential) {
@@ -26,7 +26,7 @@ async function setupGoogleLogin() {
 
   try {
 
-    const clientId = await getGoogleClientId();
+    const clientId = await fetchGoogleClientId();
     if (!clientId) throw new Error('Google login is not configured on the server.');
 
     console.log('CLIENT ID:', clientId);
@@ -66,13 +66,12 @@ async function applyPendingProfile() {
   if (!pendingProfile) return;
 
   try {
-    const userData = await getLocalUserData();
     if (pendingProfile.country?.name && pendingProfile.country?.code) {
-      await setCountry(pendingProfile.country, userData._id);
+      await setCountry(pendingProfile.country);
     }
 
     if (pendingProfile.bio) {
-      await setBio(pendingProfile.bio, userData._id);
+      await setBio(pendingProfile.bio);
     }
   } catch (error) {
     console.error('Failed to apply pending profile:', error);

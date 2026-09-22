@@ -41,7 +41,13 @@ export function removeUsername() {
 }
 
 export function getSettings() {
-    return localStorage.getItem(STORAGE_KEYS.SETTINGS);
+    const settings = localStorage.getItem(STORAGE_KEYS.SETTINGS);
+
+    if (!settings) {
+        return null;
+    }
+
+    return JSON.parse(settings);
 }
 
 export function setSettings(settings) {

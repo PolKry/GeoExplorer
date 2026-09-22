@@ -20,13 +20,10 @@ import {
             }
         });
 
-        const gameId = document.getElementById("game-id")?.dataset?.gameId;
-        if (gameId) {
-            socket.emit("game:join", gameId);
-        }
-
         socket.on("connect", () => {
             console.log("Connected to server with id:", socket.id);
+            const gameId = document.getElementById("game-id")?.dataset?.gameId;
+            if (gameId) socket.emit("game:join", gameId);
         });
 
         socket.on("connect_error", (err) => {
@@ -56,14 +53,14 @@ import {
         });
     };
 
-    shared.bindTimerEvents = function bindTimerEvents(socket) {
+    shared.bindTimerEvents = function bindTimerEvents(socket, setTimerActive) {
         const timerEl = document.getElementById("time-info");
         if (!timerEl || !socket) return;
 
         socket.on("timer:start", ({ remaining }) => {
             console.log("timer:start", remaining);
             timerEl.textContent = shared.formatTime(remaining);
-            setTimerActive(true);
+            setTimerActive?.(true);
         });
 
         socket.on("timer:tick", ({ remaining }) => {
@@ -74,7 +71,66 @@ import {
         socket.on("timer:end", () => {
             console.log("timer:end");
             timerEl.textContent = "0:00";
+            setTimerActive?.(false);
         });
+    };
+
+    shared.applyTimerState = function applyTimerState(timer, setTimerActive) {
+        const timerEl = document.getElementById("time-info");
+        if (!timer || !timerEl) {
+            setTimerActive?.(false);
+            return;
+        }
+        // The server deadline is canonical. This also handles a snapshot that
+        // arrives after a missed timer:start event.
+        const remaining = Math.max(0, Math.ceil((timer.deadline - Date.now()) / 1000));
+        timerEl.textContent = shared.formatTime(remaining);
+        setTimerActive?.(remaining > 0);
+    };
+
+    // Every game mode shares the same connection and state-event lifecycle.
+    // Modes only supply the UI work that is specific to their rules.
+    shared.createGameSession = function createGameSession({
+        onStatus,
+        onRoundStart,
+        onGuessingOver,
+        onGameEnd,
+        onTerminated,
+        onGuess,
+        setTimerActive
+    } = {}) {
+        const gameId = document.getElementById("game-id")?.dataset?.gameId;
+        if (!gameId) {
+            throw new Error("The game page is missing its game id");
+        }
+
+        window.GAME_ID = gameId;
+
+        const socket = shared.createSocket();
+        shared.bindTimerEvents(socket, setTimerActive);
+
+        const safely = (handler, data) => {
+            if (typeof handler !== "function") return;
+            Promise.resolve(handler(data)).catch((error) => {
+                console.error("Game event could not be handled", error);
+            });
+        };
+
+        socket.on("game:round-start", (data) => safely(onRoundStart, data));
+        socket.on("game:guessing-over", (data) => safely(onGuessingOver, data));
+        socket.on("game:end", (data) => safely(onGameEnd, data));
+        socket.on("game:terminated", (data) => safely(onTerminated, data));
+        socket.on("game:on-guess", (data) => safely(onGuess, data));
+
+        const requestStatus = () => socket.emit("game:get-status", { gameId }, (data) => {
+            shared.applyTimerState(data?.timer, setTimerActive);
+            safely(onStatus, data);
+        });
+        // Joining an idle game can resume its paused timer asynchronously.
+        // Ask for a fresh snapshot only after that transition completes.
+        socket.on("game:state-ready", requestStatus);
+        requestStatus();
+        return { socket, gameId };
     };
 
     shared.initStreetView = function initStreetView({ gameData, roundPanoId, allowPanoFocus = false, setBlocker = false }) {
@@ -234,8 +290,8 @@ import {
         blocker.style.display = blocked ? "block" : "none";
     };
 
-    shared.isLoadingScreenActive = isLoadingScreenActive();
-    
+    shared.isLoadingScreenActive = isLoadingScreenActive;
+
 
     shared.submitGuess = function submitGuess({ socket, gameId, guessLocation, guessMarker, hasGuessed, panorama, setHasGuessed }) {
         if (!guessMarker || hasGuessed || !guessLocation) return;

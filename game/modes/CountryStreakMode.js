@@ -52,7 +52,7 @@ class CountryStreakMode extends GameMode {
 
         // A timed-out round has no guess entry. Treat it as an incorrect
         // answer instead of dereferencing an absent result.
-        return !guessData?.isCorrect;
+        return engine.roundIndex >= this.maxRounds || !guessData?.isCorrect;
     }
 
     getStreak(engine) {

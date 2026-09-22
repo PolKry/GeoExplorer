@@ -115,6 +115,7 @@ class FFAMode extends GameMode {
     getGameStatusPayload(engine, userId) {
         return {
             gameId: engine.getGameId(),
+            userId: String(userId),
             roundPanoId: engine.round?.location?.panoId || null,
             roundIndex: engine.roundIndex,
             maxRounds: this.maxRounds,

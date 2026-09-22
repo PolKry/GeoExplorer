@@ -1,6 +1,6 @@
-const { getGameClass } = require("../game/getGameClass");
 const { sendError } = require('./response.controller');
 const gameService = require('../services/game.service');
+const mapRepository = require('../repositories/map.repository');
 
 exports.startPointsMode = async (req, res) => {
     try {
@@ -61,32 +61,26 @@ exports.startCountryMode = async (req, res) => {
 exports.startGameForParty = async (party) => {
     try {
         const playerIds = party.players.map(p => String(p.user));
+        const map = await mapRepository.findById(party.settings.map);
+
+        if (!map) {
+            throw new Error("The party's selected map no longer exists");
+        }
 
         const gameData = await gameService.startGame({
             mode: "ffa",
             settings: {
                 gameplayMode: "moving",
-                mapCode: party.settings.map,
+                // Party settings store a Map ObjectId; games use the map's
+                // stable srcName when they resolve the selected map.
+                mapCode: map.srcName,
                 maxRounds: party.settings.rounds,
-                roundTime: party.settings.time
+                roundTime: party.settings.unlimitedTime ? 5 : party.settings.time
             },
             hostUserId: String(party.host),
             playerIds,
             partyId: party.id
         });
-
-        const session = gameData.session;
-        const GameModeClass = getGameClass("ffa");
-
-        const gameInstance = new GameModeClass(
-            session.settings.maxRounds,
-            session.settings.roundTime,
-            session.mapCode,
-            session.mapId,
-            gameData.map.maxDistance
-        );
-
-        gameService.generateThisAndNextRound(gameData, gameInstance);
 
         return gameData;
     } catch (err) {

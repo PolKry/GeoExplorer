@@ -17,7 +17,7 @@ export async function createMap(mapData) {
     }
 }
 
-export async function getTags() {
+export async function fetchTags() {
     try {
         const res = await apiFetch('/api/tags/all');
         const data = await res.json();

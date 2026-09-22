@@ -5,6 +5,11 @@ body {
     min-height: 100vh;
 }
 
+html.modal-open,
+body.modal-open {
+    overflow: hidden;
+}
+
 .party-main {
     flex: 1;
     display: flex;
@@ -63,6 +68,42 @@ body {
     user-select: none;
     font-size: 1.3rem;
     letter-spacing: 0.5px;
+}
+
+#copy-party-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgba(0, 255, 174, 0.48);
+    border-radius: 999px;
+    background: rgba(0, 255, 174, 0.12);
+    color: #c9ffec;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.18);
+    transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+#copy-party-link-btn::before {
+    content: "↗";
+    color: #00ffae;
+    font-size: 1rem;
+}
+
+#copy-party-link-btn:hover {
+    transform: translateY(-1px);
+    border-color: #00ffae;
+    background: rgba(0, 255, 174, 0.2);
+    box-shadow: 0 0 18px rgba(0, 255, 174, 0.18);
+}
+
+#copy-party-link-btn:focus-visible {
+    outline: 3px solid rgba(0, 255, 174, 0.45);
+    outline-offset: 3px;
 }
 
 /* === Player Section === */
@@ -760,4 +801,11 @@ body {
     .party-footer button {
         width: 100%;
     }
+}
+
+/* The control remains clickable only to explain why party start is blocked. */
+.party-footer .start-game-blocked {
+    opacity: 0.55;
+    cursor: not-allowed;
+    filter: grayscale(0.55);
 }

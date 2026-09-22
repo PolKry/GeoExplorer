@@ -1,5 +1,5 @@
 import { deleteAccount, updateAccount } from "../../api/auth-api.js";
-import { getAccountData } from "../../api/user-api.js";
+import { fetchAccountData } from "../../api/user-api.js";
 import { PAGES } from "../../constants/resources.js";
 import { clearStorage, setUsername } from "../../utils/storage.js";
 import { showMessage, showToast } from "../../utils/toast.js";
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function assignValues() {
-    const userData = await getAccountData();
+    const userData = await fetchAccountData();
 
     originalUsername = userData.username;
 

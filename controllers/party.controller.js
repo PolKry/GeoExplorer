@@ -26,6 +26,14 @@ async function join(req, res) {
   }
 }
 
+async function joinById(req, res) {
+  try {
+    res.json(await partyService.joinParty(req.user.userId, req.params.partyId));
+  } catch (error) {
+    sendError(res, error);
+  }
+}
+
 async function leave(req, res) {
   try {
     await partyService.leaveParty(req.user.userId);
@@ -95,6 +103,7 @@ module.exports = {
   create,
   end,
   join,
+  joinById,
   leave,
   start,
   swapPlayer,

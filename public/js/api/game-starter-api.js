@@ -1,4 +1,4 @@
-import { apiFetch, apiFetchJson } from "./http.js";
+import { apiFetch } from "./http.js";
 
 export async function startPoints(mapCode, gameplayMode, roundTime, maxRounds = 5) {
     try {
@@ -27,7 +27,7 @@ export async function startPoints(mapCode, gameplayMode, roundTime, maxRounds = 
 export async function startCountry(
     mapCode = "World",
     gameplayMode = "moving",
-    roundTime = 5,
+    roundTime = 60,
     maxRounds = 5
 ) {
     try {

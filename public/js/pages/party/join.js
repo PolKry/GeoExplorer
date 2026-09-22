@@ -76,9 +76,11 @@ function bindJoinForm(inputs) {
         }
 
         try {
-            const party = await joinPartyByCode(code);
+            const { party } = await joinPartyByCode(code);
             
             setPartyCode(party.code);
+            // Guests belong in the read-only lobby. The dashboard is the
+            // host's settings and game-control surface.
             window.location.href = PAGES.waitingRoom;
         } catch (err) {
             console.error("Error joining party:", err.message);

@@ -34,12 +34,12 @@ export async function loginWithGoogle(credential) {
     return data;
 }
 
-export async function getGoogleClientId() {
+export async function fetchGoogleClientId() {
     const response = await fetch('/api/auth/google-client-id');
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || "Failed to get Google client ID");
+        throw new Error(data.message || "Failed to fetch Google client ID");
     }
 
     return data.clientId;

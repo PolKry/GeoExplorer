@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GeoExplorer | Party Lobby</title>
+  <title>GeoExplorer | Party Dashboard</title>
 
   <link rel="stylesheet" href="/styles/menu-style.css">
   <link rel="stylesheet" href="/styles/party.css">
@@ -16,7 +16,7 @@
   <script type="module" src="/js/utils/auth-check.js"></script>
   <script type="module" src="/js/components/profile-menu.js"></script>
   <script src="/js/components/loader.js"></script>
-  <script type="module" src="../js/pages/party/create.js"></script>
+  <script type="module" src="/js/pages/party/dashboard.js"></script>
 </head>
 
 <body>
@@ -26,13 +26,14 @@
     <div id="loading-screen"></div>
 
     <div class="party-container fade-in">
-      <h2 class="party-lobby-title">Party Lobby</h2>
+      <h2 class="party-lobby-title">Party Dashboard</h2>
 
       <div class="party-header">
         <span class="party-code-container">
           Party Code:
           <span id="party-code" title="Click to copy">XXXXXX</span>
         </span>
+        <button id="copy-party-link-btn" class="secondary" type="button">Copy Invite Link</button>
       </div>
 
       <div class="party-body" id="party-body">
@@ -58,12 +59,13 @@
       </div>
 
       <div class="party-footer">
-        <button id="open-settings-btn" class="secondary">Settings</button>
-        <button id="start-game-btn" class="primary">Start Game</button>
+        <button id="open-settings-btn" class="secondary" data-host-control>Settings</button>
+        <button id="start-game-btn" class="primary" data-host-control>Start Game</button>
         <button id="rejoin-game-btn" class="rejoin">Rejoin</button>
-        <button id="terminate-game-btn" class="danger">Terminate Game</button>
-        <button id="kick-offline-btn" class="danger">Kick Offline</button>
-        <button id="disband-btn" class="secondary">Disband</button>
+        <button id="terminate-game-btn" class="danger" data-host-control>Terminate Game</button>
+        <button id="kick-offline-btn" class="danger" data-host-control>Kick Offline</button>
+        <button id="disband-btn" class="secondary" data-host-control>Disband</button>
+        <button id="leave-btn" class="secondary" style="display:none;">Leave</button>
       </div>
 
     </div>

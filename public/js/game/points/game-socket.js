@@ -1,4 +1,4 @@
-import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
+import { hideLoadingScreen } from "../../components/loading-screen.js";
 
 const socket = window.GameShared.createSocket();
 window.GameShared.bindTimerEvents(socket);

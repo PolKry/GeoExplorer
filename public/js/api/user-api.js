@@ -1,6 +1,6 @@
 import { apiFetch } from "./http.js";
 
-export async function getLocalUserData() {
+export async function fetchLocalUserData() {
     try {
         const res = await apiFetch('/api/users/me');
         if (!res.ok) throw new Error('Failed to fetch user profile info');
@@ -12,7 +12,7 @@ export async function getLocalUserData() {
     }
 }
 
-export async function getAccountData() {
+export async function fetchAccountData() {
     try {
         const res = await apiFetch('/api/users/me/account');
         if (!res.ok) throw new Error('Failed to fetch user account info');
@@ -24,7 +24,7 @@ export async function getAccountData() {
     }
 }
 
-export async function getHighestScore(mapSrcName) {
+export async function fetchHighestScore(mapSrcName) {
     try {
         const res = await apiFetch(`/api/users/me/highest-score?name=${encodeURIComponent(mapSrcName)}`);
         if (!res.ok) throw new Error("Highest score data fetch failed");
@@ -36,7 +36,7 @@ export async function getHighestScore(mapSrcName) {
     }
 }
 
-export async function getFavMaps() {
+export async function fetchFavMaps() {
     try {
         const res = await apiFetch('/api/users/me/favorite-maps');
         if (!res.ok) throw new Error('Failed to fetch favorite maps');
@@ -50,7 +50,7 @@ export async function getFavMaps() {
 
 export async function setFavMaps(mapSrcName) {
     try {
-        const userData = await getLocalUserData();
+        const userData = await fetchLocalUserData();
         // TODO: Remove the id. Make it always add to the local player data.
         const res = await apiFetch(`/api/users/${userData._id}/favorite-map`, {
             method: 'PUT',
@@ -65,15 +65,13 @@ export async function setFavMaps(mapSrcName) {
     }
 }
 
-export async function setCountry(countryData, userId = null) {
+export async function setCountry(countryData) {
     try {
-        const userData = await getLocalUserData();
-        const id = userId || userData._id;
-
-        const res = await apiFetch(`/api/users/${id}/country`, {
+        const res = await apiFetch(`/api/users/me/country`, {
             method: 'PUT',
             body: JSON.stringify(countryData)
         });
+        if (!res.ok) throw new Error('Failed to fetch country data');
 
         return await res.json();
     } catch (err) {
@@ -82,15 +80,13 @@ export async function setCountry(countryData, userId = null) {
     }
 }
 
-export async function setBio(bio, userId = null) {
+export async function setBio(bio) {
     try {
-        const userData = await getLocalUserData();
-        const id = userId || userData._id;
-
-        const res = await apiFetch(`/api/users/${id}/bio`, {
+        const res = await apiFetch(`/api/users/me/bio`, {
             method: 'PUT',
             body: JSON.stringify({ bio })
         });
+        if (!res.ok) throw new Error('Failed to fetch bio data');
 
         return await res.json();
     } catch (err) {
@@ -99,7 +95,7 @@ export async function setBio(bio, userId = null) {
     }
 }
 
-export async function getDashboard() {
+export async function fetchDashboard() {
     try {
         const res = await apiFetch('/api/users/me/dashboard');
         if (!res.ok) throw new Error('Failed to fetch dashboard data');
@@ -108,18 +104,6 @@ export async function getDashboard() {
     } catch (err) {
         console.error("Error fetching dashboard data:", err);
         return null;
-    }
-}
-
-export async function getCountries() {
-    try {
-        const res = await apiFetch('/api/countries');
-        if (!res.ok) throw new Error('Failed to fetch countries data');
-
-        return await res.json();
-    } catch (err) {
-        console.error("Error fetching countries data:", err);
-        return [];
     }
 }
 
@@ -135,7 +119,7 @@ export async function setSettings(settings) {
     }
 }
 
-export async function getSettings() {
+export async function fetchSettings() {
     try {
         const res = await apiFetch('/api/users/me/settings');
         if (!res.ok) throw new Error('Failed to fetch user settings');

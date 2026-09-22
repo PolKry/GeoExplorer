@@ -13,9 +13,10 @@ router.get('/me/highest-score', auth, userController.highestScore);
 router.get('/me/stats', auth, userController.stats);
 router.get('/me/settings', auth, userController.getSettings);
 router.put('/me/settings', auth, userController.updateSettings);
+router.put('/me/bio', auth, userController.updateBio)
+router.put('/me/country', auth, userController.updateCountry);
 router.put('/:userId/favorite-map', auth, userController.toggleFavoriteMap); // TODO : Why two different routes for the same action? One with /me and one with /:userId. Should be consistent.
-router.put('/:userId/country', auth, userController.updateCountry);
-router.put('/:userId/bio', auth, userController.updateBio);
+//router.put('/:userId/bio', auth, userController.getBio);
 router.get('/:userId/username', auth, userController.username);
 
 module.exports = router;

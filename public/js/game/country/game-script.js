@@ -1,10 +1,9 @@
-import { ICONS, AUDIO, PAGES } from "../../constants/resources.js";
+import { IMAGES, AUDIO, PAGES } from "../../constants/resources.js";
 import { playSound } from "../../utils/audio.js";
 import { showLoadingScreen, hideLoadingScreen } from "../../components/loading-screen.js";
-const { startCountryGameRes } = require("../../api/game-api");
+import { startCountry } from "../../api/game-starter-api.js";
 
 // Maps
-let mapName;
 let map;
 let endingMap;
 let panorama;
@@ -57,42 +56,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 });
 
-function loadGame(gameId) {
-    showLoadingScreen();
-    setTimerActive(false);
-
-    socket.emit('game:get-status', { gameId }, (data) => {
-        if (!data) {
-            console.error("No game status received");
-            hideLoadingScreen();
-            return;
-        }
-
-        gameData = data;
-        initGameData(gameData);
-
-        if (gameData.state === "in_round") {
-            initializeRound(gameData);
-            return;
-        }
-
-        if (["all_guessed", "game_ended"].includes(gameData.state)) {
-            hideLoadingScreen();
-        }
-    });
-
-    socket.once('game:round-start', (data) => {
-        gameData = data;
-
-        initializeRound(gameData);
-    });
-}
-
 async function initializeRound(data) {
     try {
-        await window.GameShared.whenMapsReady();
+        await Promise.all([
+            window.GameShared.whenMapsReady(),
+            loadWorldGeoJson()
+        ]);
     } catch (error) {
-        console.error(error);
+        console.error("Country round could not be initialized", error);
         hideLoadingScreen();
         return;
     }
@@ -105,7 +76,15 @@ async function initializeRound(data) {
 
     hideLoadingScreen();
     setTimerActive(data.isTimerStarted);
-    submitGuessButton.disabled = false;
+    // A country must be selected before a guess can be submitted.
+    const restoredGuess = data.submittedGuess?.guessedCountry;
+    if (restoredGuess) {
+        guessCountry = restoredGuess;
+        selectedCountry = restoredGuess;
+        hasGuessed = true;
+        map.data.setStyle(styleCountries);
+    }
+    submitGuessButton.disabled = Boolean(restoredGuess) || !guessCountry;
 }
 
 function initGameData(gameData) {
@@ -114,14 +93,17 @@ function initGameData(gameData) {
 
     if (gameData.map)
         mapInfo.textContent = gameData.map.name;
-    if (gameData.streak)
+    if (gameData.streak != null)
         streakInfo.textContent = gameData.streak;
 }
 
 function loadWorldGeoJson() {
     if (!worldGeoJsonPromise) {
-        worldGeoJsonPromise = fetch("/data/World.geojson")
-            .then(res => res.json())
+        worldGeoJsonPromise = fetch("/data/world.geojson")
+            .then(res => {
+                if (!res.ok) throw new Error(`Could not load country boundaries (${res.status})`);
+                return res.json();
+            })
             .then(data => {
                 worldGeoJson = data;
                 return data;
@@ -132,31 +114,10 @@ function loadWorldGeoJson() {
 }
 
 function initStreetView(roundPanoId) {
-    streetViewPanel = document.getElementById("street-view");
-
-    panorama = new google.maps.StreetViewPanorama(streetViewPanel, {
-        pano: roundPanoId,
-        zoom: 0,
-
-        clickToGo: true,
-        linksControl: true,
-        scrollwheel: true,
-        panControl: true,
-        zoomControl: false,
-        keyboardShortcuts: false,
-        gestureHandling: "none",
-
-        disableDefaultUI: true,
-        addressControl: false,
-        fullscreenControl: false,
-        showRoadLabels: false,
-    });
-
-    // Wait for pano to be fully loaded
-    panorama.addListener("status_changed", () => {
-        if (panorama.getStatus() !== "OK") return;
-
-        hideLoadingScreen();
+    panorama = window.GameShared.initStreetView({
+        gameData,
+        roundPanoId,
+        allowPanoFocus: gameData.gameplayMode !== "moving"
     });
 }
 
@@ -179,9 +140,7 @@ function initGuessMap() {
         }
     });
 
-    loadWorldGeoJson().then(data => {
-        map.data.addGeoJson(data);
-    });
+    map.data.addGeoJson(worldGeoJson);
 
     map.data.setStyle({
         fillColor: "#ffffff",
@@ -202,6 +161,7 @@ function initGuessMap() {
         selectedCountry = countryCode;
 
         map.data.setStyle(styleCountries);
+        submitGuessButton.disabled = false;
     });
 
     map.data.addListener("mouseover", (event) => {
@@ -271,7 +231,7 @@ function proceed() {
         if (!newRound || newRound.error) {
             return;
         }
-        
+
         resetGame();
         initGameData(newRound);
         initStreetView(newRound.roundPanoId);
@@ -310,10 +270,18 @@ function setGameState(newState) {
 
 function resetGame() {
     guessCountry = null;
+    selectedCountry = null;
+    hasGuessed = false;
+    submitGuessButton.disabled = true;
+    const resultText = document.getElementById('info-text');
+    if (resultText) {
+        resultText.textContent = "";
+        resultText.style.visibility = "hidden";
+    }
 }
 
 // Shows the round info
-function showRoundInfo({ correctCountry, correctCountryName, guessedCountry, isCorrect, streak }) {
+function showRoundInfo({ correctCountry, correctCountryName, guessedCountry, isCorrect, streak, silent = false }) {
     proceedBtn.hidden = false;
     endButtons.style.display = 'none';
 
@@ -334,7 +302,7 @@ function showRoundInfo({ correctCountry, correctCountryName, guessedCountry, isC
     setRoundEndScreenActive(true);
 
     // Play SFX
-    playSound(AUDIO.showAnswer);
+    if (!silent) playSound(AUDIO.showAnswer);
 }
 
 function setEndingScreenActive(value) {
@@ -373,16 +341,6 @@ document.getElementById("play-again-answer")
     .addEventListener('click', playAgainClick);
 document.getElementById("exit-answer")
     .addEventListener('click', menuClick);
-
-function setEndStreakButtonsActive(isCorrect) {
-    if (isCorrect) {
-        proceedBtn.hidden = false;
-        endButtons.style.display = 'none';
-    } else {
-        proceedBtn.hidden = true;
-        endButtons.style.display = 'flex';
-    }
-}
 
 function setTimerActive(value) {
     const timerPanel = document.getElementById('time-panel');
@@ -477,7 +435,6 @@ function highlightHistoryCountryPolygon() {
 
     const bounds = new google.maps.LatLngBounds();
 
-    // Precompute lookup map (O(n))
     historyCountries.forEach(({ countryISO, isCorrect }) => {
         countryMap.set(countryISO, isCorrect);
     });
@@ -485,9 +442,7 @@ function highlightHistoryCountryPolygon() {
     endingMap.data.setStyle((feature) => {
         const code = feature.getProperty("ISO_A2_EH");
 
-        // O(1) lookup
         const isCorrect = countryMap.get(code);
-
         if (isCorrect !== undefined) {
             feature.getGeometry().forEachLatLng((latLng) => {
                 bounds.extend(latLng);
@@ -577,12 +532,12 @@ function breakDownClick() {
     if (responsive) {
         overlay.style.visibility = "hidden";
         infoPanel.style.visibility = "hidden";
-        img.src = ICONS.breakdownGrayIcon;
+        img.src = IMAGES.breakdownGray;
         map.classList.remove('responsive');
     } else {
         overlay.style.visibility = "visible";
         infoPanel.style.visibility = "visible";
-        img.src = ICONS.breakdownWhiteIcon;
+        img.src = IMAGES.breakdownWhite;
         map.classList.add('responsive');
     }
 
@@ -615,10 +570,9 @@ async function playAgainClick() {
     setEndingScreenActive(false);
     showLoadingScreen();
 
-    const res = await startCountryGameRes(gameData.map.srcName, roundLength);
-    const data = await res.json();
+    const data = await startCountry(gameData.map.srcName, gameData.gameplayMode, roundTime, gameData.maxRounds);
 
-    if (!res.ok || !data.gameId) {
+    if (!data?.gameId) {
         console.error("Failed to start game", data);
         hideLoadingScreen();
         gameStartInProgress = false;
@@ -628,3 +582,54 @@ async function playAgainClick() {
     // Redirect immediately
     window.location.href = `/play/${data.gameId}`;
 }
+
+const { socket } = window.GameShared.createGameSession({
+    onStatus(data) {
+        if (!data) {
+            console.error("No game status received");
+            hideLoadingScreen();
+            return;
+        }
+
+        gameData = { ...gameData, ...data };
+        initGameData(gameData);
+        if (data.state === "in_round") {
+            initializeRound(data);
+        } else if (data.state === "all_guessed" || data.state === "round_ended") {
+            setGameState(data.state);
+            showRoundInfo({
+                correctCountry: data.correctCountry,
+                correctCountryName: data.correctCountryName,
+                guessedCountry: data.guessedCountry,
+                isCorrect: data.isCorrect,
+                streak: data.streak,
+                silent: true
+            });
+            hideLoadingScreen();
+        } else if (data.state === "game_ended" || data.state === "finished") {
+            endGame(data);
+        } else if (data.state !== "waiting") {
+            hideLoadingScreen();
+        }
+    },
+    onRoundStart(data) {
+        gameData = { ...gameData, ...data };
+        resetGame();
+        setGameState(data.state);
+        setRoundEndScreenActive(false);
+        initializeRound(data);
+    },
+    onGuessingOver(data) {
+        const localGuess = data.round?.guesses?.[data.userId];
+        setGameState(data.state);
+        showRoundInfo({
+            correctCountry: data.correctCountry,
+            correctCountryName: data.correctCountryName,
+            guessedCountry: localGuess?.countryCode || data.guessedCountry,
+            isCorrect: data.isCorrect,
+            streak: data.streak
+        });
+    },
+    onGameEnd: endGame,
+    setTimerActive
+});

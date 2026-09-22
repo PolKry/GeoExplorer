@@ -24,7 +24,9 @@ const roundSchema = new mongoose.Schema({
     }, { _id: false })
   },
   endedAt: { type: Date },
-  startedAt: { type: Date }
+  startedAt: { type: Date },
+  timerEndsAt: { type: Date },
+  timerPausedRemaining: { type: Number, default: null }
 }, { _id: false });
 
 const gameSettingsSchema = new mongoose.Schema({

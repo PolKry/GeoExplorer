@@ -57,5 +57,5 @@ export function hideLoadingScreen() {
 }
 
 export function isLoadingScreenActive() {
-    return document.boidy.classList.contains("loading");
+    return document.body.classList.contains("loading");
 }

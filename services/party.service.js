@@ -88,20 +88,25 @@ async function joinParty(userId, partyId) {
   const user = await getUserOrThrow(userId);
   const userProfile = await getProfileOrThrow(userId);
   const oldPartyCode = userProfile.partyCode;
+  const party = await getPartyOrThrow(partyId);
 
-  if (oldPartyCode) {
+  // Joining the same party again happens on dashboard reloads and socket
+  // reconnects. It must be a no-op: removing a host here could promote a
+  // guest to host before the original host is added back.
+  if (party.getPlayer(userId)) {
+    if (userProfile.partyCode !== party.code) {
+      userProfile.partyCode = party.code;
+      await userProfile.save();
+    }
+    return { message: 'Already in party', party };
+  }
+
+  if (oldPartyCode && oldPartyCode !== party.code) {
     const oldParty = await PartyManager.getByCode(oldPartyCode);
     if (oldParty) {
       oldParty.removePlayer(userId);
       kickUserFromParty(userId, user.username, oldPartyCode);
     }
-  }
-
-  const party = await getPartyOrThrow(partyId);
-  const player = party.getPlayer(userId);
-
-  if (player) {
-    return { message: 'Already in party' };
   }
 
   party.addPlayer(user);
@@ -120,7 +125,7 @@ async function joinParty(userId, partyId) {
   userProfile.partyCode = partyId;
   await userProfile.save();
 
-  return { message: 'Joined successfully', code: partyId };
+  return { message: 'Joined successfully', party };
 }
 
 async function leaveParty(userId) {
@@ -149,6 +154,10 @@ async function startPartyGame(userId, partyId) {
 
   if (!party.isHost(userId)) {
     throw new ForbiddenError('Only host can start the game');
+  }
+
+  if (party.players.length < 2) {
+    throw new ValidationError('At least two players are required to start a party game');
   }
 
   if (party.isPlaying()) {

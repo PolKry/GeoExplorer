@@ -9,9 +9,9 @@ export const IMAGES = {
 };
 
 export const AUDIO = {
-    showAnswer: "/resources/audio/show-answer.mp3",
-    markerPlacedLand: "/resources/audio/marker-placed-land.mp3",
-    markerPlacedWater: "/resources/audio/marker-placed-water.mp3"
+    showAnswer: "/resources/sounds/show-answers.mp3",
+    markerPlacedLand: "/resources/sounds/marker-placed-land.mp3",
+    markerPlacedWater: "/resources/sounds/marker-placed-water.mp3"
 };
 
 export const PAGES = {
@@ -20,6 +20,6 @@ export const PAGES = {
     explore: "/menu/explore.html",
     gameModes: "/menu/game-modes.html",
     map: "/menu/map.html",
-    createParty: "/party/create.html",
+    partyDashboard: "/party/dashboard",
     waitingRoom: "/party/waiting-room.html",
 };
